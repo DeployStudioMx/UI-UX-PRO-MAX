@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System — Clínica Dental Lumina</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              DEFAULT: '#C9A84C',
+              light:   '#E8D5A3',
+              lighter: '#F5EDD6',
+              dark:    '#A8862E',
+              deeper:  '#8A6E20',
+            },
+            navy: {
+              DEFAULT: '#1B2A4A',
+              light:   '#2D4270',
+              lighter: '#3D5A96',
+            },
+            cream: {
+              DEFAULT: '#FAFAF7',
+              warm:    '#F5F0E8',
+              medium:  '#EDE8DC',
+              deep:    '#E0D9CC',
+            },
+            teal: {
+              DEFAULT: '#2D6B6B',
+              light:   '#3D8A8A',
+              lighter: '#5AABAB',
+            },
+            ink: {
+              DEFAULT: '#2D2D2D',
+              medium:  '#5A5A5A',
+              light:   '#8A8A8A',
+              faint:   '#B8B8B8',
+            },
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans:  ['Inter', 'system-ui', 'sans-serif'],
+          },
+          fontSize: {
+            'display-2xl': ['72px', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+            'display-xl':  ['60px', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
+            'display-lg':  ['48px', { lineHeight: '1.1',  letterSpacing: '-0.015em' }],
+            'display-md':  ['36px', { lineHeight: '1.2',  letterSpacing: '-0.01em' }],
+            'display-sm':  ['30px', { lineHeight: '1.25', letterSpacing: '-0.005em' }],
+            'body-xl':     ['20px', { lineHeight: '1.6' }],
+            'body-lg':     ['18px', { lineHeight: '1.65' }],
+            'body-md':     ['16px', { lineHeight: '1.7' }],
+            'body-sm':     ['14px', { lineHeight: '1.6' }],
+            'body-xs':     ['12px', { lineHeight: '1.5' }],
+          },
+          boxShadow: {
+            'warm-sm':  '0 1px 3px rgba(201,168,76,0.12), 0 1px 2px rgba(0,0,0,0.06)',
+            'warm-md':  '0 4px 12px rgba(201,168,76,0.15), 0 2px 6px rgba(0,0,0,0.08)',
+            'warm-lg':  '0 10px 30px rgba(201,168,76,0.18), 0 4px 12px rgba(0,0,0,0.10)',
+            'warm-xl':  '0 20px 50px rgba(201,168,76,0.20), 0 8px 20px rgba(0,0,0,0.12)',
+            'card':     '0 2px 20px rgba(27,42,74,0.08), 0 1px 4px rgba(0,0,0,0.04)',
+            'card-hover':'0 8px 40px rgba(27,42,74,0.14), 0 2px 8px rgba(0,0,0,0.06)',
+            'inner-gold':'inset 0 1px 0 rgba(201,168,76,0.3)',
+          },
+          borderRadius: {
+            'xl2': '20px',
+            'xl3': '24px',
+            'xl4': '32px',
+          },
+          spacing: {
+            '18': '4.5rem',
+            '22': '5.5rem',
+            '26': '6.5rem',
+            '30': '7.5rem',
+          },
+          animation: {
+            'float':      'float 6s ease-in-out infinite',
+            'float-slow': 'float 9s ease-in-out infinite',
+            'fade-up':    'fadeUp 0.7s ease-out forwards',
+            'fade-in':    'fadeIn 0.5s ease-out forwards',
+            'pulse-gold': 'pulseGold 2s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%,100%': { transform: 'translateY(0px)' },
+              '50%':     { transform: 'translateY(-12px)' },
+            },
+            fadeUp: {
+              '0%':   { opacity: '0', transform: 'translateY(24px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%':   { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            pulseGold: {
+              '0%,100%': { boxShadow: '0 0 0 0 rgba(201,168,76,0.4)' },
+              '50%':     { boxShadow: '0 0 0 10px rgba(201,168,76,0)' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    /* ─── Base Reset ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #FAFAF7; color: #2D2D2D; }
+
+    /* ─── DS Token Label ──────────────────────────────────── */
+    .token-label {
+      font-family: 'Inter', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8A8A8A;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #1B2A4A;
+      border-bottom: 2px solid #E8D5A3;
+      padding-bottom: 12px;
+      margin-bottom: 32px;
+    }
+    .ds-chip {
+      display: inline-block;
+      background: #F5EDD6;
+      color: #A8862E;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    /* ─── Color Swatch ────────────────────────────────────── */
+    .swatch {
+      border-radius: 12px;
+      height: 72px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .swatch:hover { transform: scale(1.04); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+
+    /* ─── Button Base ─────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Inter', sans-serif; font-weight: 600;
+      cursor: pointer; transition: all 0.25s ease;
+      border: none; outline: none; text-decoration: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #C9A84C 0%, #A8862E 100%);
+      color: #fff;
+      padding: 14px 32px; border-radius: 999px;
+      font-size: 15px; letter-spacing: 0.02em;
+      box-shadow: 0 4px 16px rgba(201,168,76,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(201,168,76,0.50);
+      background: linear-gradient(135deg, #D9B85C 0%, #B8962E 100%);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      background: transparent;
+      color: #1B2A4A;
+      padding: 13px 30px; border-radius: 999px;
+      font-size: 15px; letter-spacing: 0.02em;
+      border: 1.5px solid #1B2A4A;
+    }
+    .btn-secondary:hover {
+      background: #1B2A4A; color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(27,42,74,0.25);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #C9A84C;
+      padding: 13px 30px; border-radius: 999px;
+      font-size: 15px; letter-spacing: 0.02em;
+      border: 1.5px solid #C9A84C;
+    }
+    .btn-ghost:hover {
+      background: linear-gradient(135deg, #C9A84C 0%, #A8862E 100%);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(201,168,76,0.30);
+    }
+
+    .btn-sm  { padding: 9px 22px !important; font-size: 13px !important; }
+    .btn-lg  { padding: 18px 44px !important; font-size: 17px !important; }
+    .btn-icon { width: 44px; height: 44px; padding: 0 !important; justify-content: center; }
+
+    /* ─── Card Base ───────────────────────────────────────── */
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 2px 20px rgba(27,42,74,0.08), 0 1px 4px rgba(0,0,0,0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(27,42,74,0.14), 0 4px 10px rgba(0,0,0,0.06);
+    }
+    .card-gold-border { border-top: 3px solid #C9A84C; }
+
+    /* ─── Service Icon ────────────────────────────────────── */
+    .service-icon {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, #F5EDD6 0%, #E8D5A3 100%);
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .service-icon:hover {
+      background: linear-gradient(135deg, #C9A84C 0%, #A8862E 100%);
+      transform: scale(1.1) rotate(-3deg);
+      box-shadow: 0 8px 20px rgba(201,168,76,0.35);
+    }
+    .service-icon:hover svg { stroke: #fff; }
+
+    /* ─── Input ───────────────────────────────────────────── */
+    .input-field {
+      width: 100%;
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: #2D2D2D;
+      background: #fff;
+      border: 1.5px solid #E0D9CC;
+      border-radius: 12px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .input-field::placeholder { color: #B8B8B8; }
+    .input-field:focus {
+      border-color: #C9A84C;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+    }
+    .input-field:hover:not(:focus) { border-color: #C9A84C80; }
+
+    /* ─── Badge ───────────────────────────────────────────── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 999px;
+      font-size: 13px; font-weight: 500;
+    }
+    .badge-gold  { background: #F5EDD6; color: #8A6E20; }
+    .badge-navy  { background: #E8EDF5; color: #1B2A4A; }
+    .badge-teal  { background: #E3F0F0; color: #2D6B6B; }
+    .badge-white { background: rgba(255,255,255,0.9); color: #2D2D2D; backdrop-filter: blur(8px); }
+
+    /* ─── Divider ─────────────────────────────────────────── */
+    .divider-gold {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, #C9A84C 50%, transparent 100%);
+    }
+
+    /* ─── Gradient Text ───────────────────────────────────── */
+    .text-gradient-gold {
+      background: linear-gradient(135deg, #C9A84C 0%, #A8862E 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-gradient-navy {
+      background: linear-gradient(135deg, #1B2A4A 0%, #3D5A96 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── Frosted Glass ───────────────────────────────────── */
+    .glass {
+      background: rgba(255,255,255,0.80);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    /* ─── Floating Element Demo ───────────────────────────── */
+    @keyframes float {
+      0%,100% { transform: translateY(0px) rotate(0deg); }
+      50%      { transform: translateY(-14px) rotate(1deg); }
+    }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+
+    /* ─── Stat Counter Card ───────────────────────────────── */
+    .stat-card {
+      background: linear-gradient(135deg, #1B2A4A 0%, #2D4270 100%);
+      border-radius: 20px;
+      padding: 28px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute; top: -30px; right: -30px;
+      width: 100px; height: 100px;
+      background: rgba(201,168,76,0.15);
+      border-radius: 50%;
+    }
+
+    /* ─── Testimonial Card ────────────────────────────────── */
+    .testimonial-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 2px 20px rgba(27,42,74,0.08);
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      position: absolute; top: 16px; left: 22px;
+      font-family: 'Playfair Display', serif;
+      font-size: 80px; line-height: 1;
+      color: #E8D5A3;
+      z-index: 0;
+    }
+
+    /* ─── Navigation Item ─────────────────────────────────── */
+    .nav-link {
+      font-size: 14px; font-weight: 500;
+      color: #2D2D2D; text-decoration: none;
+      position: relative; padding-bottom: 2px;
+      transition: color 0.2s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1.5px;
+      background: #C9A84C;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover { color: #C9A84C; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ─── Scroll indicator ────────────────────────────────── */
+    @keyframes scrollPulse {
+      0%,100% { transform: translateY(0); opacity: 1; }
+      50%      { transform: translateY(6px); opacity: 0.4; }
+    }
+    .scroll-indicator { animation: scrollPulse 2s ease-in-out infinite; }
+
+    /* ─── Before/After Slider ─────────────────────────────── */
+    .before-after {
+      position: relative; overflow: hidden;
+      border-radius: 16px; cursor: col-resize;
+    }
+    .before-after:hover .ba-label { opacity: 1; }
+    .ba-label {
+      position: absolute; top: 12px;
+      padding: 4px 12px; border-radius: 999px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+
+    /* ─── Progress / Loading Bar ──────────────────────────── */
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+    .shimmer {
+      background: linear-gradient(90deg, #E8D5A3 25%, #F5EDD6 50%, #E8D5A3 75%);
+      background-size: 200% auto;
+      animation: shimmer 1.8s linear infinite;
+    }
+
+    /* ─── Sticky Header Sample ────────────────────────────── */
+    .header-sample {
+      background: rgba(250,250,247,0.88);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    /* Section spacing helper */
+    .ds-section { padding: 64px 0; }
+    .ds-section + .ds-section { border-top: 1px solid #EDE8DC; }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     DS HEADER
+════════════════════════════════════════════════════════ -->
+<header style="background: linear-gradient(135deg, #1B2A4A 0%, #2D4270 100%); padding: 40px 64px;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
+      <span class="ds-chip">Design System v1.0</span>
+      <span style="color:rgba(255,255,255,0.4); font-size:13px;">·</span>
+      <span style="color:rgba(255,255,255,0.5); font-size:13px; font-family:'Inter',sans-serif;">Confidential — uso interno</span>
+    </div>
+    <h1 style="font-family:'Playfair Display',serif; font-size:42px; color:#fff; font-weight:600; margin-bottom:6px;">
+      Clínica Dental Lumina
+    </h1>
+    <p style="font-family:'Inter',sans-serif; font-size:16px; color:#C9A84C; font-weight:500; letter-spacing:0.08em; text-transform:uppercase;">
+      Brand & UI Design System — Polanco, CDMX
+    </p>
+    <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
+      <span style="background:rgba(201,168,76,0.15); color:#C9A84C; border:1px solid rgba(201,168,76,0.3); padding:5px 14px; border-radius:999px; font-size:12px; font-family:'Inter',sans-serif; font-weight:500;">Light Theme</span>
+      <span style="background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.7); border:1px solid rgba(255,255,255,0.15); padding:5px 14px; border-radius:999px; font-size:12px; font-family:'Inter',sans-serif; font-weight:500;">Luxury Medical</span>
+      <span style="background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.7); border:1px solid rgba(255,255,255,0.15); padding:5px 14px; border-radius:999px; font-size:12px; font-family:'Inter',sans-serif; font-weight:500;">Lead Generation</span>
+      <span style="background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.7); border:1px solid rgba(255,255,255,0.15); padding:5px 14px; border-radius:999px; font-size:12px; font-family:'Inter',sans-serif; font-weight:500;">HTML + Tailwind + Vanilla JS</span>
+    </div>
+  </div>
+</header>
+
+<main style="max-width: 1200px; margin: 0 auto; padding: 0 64px 96px;">
+
+<!-- ════════════════════════════════════════════════════════
+     1. COLOR PALETTE
+════════════════════════════════════════════════════════ -->
+<section class="ds-section">
+  <h2 class="section-title">01 — Paleta de Color</h2>
+
+  <!-- Gold -->
+  <div style="margin-bottom:40px;">
+    <p class="token-label" style="margin-bottom:16px;">Gold — Acento Primario</p>
+    <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:12px;">
+      <div>
+        <div class="swatch" style="background:#F5EDD6;"></div>
+        <p style="font-size:12px; margin-top:8px; font-family:'Inter',sans-serif; color:#5A5A5A; font-weight:500;">Gold Lighter</p>
+        <p style="font-size:11px; font-family:monospace; color:#8A8A8A;">#F5EDD6</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#E8D5A3;"></div>
+        <p style="font-size:12px; margin-top:8px; font-family:'Inter',sans-serif; color:#5A5A5A; font-weight:500;">Gold Light</p>
+        <p style="font-size:11px; font-family:monospace; color:#8A8A8A;">#E8D5A3</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#C9A84C; border: 2px solid rgba(0,0,0,0.06);"></div>
+        <p style="font-size:12px; margin-top:8px; font-family:'Inter',sans-serif; color:#5A5A5A; font-weight:700;">Gold ★ Default</p>
+        <p style="font-size:11px; font-family:monospace; color:#8A8A8A;">#C9A84C</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#A8862E;"></div>
+        <p style="font-size:12px; margin-top:8px; font-family:'Inter',sans-serif; color:#5A5A5A; font-weight:500;">Gold Dark</p>
+        <p style="font-size:11px; font-family:monospace; color:#8A8A8A;">#A8862E</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#8A6E20;"></div>
+        <p style="font-size:12px; margin-top:8px; font-family:'Inter',sans-serif; color:#5A5A5A; font-weight:500;">Gold Deeper</p>
+        <p style="font-size:11px; font-family:monospace; color:#8A8A8A;">#8A6E20</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navy -->
+  <div style="margin-bottom:40px;">
+    <p class="token-label" style="margin-bottom:16px;">Navy — Contraste Profundo</p>
+    <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:12px;">
+      <div>
+        <div class="swatch" style="background:#E8EDF5;"></div>
+        <p style="font-size:12px; margin-top:8px; font-family:'Inter',sans-serif; color:#5A5A5A; font-weight:500;">Navy Tint</p>
+        <p style="font-size:11px; font-family:monospace; color:#8A8A8A;">#E8EDF5</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#3D5A96;"></div>
+        <p style="font-size:12px; margin-top:8px; font-family:'Inter',sans-serif; color:#5A5A5A; font-weight:500;">Navy Lighter</p>
+        <p style="font-size:11px; font-family:monospace; color:#8A8A8A;">#3D5A96</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#2D4270;"></div>
+        <p style="font-size:12px; margin-top:8px; font-family:'Inter',sans-serif; color:#5A5A5A; font-weight:500;">Navy Light</p>
+        <p style="font-size:11px; font-family:monospace; color:#8A8A8A;">#2D4270</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#1B2A4A; border: 2px solid rgba(0,0,0,0.06);"></div>
+        <p style="font-size:12px; margin-top:8px; font-family:'Inter',sans-serif; color:#5A5A5A; font-weight:700;">Navy ★ Default</p>
+        <p style="font-size:11px; font-family:monospace; color:#8A8A8A;">#1B2A4A</p>
+      </div>
+      <div>
+        <div class="swatch" style="background:#111A2E;"></div>
+        <p style="font-size:12px; margin-top:8px; font-family:'Inter',sans-serif; color:#5A5A5A; font-weight:500;">Navy Deepest</p>
+        <p style="font-size:11px; font-family:monospace; color:#8A8A8A;">#111A2E</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cream + Teal + Ink -->
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:40px;">
+    <!-- Cream -->
+    <div>
+      <p class="token-label" style="margin-bottom:16px;">Cream — Fondos Cálidos</p>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#FAFAF7;border:1px solid #E0D9CC;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:#5A5A5A;">Cream Default</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#FAFAF7</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#F5F0E8;border:1px solid #E0D9CC;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:#5A5A5A;">Cream Warm</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#F5F0E8</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#EDE8DC;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:#5A5A5A;">Cream Medium</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#EDE8DC</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#E0D9CC;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:#5A5A5A;">Cream Deep</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#E0D9CC</p></div>
+        </div>
+      </div>
+    </div>
+    <!-- Teal -->
+    <div>
+      <p class="token-label" style="margin-bottom:16px;">Teal — Acento Secundario</p>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#E3F0F0;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:#5A5A5A;">Teal Tint</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#E3F0F0</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#5AABAB;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:#5A5A5A;">Teal Lighter</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#5AABAB</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#3D8A8A;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:#5A5A5A;">Teal Light</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#3D8A8A</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#2D6B6B;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:700;color:#5A5A5A;">Teal ★ Default</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#2D6B6B</p></div>
+        </div>
+      </div>
+    </div>
+    <!-- Ink -->
+    <div>
+      <p class="token-label" style="margin-bottom:16px;">Ink — Texto & UI</p>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#2D2D2D;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:700;color:#5A5A5A;">Ink ★ Default</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#2D2D2D</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#5A5A5A;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:#5A5A5A;">Ink Medium</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#5A5A5A</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#8A8A8A;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:#5A5A5A;">Ink Light</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#8A8A8A</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:10px;background:#B8B8B8;flex-shrink:0;"></div>
+          <div><p style="font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:#5A5A5A;">Ink Faint</p><p style="font-size:11px;font-family:monospace;color:#8A8A8A;">#B8B8B8</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gradient Showcase -->
+  <div style="margin-top:40px;">
+    <p class="token-label" style="margin-bottom:16px;">Gradientes del Sistema</p>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;">
+      <div>
+        <div style="height:80px; border-radius:14px; background:linear-gradient(135deg,#C9A84C,#A8862E);"></div>
+        <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-top:8px;">gradient-gold</p>
+      </div>
+      <div>
+        <div style="height:80px; border-radius:14px; background:linear-gradient(135deg,#1B2A4A,#2D4270);"></div>
+        <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-top:8px;">gradient-navy</p>
+      </div>
+      <div>
+        <div style="height:80px; border-radius:14px; background:linear-gradient(135deg,#2D6B6B,#3D8A8A);"></div>
+        <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-top:8px;">gradient-teal</p>
+      </div>
+      <div>
+        <div style="height:80px; border-radius:14px; background:linear-gradient(160deg,#FAFAF7 0%,#F5EDD6 50%,#E8D5A3 100%);"></div>
+        <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-top:8px;">gradient-cream</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     2. TYPOGRAPHY
+════════════════════════════════════════════════════════ -->
+<section class="ds-section">
+  <h2 class="section-title">02 — Tipografía</h2>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px;">
+    <!-- Serif scale -->
+    <div>
+      <p class="token-label" style="margin-bottom:24px;">Playfair Display — Headings</p>
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div style="padding-bottom:16px; border-bottom:1px solid #EDE8DC;">
+          <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">display-2xl / 72px / -0.02em</p>
+          <p style="font-family:'Playfair Display',serif;font-size:clamp(42px,5vw,72px);font-weight:600;color:#1B2A4A;line-height:1.05;letter-spacing:-0.02em;">Lumina</p>
+        </div>
+        <div style="padding-bottom:16px; border-bottom:1px solid #EDE8DC;">
+          <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">display-xl / 60px / -0.02em</p>
+          <p style="font-family:'Playfair Display',serif;font-size:clamp(36px,4vw,60px);font-weight:600;color:#1B2A4A;line-height:1.08;letter-spacing:-0.02em;">Tu Sonrisa Perfecta</p>
+        </div>
+        <div style="padding-bottom:16px; border-bottom:1px solid #EDE8DC;">
+          <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">display-lg / 48px / -0.015em</p>
+          <p style="font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,48px);font-weight:600;color:#1B2A4A;line-height:1.1;letter-spacing:-0.015em;">Nuestros Servicios</p>
+        </div>
+        <div style="padding-bottom:16px; border-bottom:1px solid #EDE8DC;">
+          <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">display-md / 36px / -0.01em</p>
+          <p style="font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,36px);font-weight:600;color:#1B2A4A;line-height:1.2;letter-spacing:-0.01em;">¿Por qué elegirnos?</p>
+        </div>
+        <div style="padding-bottom:16px; border-bottom:1px solid #EDE8DC;">
+          <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">display-sm / 30px / italic</p>
+          <p style="font-family:'Playfair Display',serif;font-size:30px;font-weight:400;font-style:italic;color:#C9A84C;line-height:1.25;">Excelencia en cada sonrisa</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sans scale -->
+    <div>
+      <p class="token-label" style="margin-bottom:24px;">Inter — Body & UI</p>
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div style="padding-bottom:16px; border-bottom:1px solid #EDE8DC;">
+          <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">body-xl / 20px / 400 / lh 1.6</p>
+          <p style="font-family:'Inter',sans-serif;font-size:20px;font-weight:400;color:#2D2D2D;line-height:1.6;">Ofrecemos la más alta calidad en tratamientos dentales con tecnología de vanguardia.</p>
+        </div>
+        <div style="padding-bottom:16px; border-bottom:1px solid #EDE8DC;">
+          <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">body-lg / 18px / 400 / lh 1.65</p>
+          <p style="font-family:'Inter',sans-serif;font-size:18px;font-weight:400;color:#5A5A5A;line-height:1.65;">Tu confianza y bienestar son nuestra prioridad en cada visita a nuestra clínica.</p>
+        </div>
+        <div style="padding-bottom:16px; border-bottom:1px solid #EDE8DC;">
+          <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">body-md / 16px / 400 / lh 1.7</p>
+          <p style="font-family:'Inter',sans-serif;font-size:16px;font-weight:400;color:#5A5A5A;line-height:1.7;">Agenda tu cita hoy y descubre por qué somos la clínica dental de confianza en Polanco.</p>
+        </div>
+        <div style="padding-bottom:16px; border-bottom:1px solid #EDE8DC;">
+          <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">body-sm / 14px / 500 / uppercase label</p>
+          <p style="font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#C9A84C;line-height:1.5;text-transform:uppercase;letter-spacing:0.1em;">Ortodoncia · Implantes · Estética</p>
+        </div>
+        <div style="padding-bottom:16px; border-bottom:1px solid #EDE8DC;">
+          <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">body-xs / 12px / 500 / caption</p>
+          <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#8A8A8A;line-height:1.5;">* Resultados individuales pueden variar. Consulte a nuestros especialistas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gradient text examples -->
+  <div style="margin-top:40px; padding:32px; background:#F5F0E8; border-radius:20px;">
+    <p class="token-label" style="margin-bottom:20px;">Gradient Text — Uso especial para énfasis</p>
+    <div style="display:flex; gap:40px; flex-wrap:wrap; align-items:flex-end;">
+      <p style="font-family:'Playfair Display',serif;font-size:48px;font-weight:700;background:linear-gradient(135deg,#C9A84C,#A8862E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Lumina</p>
+      <p style="font-family:'Playfair Display',serif;font-size:36px;font-weight:600;background:linear-gradient(135deg,#1B2A4A,#3D5A96);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Especialistas</p>
+      <p style="font-family:'Inter',sans-serif;font-size:20px;font-weight:700;background:linear-gradient(135deg,#2D6B6B,#5AABAB);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; text-transform:uppercase; letter-spacing:0.1em;">POLANCO · CDMX</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     3. BUTTONS
+════════════════════════════════════════════════════════ -->
+<section class="ds-section">
+  <h2 class="section-title">03 — Botones</h2>
+
+  <div style="display:flex;flex-direction:column;gap:32px;">
+    <!-- Variants -->
+    <div>
+      <p class="token-label" style="margin-bottom:16px;">Variantes</p>
+      <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+        <button class="btn btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          Agenda tu Cita
+        </button>
+        <button class="btn btn-secondary">Conocer más</button>
+        <button class="btn btn-ghost">Ver servicios</button>
+        <button class="btn btn-primary" style="background:linear-gradient(135deg,#2D6B6B,#3D8A8A); box-shadow:0 4px 16px rgba(45,107,107,0.35);">
+          Contactar
+        </button>
+      </div>
+    </div>
+    <!-- Sizes -->
+    <div>
+      <p class="token-label" style="margin-bottom:16px;">Tamaños</p>
+      <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+        <button class="btn btn-primary btn-sm">Pequeño</button>
+        <button class="btn btn-primary">Default</button>
+        <button class="btn btn-primary btn-lg">Grande</button>
+      </div>
+    </div>
+    <!-- With icons -->
+    <div>
+      <p class="token-label" style="margin-bottom:16px;">Con Iconos</p>
+      <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+        <button class="btn btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          Llamar ahora
+        </button>
+        <button class="btn btn-secondary">
+          Ver galería
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn btn-primary btn-icon" style="background:linear-gradient(135deg,#C9A84C,#A8862E);box-shadow:0 4px 16px rgba(201,168,76,0.35);">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        </button>
+        <button class="btn btn-primary btn-icon" style="background:linear-gradient(135deg,#2D6B6B,#3D8A8A);box-shadow:0 4px 16px rgba(45,107,107,0.35);">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     4. CARDS & COMPONENTS
+════════════════════════════════════════════════════════ -->
+<section class="ds-section">
+  <h2 class="section-title">04 — Tarjetas & Componentes</h2>
+
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:40px;">
+    <!-- Service Card -->
+    <div class="card card-gold-border" style="padding:28px;">
+      <div class="service-icon" style="margin-bottom:20px;">
+        <svg width="28" height="28" fill="none" stroke="#C9A84C" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+        </svg>
+      </div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:#1B2A4A;margin-bottom:10px;">Ortodoncia</h3>
+      <p style="font-family:'Inter',sans-serif;font-size:15px;color:#5A5A5A;line-height:1.65;margin-bottom:16px;">Alineación dental con brackets tradicionales e invisibles para una sonrisa perfecta.</p>
+      <a href="#" style="font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#C9A84C;text-decoration:none;display:flex;align-items:center;gap:6px;">
+        Saber más
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Stat Card -->
+    <div class="stat-card">
+      <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(201,168,76,0.8);margin-bottom:8px;">Pacientes atendidos</p>
+      <p style="font-family:'Playfair Display',serif;font-size:52px;font-weight:700;color:#C9A84C;line-height:1;">500<span style="font-size:36px;">+</span></p>
+      <p style="font-family:'Inter',sans-serif;font-size:15px;color:rgba(255,255,255,0.65);margin-top:8px;">Sonrisas transformadas desde 2015</p>
+      <div style="margin-top:20px; height:3px; background:rgba(201,168,76,0.2); border-radius:999px;">
+        <div style="height:100%;width:78%;background:linear-gradient(90deg,#C9A84C,#E8D5A3);border-radius:999px;"></div>
+      </div>
+    </div>
+
+    <!-- Testimonial Card -->
+    <div class="testimonial-card">
+      <div style="position:relative;z-index:1;">
+        <div style="display:flex;gap:3px;margin-bottom:16px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p style="font-family:'Inter',sans-serif;font-size:15px;color:#5A5A5A;line-height:1.7;margin-bottom:20px;">"El tratamiento de ortodoncia superó mis expectativas. El equipo es increíblemente profesional y atento."</p>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#C9A84C,#A8862E);display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:'Playfair Display',serif;font-weight:700;color:#fff;font-size:16px;">A</span>
+          </div>
+          <div>
+            <p style="font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#2D2D2D;">Ana Martínez</p>
+            <p style="font-family:'Inter',sans-serif;font-size:12px;color:#8A8A8A;">Paciente desde 2022</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Doctor / Team Card -->
+  <div style="margin-bottom:32px;">
+    <p class="token-label" style="margin-bottom:16px;">Team Card</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+      <div class="card" style="overflow:hidden;">
+        <div style="height:200px;background:linear-gradient(160deg,#E8EDF5 0%,#EDE8DC 100%);display:flex;align-items:center;justify-content:center;position:relative;">
+          <div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#C9A84C20,#1B2A4A20);border:3px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;">
+            <svg width="48" height="48" fill="none" stroke="#1B2A4A" stroke-width="1" viewBox="0 0 24 24" opacity="0.4">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div style="position:absolute;bottom:12px;right:12px;" class="badge badge-gold">Especialista</div>
+        </div>
+        <div style="padding:20px;">
+          <h4 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:#1B2A4A;margin-bottom:4px;">Dra. Sofía Ramírez</h4>
+          <p style="font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#C9A84C;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Ortodoncia · Implantología</p>
+          <p style="font-family:'Inter',sans-serif;font-size:14px;color:#5A5A5A;line-height:1.6;">15 años de experiencia transformando sonrisas con precisión y cuidado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     5. FORM ELEMENTS
+════════════════════════════════════════════════════════ -->
+<section class="ds-section">
+  <h2 class="section-title">05 — Formulario & Inputs</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;">
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div>
+        <label style="display:block;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:6px;letter-spacing:0.03em;">Nombre completo</label>
+        <input class="input-field" type="text" placeholder="Ej. María González" />
+      </div>
+      <div>
+        <label style="display:block;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:6px;letter-spacing:0.03em;">Teléfono</label>
+        <input class="input-field" type="tel" placeholder="+52 55 XXXX XXXX" />
+      </div>
+      <div>
+        <label style="display:block;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:6px;letter-spacing:0.03em;">Servicio de interés</label>
+        <select class="input-field" style="appearance:none; cursor:pointer; background-image:url('data:image/svg+xml,<svg xmlns=&apos;http://www.w3.org/2000/svg&apos; fill=&apos;none&apos; viewBox=&apos;0 0 24 24&apos; stroke=&apos;%23C9A84C&apos; stroke-width=&apos;2&apos;><path d=&apos;M19 9l-7 7-7-7&apos;/></svg>'); background-repeat:no-repeat; background-position:right 14px center; background-size:16px;">
+          <option value="">Selecciona un servicio...</option>
+          <option>Ortodoncia</option>
+          <option>Implantes Dentales</option>
+          <option>Blanqueamiento</option>
+          <option>Carillas</option>
+          <option>Limpieza Dental</option>
+          <option>Odontología Estética</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:6px;letter-spacing:0.03em;">Mensaje (opcional)</label>
+        <textarea class="input-field" rows="4" placeholder="Cuéntanos cómo podemos ayudarte..." style="resize:vertical;"></textarea>
+      </div>
+      <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Agendar Mi Cita
+      </button>
+    </div>
+
+    <!-- State examples -->
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div>
+        <p class="token-label" style="margin-bottom:12px;">Estados del Input</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div>
+            <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">Default</p>
+            <input class="input-field" type="text" placeholder="Nombre completo..." />
+          </div>
+          <div>
+            <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">Focus (simulado)</p>
+            <input class="input-field" type="text" value="María González" style="border-color:#C9A84C;box-shadow:0 0 0 3px rgba(201,168,76,0.15);" />
+          </div>
+          <div>
+            <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">Error</p>
+            <input class="input-field" type="text" value="gonzalez@" style="border-color:#E53E3E;box-shadow:0 0 0 3px rgba(229,62,62,0.12);" />
+            <p style="font-size:12px;color:#E53E3E;font-family:'Inter',sans-serif;margin-top:4px;">Por favor ingresa un email válido.</p>
+          </div>
+          <div>
+            <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">Success</p>
+            <input class="input-field" type="text" value="maria@email.com" style="border-color:#38A169;box-shadow:0 0 0 3px rgba(56,161,105,0.12);" />
+          </div>
+          <div>
+            <p style="font-size:11px;font-family:monospace;color:#8A8A8A;margin-bottom:4px;">Disabled</p>
+            <input class="input-field" type="text" placeholder="No disponible" disabled style="opacity:0.5;cursor:not-allowed;background:#F5F0E8;" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     6. BADGES & TAGS
+════════════════════════════════════════════════════════ -->
+<section class="ds-section">
+  <h2 class="section-title">06 — Badges, Tags & Pills</h2>
+
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:32px;">
+    <span class="badge badge-gold">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="#C9A84C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Top Especialista
+    </span>
+    <span class="badge badge-navy">
+      <svg width="12" height="12" fill="none" stroke="#1B2A4A" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+      Clínica Certificada
+    </span>
+    <span class="badge badge-teal">Tecnología Digital</span>
+    <span class="badge" style="background:#E8F5E9;color:#2D6B2D;">Disponible hoy</span>
+    <span class="badge" style="background:#FFF3E0;color:#B45309;">Cupo limitado</span>
+    <span class="badge badge-white" style="box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+      <svg width="12" height="12" fill="none" stroke="#C9A84C" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Lun–Sáb 9–19h
+    </span>
+  </div>
+
+  <!-- Trust badges -->
+  <div style="padding:28px;background:#F5F0E8;border-radius:20px;">
+    <p class="token-label" style="margin-bottom:16px;">Trust Badges — Hero Section</p>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;">
+      <div style="display:flex;align-items:center;gap:10px;background:#fff;padding:12px 20px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#C9A84C,#A8862E);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-size:18px;font-weight:700;color:#1B2A4A;line-height:1;">500+</p>
+          <p style="font-family:'Inter',sans-serif;font-size:11px;color:#8A8A8A;font-weight:500;">Pacientes</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:#fff;padding:12px 20px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#1B2A4A,#2D4270);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-size:18px;font-weight:700;color:#1B2A4A;line-height:1;">10+</p>
+          <p style="font-family:'Inter',sans-serif;font-size:11px;color:#8A8A8A;font-weight:500;">Años de exp.</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:#fff;padding:12px 20px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#2D6B6B,#3D8A8A);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-size:18px;font-weight:700;color:#1B2A4A;line-height:1;">4.9★</p>
+          <p style="font-family:'Inter',sans-serif;font-size:11px;color:#8A8A8A;font-weight:500;">Google Reviews</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     7. SPACING & SHADOWS
+════════════════════════════════════════════════════════ -->
+<section class="ds-section">
+  <h2 class="section-title">07 — Espaciado & Sombras</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;">
+    <!-- Spacing -->
+    <div>
+      <p class="token-label" style="margin-bottom:20px;">Escala de Espaciado (base 4px)</p>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:4px;height:20px;background:#C9A84C;border-radius:2px;"></div>
+          <span style="font-family:monospace;font-size:12px;color:#8A8A8A;width:40px;">4px</span>
+          <span style="font-size:12px;font-family:'Inter';color:#5A5A5A;">space-1 · micro gap</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:8px;height:20px;background:#C9A84C;border-radius:2px;"></div>
+          <span style="font-family:monospace;font-size:12px;color:#8A8A8A;width:40px;">8px</span>
+          <span style="font-size:12px;font-family:'Inter';color:#5A5A5A;">space-2 · tight gap</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:16px;height:20px;background:#C9A84C;border-radius:2px;"></div>
+          <span style="font-family:monospace;font-size:12px;color:#8A8A8A;width:40px;">16px</span>
+          <span style="font-size:12px;font-family:'Inter';color:#5A5A5A;">space-4 · default</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:24px;height:20px;background:#C9A84C;border-radius:2px;"></div>
+          <span style="font-family:monospace;font-size:12px;color:#8A8A8A;width:40px;">24px</span>
+          <span style="font-size:12px;font-family:'Inter';color:#5A5A5A;">space-6 · comfortable</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:32px;height:20px;background:#C9A84C;border-radius:2px;"></div>
+          <span style="font-family:monospace;font-size:12px;color:#8A8A8A;width:40px;">32px</span>
+          <span style="font-size:12px;font-family:'Inter';color:#5A5A5A;">space-8 · section gap</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:48px;height:20px;background:#C9A84C;border-radius:2px;"></div>
+          <span style="font-family:monospace;font-size:12px;color:#8A8A8A;width:40px;">48px</span>
+          <span style="font-size:12px;font-family:'Inter';color:#5A5A5A;">space-12 · large gap</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:64px;height:20px;background:#C9A84C;border-radius:2px;"></div>
+          <span style="font-family:monospace;font-size:12px;color:#8A8A8A;width:40px;">64px</span>
+          <span style="font-size:12px;font-family:'Inter';color:#5A5A5A;">space-16 · section pad</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:96px;height:20px;background:#C9A84C;border-radius:2px;"></div>
+          <span style="font-family:monospace;font-size:12px;color:#8A8A8A;width:40px;">96px</span>
+          <span style="font-size:12px;font-family:'Inter';color:#5A5A5A;">space-24 · hero pad</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shadows -->
+    <div>
+      <p class="token-label" style="margin-bottom:20px;">Sistema de Sombras (warm-tinted)</p>
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(201,168,76,0.12),0 1px 2px rgba(0,0,0,0.06);">
+          <p style="font-family:monospace;font-size:12px;color:#8A8A8A;">shadow-warm-sm</p>
+          <p style="font-size:13px;color:#5A5A5A;font-family:'Inter';">Subtle lift · hover states</p>
+        </div>
+        <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(201,168,76,0.15),0 2px 6px rgba(0,0,0,0.08);">
+          <p style="font-family:monospace;font-size:12px;color:#8A8A8A;">shadow-warm-md</p>
+          <p style="font-size:13px;color:#5A5A5A;font-family:'Inter';">Cards · dropdowns</p>
+        </div>
+        <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 10px 30px rgba(201,168,76,0.18),0 4px 12px rgba(0,0,0,0.10);">
+          <p style="font-family:monospace;font-size:12px;color:#8A8A8A;">shadow-warm-lg</p>
+          <p style="font-size:13px;color:#5A5A5A;font-family:'Inter';">Modals · featured cards</p>
+        </div>
+        <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 20px 50px rgba(201,168,76,0.20),0 8px 20px rgba(0,0,0,0.12);">
+          <p style="font-family:monospace;font-size:12px;color:#8A8A8A;">shadow-warm-xl</p>
+          <p style="font-size:13px;color:#5A5A5A;font-family:'Inter';">Hero elements · CTAs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     8. ANIMATION TOKENS
+════════════════════════════════════════════════════════ -->
+<section class="ds-section">
+  <h2 class="section-title">08 — Animaciones & Motion</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:40px;">
+    <!-- Float -->
+    <div style="text-align:center;padding:32px;background:#fff;border-radius:20px;box-shadow:0 2px 20px rgba(27,42,74,0.06);">
+      <div style="width:80px;height:80px;background:linear-gradient(135deg,#C9A84C,#A8862E);border-radius:20px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center; animation:float 6s ease-in-out infinite;">
+        <svg width="36" height="36" fill="none" stroke="#fff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zM8 12s1 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>
+      </div>
+      <p style="font-family:'Inter';font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:4px;">Float</p>
+      <p style="font-family:monospace;font-size:11px;color:#8A8A8A;">6s ease-in-out ∞</p>
+    </div>
+
+    <!-- Fade Up -->
+    <div style="text-align:center;padding:32px;background:#fff;border-radius:20px;box-shadow:0 2px 20px rgba(27,42,74,0.06);">
+      <div style="width:80px;height:80px;background:linear-gradient(135deg,#1B2A4A,#2D4270);border-radius:20px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;">
+        <svg width="36" height="36" fill="none" stroke="#fff" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+      </div>
+      <p style="font-family:'Inter';font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:4px;">Fade Up</p>
+      <p style="font-family:monospace;font-size:11px;color:#8A8A8A;">0.7s ease-out · IO</p>
+    </div>
+
+    <!-- Scale -->
+    <div style="text-align:center;padding:32px;background:#fff;border-radius:20px;box-shadow:0 2px 20px rgba(27,42,74,0.06);">
+      <div style="width:80px;height:80px;background:linear-gradient(135deg,#2D6B6B,#3D8A8A);border-radius:20px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center; transition:transform 0.3s ease;" onmouseenter="this.style.transform='scale(1.15)'" onmouseleave="this.style.transform='scale(1)'">
+        <svg width="36" height="36" fill="none" stroke="#fff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+      </div>
+      <p style="font-family:'Inter';font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:4px;">Scale Hover</p>
+      <p style="font-family:monospace;font-size:11px;color:#8A8A8A;">scale(1.15) 0.3s</p>
+    </div>
+
+    <!-- Pulse -->
+    <div style="text-align:center;padding:32px;background:#fff;border-radius:20px;box-shadow:0 2px 20px rgba(27,42,74,0.06);">
+      <div style="width:80px;height:80px;background:linear-gradient(135deg,#C9A84C,#A8862E);border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center; animation:pulseGold 2s ease-in-out infinite;">
+        <svg width="36" height="36" fill="none" stroke="#fff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+      </div>
+      <p style="font-family:'Inter';font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:4px;">Pulse CTA</p>
+      <p style="font-family:monospace;font-size:11px;color:#8A8A8A;">2s ease-in-out ∞</p>
+    </div>
+  </div>
+
+  <!-- Timing tokens -->
+  <div style="padding:28px;background:#F5F0E8;border-radius:20px;">
+    <p class="token-label" style="margin-bottom:16px;">Timing & Easing Tokens</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <div style="background:#fff;border-radius:12px;padding:16px;">
+        <p style="font-family:monospace;font-size:12px;color:#C9A84C;font-weight:600;margin-bottom:4px;">duration-fast</p>
+        <p style="font-family:'Inter';font-size:24px;font-weight:700;color:#1B2A4A;">150ms</p>
+        <p style="font-size:12px;color:#8A8A8A;font-family:'Inter';">Hover transitions · ripples</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:16px;">
+        <p style="font-family:monospace;font-size:12px;color:#C9A84C;font-weight:600;margin-bottom:4px;">duration-default</p>
+        <p style="font-family:'Inter';font-size:24px;font-weight:700;color:#1B2A4A;">300ms</p>
+        <p style="font-size:12px;color:#8A8A8A;font-family:'Inter';">Buttons · dropdowns · cards</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:16px;">
+        <p style="font-family:monospace;font-size:12px;color:#C9A84C;font-weight:600;margin-bottom:4px;">duration-slow</p>
+        <p style="font-family:'Inter';font-size:24px;font-weight:700;color:#1B2A4A;">700ms</p>
+        <p style="font-size:12px;color:#8A8A8A;font-family:'Inter';">Scroll reveals · page loads</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:16px;">
+        <p style="font-family:monospace;font-size:12px;color:#1B2A4A;font-weight:600;margin-bottom:4px;">ease-smooth</p>
+        <p style="font-family:'Inter';font-size:13px;font-weight:600;color:#1B2A4A;line-height:1.4;">cubic-bezier<br/>(0.4, 0, 0.2, 1)</p>
+        <p style="font-size:12px;color:#8A8A8A;font-family:'Inter';">General purpose</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:16px;">
+        <p style="font-family:monospace;font-size:12px;color:#1B2A4A;font-weight:600;margin-bottom:4px;">ease-spring</p>
+        <p style="font-family:'Inter';font-size:13px;font-weight:600;color:#1B2A4A;line-height:1.4;">cubic-bezier<br/>(0.34, 1.56, 0.64, 1)</p>
+        <p style="font-size:12px;color:#8A8A8A;font-family:'Inter';">Micro-interactions · icons</p>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:16px;">
+        <p style="font-family:monospace;font-size:12px;color:#1B2A4A;font-weight:600;margin-bottom:4px;">ease-out-expo</p>
+        <p style="font-family:'Inter';font-size:13px;font-weight:600;color:#1B2A4A;line-height:1.4;">cubic-bezier<br/>(0.19, 1, 0.22, 1)</p>
+        <p style="font-size:12px;color:#8A8A8A;font-family:'Inter';">Scroll reveals · modals</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     9. HEADER & NAV PREVIEW
+════════════════════════════════════════════════════════ -->
+<section class="ds-section">
+  <h2 class="section-title">09 — Header / Navegación</h2>
+
+  <div style="border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+    <!-- Scrolled state -->
+    <div class="header-sample" style="padding:16px 40px;display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#C9A84C,#A8862E);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"/><path d="M8 12s1 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>
+        </div>
+        <div>
+          <p style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#1B2A4A;line-height:1;">Lumina</p>
+          <p style="font-family:'Inter',sans-serif;font-size:9px;font-weight:600;color:#C9A84C;text-transform:uppercase;letter-spacing:0.12em;">Clínica Dental</p>
+        </div>
+      </div>
+      <nav style="display:flex;gap:28px;align-items:center;">
+        <a href="#" class="nav-link">Servicios</a>
+        <a href="#" class="nav-link">Nosotros</a>
+        <a href="#" class="nav-link">Testimonios</a>
+        <a href="#" class="nav-link">Galería</a>
+        <a href="#" class="nav-link">Contacto</a>
+      </nav>
+      <button class="btn btn-primary btn-sm">Agenda tu Cita</button>
+    </div>
+  </div>
+  <p style="font-size:12px;font-family:'Inter';color:#8A8A8A;margin-top:8px;">← Sticky header · frosted glass · gold underline hover · scroll activated</p>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     10. SECTION BACKGROUNDS
+════════════════════════════════════════════════════════ -->
+<section class="ds-section">
+  <h2 class="section-title">10 — Fondos de Sección</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
+    <div style="border-radius:16px;padding:32px;background:#FAFAF7;border:1px solid #EDE8DC;">
+      <p class="token-label" style="margin-bottom:8px;">bg-cream-default</p>
+      <p style="font-family:'Playfair Display',serif;font-size:22px;color:#1B2A4A;">Fondo Principal</p>
+      <p style="font-family:'Inter';font-size:14px;color:#5A5A5A;">#FAFAF7 · Base de la página</p>
+    </div>
+    <div style="border-radius:16px;padding:32px;background:#F5F0E8;">
+      <p class="token-label" style="margin-bottom:8px;">bg-cream-warm</p>
+      <p style="font-family:'Playfair Display',serif;font-size:22px;color:#1B2A4A;">Secciones alternas</p>
+      <p style="font-family:'Inter';font-size:14px;color:#5A5A5A;">#F5F0E8 · Servicios, Testimonios</p>
+    </div>
+    <div style="border-radius:16px;padding:32px;background:linear-gradient(135deg,#1B2A4A,#2D4270);">
+      <p class="token-label" style="margin-bottom:8px;color:rgba(201,168,76,0.7);">bg-gradient-navy</p>
+      <p style="font-family:'Playfair Display',serif;font-size:22px;color:#fff;">Stats & CTA</p>
+      <p style="font-family:'Inter';font-size:14px;color:rgba(255,255,255,0.6);">Secciones de impacto</p>
+    </div>
+    <div style="border-radius:16px;padding:32px;background:linear-gradient(160deg,#FAFAF7 0%,#F5EDD6 60%,#E8D5A3 100%);">
+      <p class="token-label" style="margin-bottom:8px;">bg-gradient-cream</p>
+      <p style="font-family:'Playfair Display',serif;font-size:22px;color:#1B2A4A;">Hero Background</p>
+      <p style="font-family:'Inter';font-size:14px;color:#5A5A5A;">Warm luxury gradient</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     FOOTER SUMMARY
+════════════════════════════════════════════════════════ -->
+<div style="margin-top:48px; padding:32px 0; border-top:2px solid #EDE8DC; display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+  <div>
+    <p style="font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:#1B2A4A;">Design System v1.0</p>
+    <p style="font-family:'Inter',sans-serif;font-size:14px;color:#8A8A8A;margin-top:2px;">Clínica Dental Lumina · Polanco, CDMX</p>
+  </div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <span class="badge badge-gold">10 categorías de tokens</span>
+    <span class="badge badge-navy">Tailwind config incluida</span>
+    <span class="badge badge-teal">Responsive · Mobile-first</span>
+  </div>
+</div>
+
+</main>
+
+<style>
+  @keyframes pulseGold {
+    0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.4); }
+    50%      { box-shadow: 0 0 0 12px rgba(201,168,76,0); }
+  }
+</style>
+
+</body>
+</html>
