@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Clínica Dental Lumina — Polanco, CDMX</title>
-  <meta name="description" content="Clínica dental de alta especialidad en Polanco, CDMX. Ortodoncia, implantes, estética dental y más. Agenda tu cita hoy." />
+  <meta name="description" content="Clínica dental de alta especialidad en Polanco, CDMX. Ortodoncia, implantes, estética dental y más." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -25,27 +25,17 @@
   </script>
 
   <style>
-    /* ── Design Tokens ───────────────────────────── */
     :root {
-      /* Brand */
       --mint:        #0D9488;
       --mint-light:  #14B8A6;
       --mint-pale:   #CCFBF1;
-      --mint-bg:     #F0FDFA;
-      --blue:        #2563EB;
-      --blue-light:  #3B82F6;
-      --blue-pale:   #EFF6FF;
-      /* Neutrals */
       --white:       #FFFFFF;
-      --bg:          #F8FAFB;
-      --bg-blue:     #F0F7FF;
       --navy:        #0F172A;
       --slate:       #475569;
       --slate-light: #94A3B8;
       --border:      #E2E8F0;
-      /* Gold — solo acento premium */
       --gold:        #C9A84C;
-      --gold-light:  #E2C97A;
+      --bg:          #F8FAFB;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,59 +47,225 @@
       .reveal { opacity: 1 !important; transform: none !important; }
     }
 
-    /* ── Reveal ──────────────────────────────────── */
+    /* ── Reveal ──────────────────────────── */
     .reveal {
       opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .d1 { transition-delay: 0.05s; }
-    .d2 { transition-delay: 0.18s; }
-    .d3 { transition-delay: 0.32s; }
-    .d4 { transition-delay: 0.46s; }
-    .d5 { transition-delay: 0.60s; }
+    .d1 { transition-delay: 0.1s;  }
+    .d2 { transition-delay: 0.25s; }
+    .d3 { transition-delay: 0.4s;  }
+    .d4 { transition-delay: 0.55s; }
 
-    /* ── Float ───────────────────────────────────── */
-    @keyframes floatY     { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-    @keyframes floatYslow { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)}  }
-    .float      { animation: floatY 5s ease-in-out infinite; }
-    .float-slow { animation: floatYslow 7s ease-in-out infinite; }
-
-    /* ── Header ──────────────────────────────────── */
+    /* ── Header ──────────────────────────── */
     #site-header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      padding: 1.1rem 0;
-      transition: background 0.35s, box-shadow 0.35s, padding 0.35s;
+      padding: 1.5rem 0;
+      transition: background 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
     }
     #site-header.scrolled {
-      background: rgba(255,255,255,0.92);
+      background: rgba(255,255,255,0.93);
       backdrop-filter: blur(20px) saturate(1.6);
       -webkit-backdrop-filter: blur(20px) saturate(1.6);
-      box-shadow: 0 1px 20px rgba(15,23,42,0.07);
-      padding: 0.7rem 0;
+      box-shadow: 0 1px 24px rgba(15,23,42,0.08);
+      padding: 0.85rem 0;
     }
+
+    /* Logo — blanco sobre imagen, navy al scrollear */
     .logo {
       font-family: 'Playfair Display', serif;
-      font-size: 1.45rem; font-weight: 600;
-      color: var(--navy); text-decoration: none;
+      font-size: 1.5rem; font-weight: 600;
+      color: white; text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.4s;
     }
     .logo-dot { color: var(--gold); }
+    #site-header.scrolled .logo { color: var(--navy); }
+
+    /* Nav links — visibles al scrollear */
     .nav-link {
-      font-size: 0.875rem; font-weight: 500;
-      color: var(--slate); text-decoration: none;
+      font-size: 0.85rem; font-weight: 500;
+      color: rgba(255,255,255,0.85); text-decoration: none;
       padding: 0.25rem 0; position: relative;
-      transition: color 0.2s;
+      transition: color 0.3s;
     }
     .nav-link::after {
       content:''; position:absolute; bottom:-2px; left:0;
       width:0; height:1.5px; background:var(--mint);
       transition: width 0.25s ease;
     }
-    .nav-link:hover { color: var(--navy); }
+    .nav-link:hover { color: white; }
     .nav-link:hover::after { width: 100%; }
+    #site-header.scrolled .nav-link { color: var(--slate); }
+    #site-header.scrolled .nav-link:hover { color: var(--navy); }
 
-    /* ── Buttons ─────────────────────────────────── */
+    /* Phone link */
+    .phone-link {
+      font-size: 0.85rem; font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none; display: flex; align-items: center; gap: 0.4rem;
+      transition: color 0.3s;
+    }
+    .phone-link:hover { color: white; }
+    #site-header.scrolled .phone-link { color: var(--slate-light); }
+    #site-header.scrolled .phone-link:hover { color: var(--navy); }
+
+    /* CTA nav button */
+    .btn-nav {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--mint); color: white;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
+      padding: 0.6rem 1.4rem; border-radius: 50px;
+      text-decoration: none; min-height: 44px;
+      transition: background 0.2s, transform 0.15s, opacity 0.3s;
+      touch-action: manipulation;
+    }
+    .btn-nav:hover { background: var(--mint-light); transform: translateY(-1px); }
+    .btn-nav:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
+
+    /* Hamburger icon color */
+    .menu-icon { color: white; transition: color 0.4s; }
+    #site-header.scrolled .menu-icon { color: var(--navy); }
+
+    /* ── Mobile menu ─────────────────────── */
+    #mob-overlay {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      background: rgba(15,23,42,0.97); backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    #mob-overlay.open { display: flex; }
+    .mob-link {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; color: white; text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mob-link:hover { color: var(--mint-light); }
+
+    /* ── HERO ────────────────────────────── */
+    #hero {
+      position: relative;
+      width: 100%; height: 100dvh; min-height: 600px;
+      overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+
+    /* Full-bleed background image */
+    #hero-bg {
+      position: absolute; inset: 0;
+      background: var(--navy); /* fallback */
+    }
+    #hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 30%;
+      display: block;
+    }
+
+    /* Gradient overlay — keeps text legible */
+    #hero-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to right,  rgba(15,23,42,0.72) 0%,  rgba(15,23,42,0.35) 55%, rgba(15,23,42,0.15) 100%),
+        linear-gradient(to top,    rgba(15,23,42,0.85) 0%,  rgba(15,23,42,0.0)  50%);
+    }
+
+    /* Hero content wrapper */
+    #hero-content {
+      position: relative; z-index: 10;
+      padding: 0 2.5rem 5rem;
+      max-width: 860px;
+    }
+    @media (min-width: 640px)  { #hero-content { padding: 0 4rem 5rem; } }
+    @media (min-width: 1024px) { #hero-content { padding: 0 6rem 5.5rem; } }
+    @media (min-width: 1280px) { #hero-content { padding: 0 8rem 6rem; } }
+
+    /* Big headline */
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(3rem, 7vw, 7rem);
+      line-height: 1.0;
+      color: white;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.75rem;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--mint-light);
+    }
+
+    /* Sub-line — just one sentence */
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+      font-weight: 300;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.6;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.01em;
+    }
+
+    /* CTA hero button */
+    .btn-hero {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--mint);
+      color: white;
+      font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 1rem 2.25rem; border-radius: 50px;
+      text-decoration: none; min-height: 52px;
+      box-shadow: 0 4px 24px rgba(13,148,136,0.45);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      touch-action: manipulation; position: relative; overflow: hidden;
+    }
+    .btn-hero::before {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 55%);
+      border-radius: inherit;
+    }
+    .btn-hero:hover  { background: var(--mint-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(13,148,136,0.55); }
+    .btn-hero:active { transform: translateY(0); }
+    .btn-hero:focus-visible { outline: 3px solid white; outline-offset: 3px; }
+
+    /* Bottom strip — horarios + ubicación */
+    #hero-strip {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: stretch;
+      background: rgba(15,23,42,0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .strip-item {
+      flex: 1; padding: 1rem 1.5rem sm:2rem;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      display: flex; flex-direction: column; gap: 0.2rem;
+    }
+    .strip-item:last-child { border-right: none; }
+    .strip-label {
+      font-size: 0.65rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.45);
+    }
+    .strip-value {
+      font-size: 0.82rem; font-weight: 500;
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* Scroll indicator */
+    @keyframes scrollBounce {
+      0%,100% { transform: translateY(0); opacity: 0.5; }
+      50%      { transform: translateY(8px); opacity: 1; }
+    }
+    .scroll-hint {
+      position: absolute; right: 2.5rem; bottom: 7rem; z-index: 11;
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      animation: scrollBounce 2.5s ease-in-out infinite;
+    }
+    @media (max-width: 768px) { .scroll-hint { display: none; } }
+
+    /* ── Buttons for other sections ──────── */
     .btn-primary {
       display: inline-flex; align-items: center; gap: 0.5rem;
       background: linear-gradient(135deg, var(--mint-light) 0%, var(--mint) 100%);
@@ -119,15 +275,9 @@
       cursor: pointer; text-decoration: none; min-height: 48px;
       box-shadow: 0 4px 18px rgba(13,148,136,0.35);
       transition: transform 0.2s, box-shadow 0.2s;
-      touch-action: manipulation; position: relative; overflow: hidden;
-    }
-    .btn-primary::before {
-      content:''; position:absolute; inset:0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 55%);
-      border-radius: inherit;
+      touch-action: manipulation;
     }
     .btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(13,148,136,0.45); }
-    .btn-primary:active { transform: translateY(0); }
     .btn-primary:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
 
     .btn-outline {
@@ -140,129 +290,25 @@
       transition: border-color 0.2s, background 0.2s, color 0.2s;
       touch-action: manipulation;
     }
-    .btn-outline:hover { border-color: var(--mint); color: var(--mint); background: var(--mint-bg); }
-    .btn-outline:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
-
-    .btn-nav {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      background: var(--mint); color: white;
-      font-size: 0.8rem; font-weight: 600;
-      padding: 0.6rem 1.4rem; border-radius: 50px;
-      text-decoration: none; min-height: 44px;
-      transition: background 0.2s, transform 0.15s;
-      touch-action: manipulation;
-    }
-    .btn-nav:hover { background: var(--mint-light); transform: translateY(-1px); }
-    .btn-nav:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
-
-    /* ── Chips ───────────────────────────────────── */
-    .chip {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 50px; padding: 0.4rem 0.9rem;
-      font-size: 0.78rem; font-weight: 500; color: var(--slate);
-      box-shadow: 0 1px 4px rgba(15,23,42,0.06);
-      white-space: nowrap;
-      transition: border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
-    }
-    .chip:hover {
-      border-color: var(--mint); color: var(--mint);
-      box-shadow: 0 4px 14px rgba(13,148,136,0.15);
-      transform: translateY(-2px);
-    }
-    .chip-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--mint); flex-shrink: 0;
-    }
-    .chip-dot.blue { background: var(--blue-light); }
-
-    /* ── Hero photo ──────────────────────────────── */
-    .hero-img-wrap {
-      position: relative;
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 24px 80px rgba(15,23,42,0.15);
-    }
-    .hero-img-wrap img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
-      display: block;
-    }
-    /* Subtle overlay so bottom text is legible */
-    .hero-img-wrap::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(15,23,42,0.55) 0%, rgba(15,23,42,0.1) 45%, transparent 70%);
-      pointer-events: none;
-    }
-
-    /* ── Float cards ─────────────────────────────── */
-    .fcard {
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(15,23,42,0.10);
-      padding: 0.85rem 1.1rem;
-    }
-
-    /* ── Stats strip ─────────────────────────────── */
-    .stat-strip {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(15,23,42,0.06);
-    }
-
-    /* ── Text gold gradient ──────────────────────── */
-    .text-mint {
-      background: linear-gradient(135deg, var(--mint-light) 0%, var(--mint) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* ── Mobile menu ─────────────────────────────── */
-    #mob-overlay {
-      display: none; position: fixed; inset: 0; z-index: 300;
-      background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
-      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
-    }
-    #mob-overlay.open { display: flex; }
-    .mob-link {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem; color: var(--navy); text-decoration: none;
-      transition: color 0.2s;
-    }
-    .mob-link:hover { color: var(--mint); }
-
-    /* ── Scroll hint ─────────────────────────────── */
-    @keyframes bounceHint { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
-    .scroll-hint {
-      position: absolute; bottom: 2rem; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
-      opacity: 0.4; animation: bounceHint 2.5s ease-in-out infinite;
-    }
-
-    /* ── Section divider wave ────────────────────── */
-    .wave-bottom { position: absolute; bottom: 0; left: 0; right: 0; line-height: 0; }
+    .btn-outline:hover { border-color: var(--mint); color: var(--mint); background: #F0FDFA; }
   </style>
 </head>
 
 <body>
 
-<!-- Skip link -->
 <a href="#hero-content"
    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999]
           focus:bg-mint focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold">
   Ir al contenido principal
 </a>
 
-<!-- ══════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      MOBILE MENU
-══════════════════════════════════════════════ -->
-<nav id="mob-overlay" role="dialog" aria-modal="true" aria-label="Menú principal móvil">
+══════════════════════════════════════ -->
+<nav id="mob-overlay" role="dialog" aria-modal="true" aria-label="Menú principal">
   <button id="close-mob" aria-label="Cerrar menú"
-          class="absolute top-6 right-6 p-2 text-slate-400 hover:text-navy transition-colors">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          class="absolute top-6 right-6 p-2 text-white/50 hover:text-white transition-colors">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
       <path d="M18 6 6 18M6 6l12 12"/>
     </svg>
   </button>
@@ -271,48 +317,44 @@
   <a href="#testimonios" class="mob-link" onclick="closeMob()">Testimonios</a>
   <a href="#equipo"      class="mob-link" onclick="closeMob()">El Equipo</a>
   <a href="#contacto"    class="mob-link" onclick="closeMob()">Contacto</a>
-  <a href="#contacto" class="btn-primary mt-2" onclick="closeMob()">Agenda tu cita</a>
+  <a href="#contacto" class="btn-hero mt-4" onclick="closeMob()">Agenda tu cita</a>
 </nav>
 
-<!-- ══════════════════════════════════════════════
+<!-- ══════════════════════════════════════
      HEADER
-══════════════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <header id="site-header">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between gap-4">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 flex items-center justify-between gap-6">
 
-    <a href="#" class="logo flex items-center gap-2" aria-label="Clínica Dental Lumina — Inicio">
+    <!-- Logo -->
+    <a href="#" class="logo flex items-center gap-2" aria-label="Clínica Dental Lumina">
       <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
         <path d="M16 3C9 3 3 9 3 16c0 5 3 10 6 13 2 2.5 4 3 5.5 1 .5-1 1-3 1.5-4.5.5 1.5 1 3.5 1.5 4.5C19 32 21 31.5 23 29c3-3 6-8 6-13C29 9 23 3 16 3z"
-              fill="var(--mint)" opacity="0.9"/>
-        <path d="M10 11c3-3.5 9-3.5 12 0" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+              fill="var(--mint)"/>
+        <path d="M10 11c3-3.5 9-3.5 12 0" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
       </svg>
       Lumina<span class="logo-dot">.</span>
     </a>
 
-    <nav class="hidden lg:flex items-center gap-7" aria-label="Navegación principal">
-      <a href="#"            class="nav-link">Inicio</a>
+    <!-- Desktop nav -->
+    <nav class="hidden lg:flex items-center gap-8" aria-label="Navegación principal">
       <a href="#servicios"   class="nav-link">Servicios</a>
       <a href="#por-que"     class="nav-link">Nosotros</a>
       <a href="#testimonios" class="nav-link">Testimonios</a>
       <a href="#contacto"    class="nav-link">Contacto</a>
     </nav>
 
-    <div class="flex items-center gap-3">
-      <a href="tel:+525512345678"
-         class="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-slate-400 hover:text-navy transition-colors">
+    <!-- Right side -->
+    <div class="flex items-center gap-4">
+      <a href="tel:+525512345678" class="phone-link hidden sm:flex" aria-label="Llamar a la clínica">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.38 2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16l.92.92z"/>
         </svg>
         55 1234 5678
       </a>
-      <a href="#contacto" class="btn-nav">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-          <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
-        </svg>
-        Agendar cita
-      </a>
-      <button id="open-mob" aria-label="Abrir menú"
-              class="lg:hidden p-2 rounded-xl text-slate-500 hover:bg-slate-100 transition-colors">
+      <a href="#contacto" class="btn-nav hidden sm:inline-flex">Agendar cita</a>
+      <button id="open-mob" class="menu-icon p-2 rounded-xl hover:bg-white/10 transition-colors"
+              aria-label="Abrir menú">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M3 12h18M3 6h18M3 18h18"/>
         </svg>
@@ -322,249 +364,92 @@
   </div>
 </header>
 
-<!-- ══════════════════════════════════════════════
-     HERO
-══════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════
+     HERO — full screen editorial
+══════════════════════════════════════ -->
 <main>
-<section id="hero"
-         class="relative overflow-hidden"
-         style="background: linear-gradient(160deg, #F0F7FF 0%, #F8FAFB 55%, #F0FDFA 100%);min-height:100dvh;"
-         aria-labelledby="hero-heading">
+<section id="hero" aria-labelledby="hero-heading">
 
-  <!-- Background blobs -->
-  <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-    <div id="blob-1" class="absolute -top-40 left-0 w-[500px] h-[500px] rounded-full opacity-40"
-         style="background:radial-gradient(circle,rgba(13,148,136,0.13) 0%,transparent 70%);"></div>
-    <div id="blob-2" class="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full opacity-30"
-         style="background:radial-gradient(circle,rgba(37,99,235,0.10) 0%,transparent 70%);"></div>
-    <svg class="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="1.5" fill="var(--navy)"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#dots)"/>
-    </svg>
+  <!-- Background image -->
+  <div id="hero-bg" aria-hidden="true">
+    <img src="assets/hero2.jpg"
+         alt=""
+         loading="eager"
+         onerror="this.parentElement.style.background='linear-gradient(155deg,#0F2027 0%,#203A43 50%,#2C5364 100%)';" />
   </div>
 
-  <!-- Full-height grid -->
-  <div class="relative z-10 grid lg:grid-cols-[1fr_48%] min-h-[100dvh]">
+  <!-- Overlay -->
+  <div id="hero-overlay" aria-hidden="true"></div>
 
-    <!-- ── LEFT: copy (scrollable, padded) ──────── -->
-    <div id="hero-content"
-         class="flex flex-col justify-center px-6 sm:px-10 lg:px-16 xl:px-20
-                pt-32 pb-16 lg:py-0">
+  <!-- Main content — bottom left -->
+  <div id="hero-content">
 
-      <!-- Eyebrow -->
-      <div class="reveal d1 flex items-center gap-2 mb-7 w-fit rounded-full
-                  px-4 py-1.5 text-xs font-semibold uppercase tracking-widest"
-           style="background:var(--mint-pale);color:var(--mint);">
-        <span class="w-2 h-2 rounded-full inline-block" style="background:var(--mint);"></span>
-        Polanco, CDMX &mdash; Alta Especialidad
-      </div>
+    <!-- Eyebrow line -->
+    <p class="reveal d1 text-xs font-semibold uppercase tracking-[0.2em] mb-6"
+       style="color:var(--mint-light);">
+      Polanco · Ciudad de México · Alta Especialidad
+    </p>
 
-      <!-- Headline -->
-      <h1 id="hero-heading"
-          class="reveal d2 font-serif font-bold leading-[1.08] mb-6"
-          style="color:var(--navy);font-size:clamp(2.4rem,4.5vw,3.75rem);">
-        Tu sonrisa<br/>
-        merece el mejor<br/>
-        <em class="text-mint not-italic">cuidado.</em>
-      </h1>
+    <!-- Headline — the star of the show -->
+    <h1 id="hero-heading" class="hero-headline reveal d2">
+      Tu sonrisa<br/>
+      merece<br/>
+      <em>lo mejor.</em>
+    </h1>
 
-      <!-- Sub -->
-      <p class="reveal d3 leading-relaxed max-w-md mb-9"
-         style="color:var(--slate);font-size:clamp(1rem,1.3vw,1.15rem);">
-        En <strong style="color:var(--navy);font-weight:600;">Clínica Dental Lumina</strong>
-        combinamos tecnología de vanguardia con atención cálida y personalizada.
-        Tu bienestar bucal es nuestra prioridad.
-      </p>
+    <!-- One clean sub-line -->
+    <p class="hero-sub reveal d3">
+      Tecnología de vanguardia y atención personalizada<br class="hidden sm:block"/>
+      en el corazón de Polanco.
+    </p>
 
-      <!-- CTAs -->
-      <div class="reveal d4 flex flex-wrap gap-3 mb-10">
-        <a href="#contacto" class="btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
-          </svg>
-          Agenda tu cita
-        </a>
-        <a href="#servicios" class="btn-outline">
-          Ver servicios
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
-      </div>
+    <!-- Single CTA -->
+    <div class="reveal d4">
+      <a href="#contacto" class="btn-hero" aria-label="Agenda tu cita en Clínica Dental Lumina">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+        </svg>
+        Agenda tu cita
+      </a>
+    </div>
+  </div>
 
-      <!-- Service chips -->
-      <div class="reveal d5 flex flex-wrap gap-2 mb-10" role="list" aria-label="Servicios disponibles">
-        <span class="chip" role="listitem"><span class="chip-dot"></span>Ortodoncia</span>
-        <span class="chip" role="listitem"><span class="chip-dot blue"></span>Implantes</span>
-        <span class="chip" role="listitem"><span class="chip-dot"></span>Blanqueamiento</span>
-        <span class="chip" role="listitem"><span class="chip-dot blue"></span>Carillas</span>
-        <span class="chip" role="listitem"><span class="chip-dot"></span>Limpieza Dental</span>
-        <span class="chip" role="listitem"><span class="chip-dot blue"></span>Odontología Estética</span>
-      </div>
+  <!-- Scroll indicator -->
+  <div class="scroll-hint" aria-hidden="true">
+    <span style="font-size:0.6rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.12em;writing-mode:vertical-rl;">Scroll</span>
+    <div style="width:1px;height:48px;background:linear-gradient(to bottom,rgba(255,255,255,0.4),transparent);margin-top:0.5rem;"></div>
+  </div>
 
-      <!-- Social proof -->
-      <div class="reveal flex items-center gap-5 flex-wrap" style="transition-delay:0.72s;">
-        <div class="flex -space-x-2.5" aria-label="Pacientes satisfechos">
-          <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-               style="background:linear-gradient(135deg,#14B8A6,#0D9488);" aria-hidden="true">MA</div>
-          <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-               style="background:linear-gradient(135deg,#3B82F6,#2563EB);" aria-hidden="true">JR</div>
-          <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-               style="background:linear-gradient(135deg,#60A5FA,#3B82F6);" aria-hidden="true">SL</div>
-          <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold"
-               style="background:var(--bg);color:var(--slate);" aria-hidden="true">+</div>
-        </div>
-        <div>
-          <div class="flex gap-0.5 mb-0.5" aria-label="Calificación 5 estrellas">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </div>
-          <p class="text-xs font-medium" style="color:var(--slate-light);">
-            <span style="color:var(--navy);font-weight:600;">500+</span> pacientes satisfechos
-          </p>
-        </div>
-      </div>
-
-      <!-- Stats strip (bottom of left col) -->
-      <div class="stat-strip reveal mt-12 px-6 py-4 d5" style="transition-delay:0.8s;"
-           role="list" aria-label="Estadísticas de la clínica">
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-0
-                    divide-y-2 sm:divide-y-0 sm:divide-x divide-slate-100">
-          <div class="text-center py-2 sm:py-0 flex flex-col items-center" role="listitem">
-            <p class="font-serif text-2xl font-bold text-mint mb-0.5" id="stat-patients" data-target="500">0</p>
-            <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Pacientes</p>
-          </div>
-          <div class="text-center py-2 sm:py-0 flex flex-col items-center" role="listitem">
-            <p class="font-serif text-2xl font-bold text-mint mb-0.5" id="stat-years" data-target="12">0</p>
-            <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Años</p>
-          </div>
-          <div class="text-center py-2 sm:py-0 flex flex-col items-center" role="listitem">
-            <p class="font-serif text-2xl font-bold text-mint mb-0.5" id="stat-spec" data-target="6">0</p>
-            <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Especialidades</p>
-          </div>
-          <div class="text-center py-2 sm:py-0 flex flex-col items-center" role="listitem">
-            <p class="font-serif text-2xl font-bold text-mint mb-0.5" id="stat-rating" data-target="49" data-decimal="true">0</p>
-            <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Google ★</p>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /left -->
-
-    <!-- ── RIGHT: full-height photo ─────────────── -->
-    <div class="relative hidden lg:block" aria-hidden="false">
-
-      <!-- Photo — fills entire column -->
-      <div class="absolute inset-0 reveal d2" style="border-radius:0 0 0 48px;overflow:hidden;">
-        <img src="assets/hero.webp"
-             alt="Especialista dental revisando la sonrisa de una paciente en Clínica Dental Lumina, Polanco CDMX"
-             style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
-             loading="eager"
-             onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(155deg,#CCFBF1 0%,#A7F3D0 50%,#6EE7B7 100%)';" />
-        <!-- Gradient overlay -->
-        <div style="position:absolute;inset:0;
-                    background:linear-gradient(to top,rgba(15,23,42,0.6) 0%,rgba(15,23,42,0.1) 40%,transparent 65%);
-                    pointer-events:none;"></div>
-        <!-- Bottom label -->
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:2rem 2.5rem;">
-          <p class="font-serif text-xl font-semibold text-white">Clínica Dental Lumina</p>
-          <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin-top:0.25rem;">
-            Polanco, Miguel Hidalgo · CDMX
-          </p>
-        </div>
-      </div>
-
-      <!-- Floating card: Doctor -->
-      <div class="fcard absolute left-0 -translate-x-1/2 top-32 w-52 float reveal d3"
-           style="animation-delay:0.3s;z-index:20;" aria-label="Dra. Valeria Torres">
-        <div class="flex items-center gap-3 mb-2">
-          <div class="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center
-                      font-bold text-white text-sm"
-               style="background:linear-gradient(135deg,var(--mint-light),var(--mint));">VT</div>
-          <div>
-            <p class="font-semibold text-sm leading-tight" style="color:var(--navy);">Dra. Valeria Torres</p>
-            <p class="text-xs mt-0.5 font-medium" style="color:var(--mint);">Ortodoncista</p>
-          </div>
-        </div>
-        <div class="flex gap-0.5 mb-1" aria-label="5 estrellas">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
-        <p class="text-xs" style="color:var(--slate-light);">4.9 · 120+ reseñas</p>
-      </div>
-
-      <!-- Floating card: Disponibilidad -->
-      <div class="fcard absolute right-8 bottom-36 w-48 float-slow reveal d4"
-           style="animation-delay:0.8s;z-index:20;" aria-label="Cita disponible mañana 10 AM">
-        <div class="flex items-center gap-2.5 mb-2.5">
-          <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-               style="background:var(--mint-pale);">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
-            </svg>
-          </div>
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-wide" style="color:var(--mint);">Disponible</p>
-            <p class="font-bold text-sm" style="color:var(--navy);">Mañana 10 AM</p>
-          </div>
-        </div>
-        <div class="h-px w-full mb-2.5" style="background:var(--border);"></div>
-        <a href="#contacto"
-           class="block text-center text-xs font-semibold rounded-full py-1.5 transition-all duration-200"
-           style="background:var(--mint-pale);color:var(--mint);"
-           onmouseover="this.style.background='var(--mint)';this.style.color='white';"
-           onmouseout="this.style.background='var(--mint-pale)';this.style.color='var(--mint)';">
-          Reservar ahora →
-        </a>
-      </div>
-
-      <!-- Badge: Certificados -->
-      <div class="fcard absolute top-8 right-8 flex items-center gap-2.5 float reveal d3"
-           style="padding:0.65rem 1rem;animation-delay:1.2s;z-index:20;" aria-label="Certificados AOM y CMD">
-        <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-             style="background:linear-gradient(135deg,var(--mint-light),var(--mint));">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" aria-hidden="true">
-            <path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/>
-          </svg>
-        </div>
-        <div>
-          <p class="font-bold text-sm leading-tight" style="color:var(--navy);">Certificados</p>
-          <p class="text-xs" style="color:var(--slate-light);">AOM &amp; CMD</p>
-        </div>
-      </div>
-
-    </div><!-- /right photo -->
-
-  </div><!-- /full-height grid -->
-
-  <!-- Scroll hint -->
-  <div class="scroll-hint hidden md:flex" aria-hidden="true">
-    <span style="font-size:0.6rem;color:var(--slate-light);text-transform:uppercase;letter-spacing:0.1em;">Scroll</span>
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--slate-light)" stroke-width="1.8" aria-hidden="true">
-      <path d="M12 5v14M5 12l7 7 7-7"/>
-    </svg>
+  <!-- Bottom info strip -->
+  <div id="hero-strip" role="contentinfo" aria-label="Información de contacto">
+    <div class="strip-item">
+      <span class="strip-label">Horario</span>
+      <span class="strip-value">Lun – Sáb · 9:00 – 20:00</span>
+    </div>
+    <div class="strip-item">
+      <span class="strip-label">Ubicación</span>
+      <span class="strip-value">Av. Presidente Masaryk 123, Polanco</span>
+    </div>
+    <div class="strip-item hidden sm:flex">
+      <span class="strip-label">Teléfono</span>
+      <span class="strip-value">55 1234 5678</span>
+    </div>
+    <div class="strip-item hidden md:flex items-center">
+      <span class="strip-label">Pacientes satisfechos</span>
+      <span class="strip-value" id="stat-patients" data-target="500">500+</span>
+    </div>
   </div>
 
 </section>
 </main>
 
-<!-- Placeholder next sections -->
-<div style="min-height:80px;background:white;"></div>
+<!-- placeholder next sections -->
+<div style="height:80px;background:var(--bg);"></div>
 
 
-<!-- ══════════════════════════════════════════════
-     JS
-══════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
 <script>
   /* Mobile menu */
   const overlay = document.getElementById('mob-overlay');
@@ -585,46 +470,23 @@
 
   /* Sticky header */
   const hdr = document.getElementById('site-header');
-  window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
-
-  /* Parallax blobs */
-  const b1 = document.getElementById('blob-1');
-  const b2 = document.getElementById('blob-2');
   window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    b1.style.transform = `translateY(${y * 0.12}px)`;
-    b2.style.transform = `translateY(${y * -0.08}px)`;
+    hdr.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  /* Parallax on hero image */
+  const heroBg = document.getElementById('hero-bg');
+  window.addEventListener('scroll', () => {
+    heroBg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
   }, { passive: true });
 
   /* Intersection Observer — reveal */
   const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-  /* Counter animation */
-  function animCount(el, target, decimal) {
-    const dur = 1800, t0 = performance.now();
-    (function tick(now) {
-      const p = Math.min((now - t0) / dur, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      el.textContent = decimal
-        ? (ease * target / 10).toFixed(1)
-        : Math.round(ease * target) + (el.id === 'stat-patients' ? '+' : '');
-      if (p < 1) requestAnimationFrame(tick);
-    })(t0);
-  }
-  const cio = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        animCount(e.target, parseInt(e.target.dataset.target), e.target.dataset.decimal === 'true');
-        cio.unobserve(e.target);
-      }
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
     });
-  }, { threshold: 0.5 });
-  ['stat-patients','stat-years','stat-spec','stat-rating'].forEach(id => {
-    const el = document.getElementById(id); if (el) cio.observe(el);
-  });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
 
 </body>
