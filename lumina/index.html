@@ -6,12 +6,10 @@
   <title>Clínica Dental Lumina — Polanco, CDMX</title>
   <meta name="description" content="Clínica dental de alta especialidad en Polanco, CDMX. Ortodoncia, implantes, estética dental y más. Agenda tu cita hoy." />
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -21,53 +19,48 @@
             serif: ['Playfair Display', 'Georgia', 'serif'],
             sans:  ['Inter', 'system-ui', 'sans-serif'],
           },
-          colors: {
-            gold:  { DEFAULT: '#C9A84C', light: '#E2C97A', dark: '#A8832A', muted: '#F7EED8', pale: '#FBF5E8' },
-            navy:  { DEFAULT: '#1B2B4A', light: '#2D4270', muted: '#4A5E7A' },
-            teal:  { DEFAULT: '#2C7873', light: '#3D9E98', pale: '#EAF4F3' },
-            cream: { DEFAULT: '#FAF6EF', warm: '#F5EDD8', deep: '#EDE4D0' },
-          },
         },
       },
     };
   </script>
 
   <style>
-    /* ── Tokens ──────────────────────────────────── */
+    /* ── Design Tokens ───────────────────────────── */
     :root {
-      --gold:       #C9A84C;
-      --gold-light: #E2C97A;
-      --gold-dark:  #A8832A;
-      --gold-muted: #F7EED8;
-      --navy:       #1B2B4A;
-      --navy-muted: #4A5E7A;
-      --teal:       #2C7873;
-      --teal-light: #3D9E98;
-      --teal-pale:  #EAF4F3;
-      --cream:      #FAF6EF;
-      --cream-warm: #F5EDD8;
-      --white:      #FFFFFF;
+      /* Brand */
+      --mint:        #0D9488;
+      --mint-light:  #14B8A6;
+      --mint-pale:   #CCFBF1;
+      --mint-bg:     #F0FDFA;
+      --blue:        #2563EB;
+      --blue-light:  #3B82F6;
+      --blue-pale:   #EFF6FF;
+      /* Neutrals */
+      --white:       #FFFFFF;
+      --bg:          #F8FAFB;
+      --bg-blue:     #F0F7FF;
+      --navy:        #0F172A;
+      --slate:       #475569;
+      --slate-light: #94A3B8;
+      --border:      #E2E8F0;
+      /* Gold — solo acento premium */
+      --gold:        #C9A84C;
+      --gold-light:  #E2C97A;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--cream);
-      color: var(--navy);
-      overflow-x: hidden;
-    }
+    html  { scroll-behavior: smooth; }
+    body  { font-family: 'Inter', sans-serif; background: var(--white); color: var(--navy); overflow-x: hidden; }
 
-    /* ── Reduced motion ──────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
       .reveal { opacity: 1 !important; transform: none !important; }
     }
 
-    /* ── Reveal animations ───────────────────────── */
+    /* ── Reveal ──────────────────────────────────── */
     .reveal {
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(22px);
       transition: opacity 0.65s ease-out, transform 0.65s ease-out;
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -77,57 +70,40 @@
     .d4 { transition-delay: 0.46s; }
     .d5 { transition-delay: 0.60s; }
 
-    /* ── Float keyframes ─────────────────────────── */
-    @keyframes floatY {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-12px); }
-    }
-    @keyframes floatYslow {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-8px); }
-    }
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    /* ── Float ───────────────────────────────────── */
+    @keyframes floatY     { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    @keyframes floatYslow { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)}  }
     .float      { animation: floatY 5s ease-in-out infinite; }
     .float-slow { animation: floatYslow 7s ease-in-out infinite; }
 
-    /* ── HEADER ──────────────────────────────────── */
+    /* ── Header ──────────────────────────────────── */
     #site-header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      padding: 1.25rem 0;
+      padding: 1.1rem 0;
       transition: background 0.35s, box-shadow 0.35s, padding 0.35s;
     }
     #site-header.scrolled {
-      background: rgba(250,246,239,0.88);
-      backdrop-filter: blur(18px) saturate(1.5);
-      -webkit-backdrop-filter: blur(18px) saturate(1.5);
-      box-shadow: 0 1px 20px rgba(27,43,74,0.07);
-      padding: 0.75rem 0;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px) saturate(1.6);
+      -webkit-backdrop-filter: blur(20px) saturate(1.6);
+      box-shadow: 0 1px 20px rgba(15,23,42,0.07);
+      padding: 0.7rem 0;
     }
     .logo {
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--navy);
-      text-decoration: none;
-      letter-spacing: 0.01em;
+      font-size: 1.45rem; font-weight: 600;
+      color: var(--navy); text-decoration: none;
     }
-    .logo span { color: var(--gold); }
+    .logo-dot { color: var(--gold); }
     .nav-link {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--navy-muted);
-      text-decoration: none;
-      padding: 0.25rem 0;
-      position: relative;
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--slate); text-decoration: none;
+      padding: 0.25rem 0; position: relative;
       transition: color 0.2s;
     }
     .nav-link::after {
-      content: ''; position: absolute; bottom: -2px; left: 0;
-      width: 0; height: 1.5px;
-      background: var(--gold);
+      content:''; position:absolute; bottom:-2px; left:0;
+      width:0; height:1.5px; background:var(--mint);
       transition: width 0.25s ease;
     }
     .nav-link:hover { color: var(--navy); }
@@ -136,168 +112,138 @@
     /* ── Buttons ─────────────────────────────────── */
     .btn-primary {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: linear-gradient(135deg, #D4B05A 0%, var(--gold) 50%, var(--gold-dark) 100%);
-      color: white;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 0.9rem 2rem;
-      border-radius: 50px;
-      border: none; cursor: pointer;
-      box-shadow: 0 4px 18px rgba(201,168,76,0.38);
+      background: linear-gradient(135deg, var(--mint-light) 0%, var(--mint) 100%);
+      color: white; font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 50px; border: none;
+      cursor: pointer; text-decoration: none; min-height: 48px;
+      box-shadow: 0 4px 18px rgba(13,148,136,0.35);
       transition: transform 0.2s, box-shadow 0.2s;
-      text-decoration: none;
-      min-height: 48px;
-      touch-action: manipulation;
-      position: relative; overflow: hidden;
+      touch-action: manipulation; position: relative; overflow: hidden;
     }
     .btn-primary::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 55%);
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 55%);
       border-radius: inherit;
     }
-    .btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(201,168,76,0.48); }
+    .btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(13,148,136,0.45); }
     .btn-primary:active { transform: translateY(0); }
-    .btn-primary:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+    .btn-primary:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
 
     .btn-outline {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      border: 1.5px solid var(--navy);
-      color: var(--navy);
-      background: transparent;
-      font-size: 0.82rem; font-weight: 600;
+      border: 1.5px solid var(--border); color: var(--navy);
+      background: var(--white); font-size: 0.82rem; font-weight: 600;
       letter-spacing: 0.04em; text-transform: uppercase;
-      padding: 0.9rem 2rem;
-      border-radius: 50px; cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-      text-decoration: none; min-height: 48px;
+      padding: 0.9rem 2rem; border-radius: 50px;
+      cursor: pointer; text-decoration: none; min-height: 48px;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
       touch-action: manipulation;
     }
-    .btn-outline:hover { background: var(--navy); color: white; }
-    .btn-outline:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
+    .btn-outline:hover { border-color: var(--mint); color: var(--mint); background: var(--mint-bg); }
+    .btn-outline:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
 
-    /* small nav CTA */
     .btn-nav {
       display: inline-flex; align-items: center; gap: 0.4rem;
-      background: var(--navy);
-      color: white;
+      background: var(--mint); color: white;
       font-size: 0.8rem; font-weight: 600;
-      padding: 0.6rem 1.4rem;
-      border-radius: 50px; text-decoration: none;
+      padding: 0.6rem 1.4rem; border-radius: 50px;
+      text-decoration: none; min-height: 44px;
       transition: background 0.2s, transform 0.15s;
-      min-height: 44px; touch-action: manipulation;
+      touch-action: manipulation;
     }
-    .btn-nav:hover { background: var(--navy-light, #2D4270); transform: translateY(-1px); }
-    .btn-nav:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
+    .btn-nav:hover { background: var(--mint-light); transform: translateY(-1px); }
+    .btn-nav:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
 
-    /* ── Service chips ────────────────────────────── */
+    /* ── Chips ───────────────────────────────────── */
     .chip {
       display: inline-flex; align-items: center; gap: 0.4rem;
-      background: white;
-      border: 1px solid rgba(201,168,76,0.25);
-      border-radius: 50px;
-      padding: 0.45rem 1rem;
-      font-size: 0.78rem; font-weight: 500;
-      color: var(--navy);
-      box-shadow: 0 2px 12px rgba(27,43,74,0.07);
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 50px; padding: 0.4rem 0.9rem;
+      font-size: 0.78rem; font-weight: 500; color: var(--slate);
+      box-shadow: 0 1px 4px rgba(15,23,42,0.06);
       white-space: nowrap;
-      cursor: default;
-      transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+      transition: border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
     }
     .chip:hover {
-      box-shadow: 0 4px 18px rgba(201,168,76,0.2);
-      border-color: rgba(201,168,76,0.55);
+      border-color: var(--mint); color: var(--mint);
+      box-shadow: 0 4px 14px rgba(13,148,136,0.15);
       transform: translateY(-2px);
     }
     .chip-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--gold);
-      flex-shrink: 0;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--mint); flex-shrink: 0;
     }
+    .chip-dot.blue { background: var(--blue-light); }
 
-    /* ── Photo card (hero visual) ─────────────────── */
-    .hero-photo {
+    /* ── Hero photo ──────────────────────────────── */
+    .hero-img-wrap {
       position: relative;
-      border-radius: 32px;
+      border-radius: 28px;
       overflow: hidden;
-      /* Gradient simulating a warm dental/smile photo */
-      background:
-        radial-gradient(ellipse 70% 80% at 55% 35%, rgba(255,220,190,0.9) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 60% at 30% 75%, rgba(44,120,115,0.25) 0%, transparent 60%),
-        linear-gradient(155deg, #EDE0CC 0%, #D4B896 30%, #C49A72 60%, #A07A58 100%);
-      box-shadow: 0 24px 80px rgba(27,43,74,0.18);
+      box-shadow: 0 24px 80px rgba(15,23,42,0.15);
     }
-
-    /* Skin-tone figure (SVG person silhouette suggestion) */
-    .hero-photo-inner {
-      position: relative;
+    .hero-img-wrap img {
       width: 100%; height: 100%;
-      display: flex; align-items: flex-end; justify-content: center;
-      padding-bottom: 0;
-      overflow: hidden;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+    /* Subtle overlay so bottom text is legible */
+    .hero-img-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(15,23,42,0.55) 0%, rgba(15,23,42,0.1) 45%, transparent 70%);
+      pointer-events: none;
     }
 
-    /* ── Floating cards ──────────────────────────── */
-    .float-card {
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 12px 40px rgba(27,43,74,0.12);
-      padding: 1rem 1.25rem;
+    /* ── Float cards ─────────────────────────────── */
+    .fcard {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(15,23,42,0.10);
+      padding: 0.85rem 1.1rem;
     }
 
     /* ── Stats strip ─────────────────────────────── */
     .stat-strip {
-      background: white;
+      background: var(--white);
+      border: 1px solid var(--border);
       border-radius: 20px;
-      box-shadow: 0 4px 24px rgba(27,43,74,0.08);
+      box-shadow: 0 4px 20px rgba(15,23,42,0.06);
     }
 
-    /* ── Gold text ───────────────────────────────── */
-    .text-gold {
-      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 60%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    /* ── Text gold gradient ──────────────────────── */
+    .text-mint {
+      background: linear-gradient(135deg, var(--mint-light) 0%, var(--mint) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
     /* ── Mobile menu ─────────────────────────────── */
-    #mobile-overlay {
+    #mob-overlay {
       display: none; position: fixed; inset: 0; z-index: 300;
-      background: rgba(250,246,239,0.97);
-      backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
       flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
     }
-    #mobile-overlay.open { display: flex; }
+    #mob-overlay.open { display: flex; }
     .mob-link {
       font-family: 'Playfair Display', serif;
       font-size: 2rem; color: var(--navy); text-decoration: none;
       transition: color 0.2s;
     }
-    .mob-link:hover { color: var(--gold); }
+    .mob-link:hover { color: var(--mint); }
 
-    /* ── Scroll indicator ────────────────────────── */
-    @keyframes bounceY {
-      0%,100% { transform: translateX(-50%) translateY(0); }
-      50%      { transform: translateX(-50%) translateY(8px); }
-    }
+    /* ── Scroll hint ─────────────────────────────── */
+    @keyframes bounceHint { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
     .scroll-hint {
       position: absolute; bottom: 2rem; left: 50%;
       transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
-      opacity: 0.45;
-      animation: bounceY 2.5s ease-in-out infinite;
+      display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+      opacity: 0.4; animation: bounceHint 2.5s ease-in-out infinite;
     }
 
-    /* ── Parallax layers ─────────────────────────── */
-    .parallax-slow { will-change: transform; }
-
-    /* ── Section placeholder ─────────────────────── */
-    .next-section-placeholder {
-      min-height: 80px;
-      background: var(--cream);
-    }
+    /* ── Section divider wave ────────────────────── */
+    .wave-bottom { position: absolute; bottom: 0; left: 0; right: 0; line-height: 0; }
   </style>
 </head>
 
@@ -306,46 +252,43 @@
 <!-- Skip link -->
 <a href="#hero-content"
    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999]
-          focus:bg-gold focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-medium focus:shadow-lg">
+          focus:bg-mint focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold">
   Ir al contenido principal
 </a>
 
-<!-- ══════════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════
      MOBILE MENU
-══════════════════════════════════════════════════ -->
-<nav id="mobile-overlay" role="dialog" aria-modal="true" aria-label="Menú móvil">
+══════════════════════════════════════════════ -->
+<nav id="mob-overlay" role="dialog" aria-modal="true" aria-label="Menú principal móvil">
   <button id="close-mob" aria-label="Cerrar menú"
-    class="absolute top-6 right-6 text-navy/60 hover:text-navy transition-colors p-2">
+          class="absolute top-6 right-6 p-2 text-slate-400 hover:text-navy transition-colors">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
       <path d="M18 6 6 18M6 6l12 12"/>
     </svg>
   </button>
   <a href="#servicios"   class="mob-link" onclick="closeMob()">Servicios</a>
-  <a href="#por-que"     class="mob-link" onclick="closeMob()">¿Por qué elegirnos?</a>
+  <a href="#por-que"     class="mob-link" onclick="closeMob()">Nosotros</a>
   <a href="#testimonios" class="mob-link" onclick="closeMob()">Testimonios</a>
   <a href="#equipo"      class="mob-link" onclick="closeMob()">El Equipo</a>
   <a href="#contacto"    class="mob-link" onclick="closeMob()">Contacto</a>
-  <a href="#contacto"    class="btn-primary mt-2" onclick="closeMob()">Agenda tu cita</a>
+  <a href="#contacto" class="btn-primary mt-2" onclick="closeMob()">Agenda tu cita</a>
 </nav>
 
-<!-- ══════════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════
      HEADER
-══════════════════════════════════════════════════ -->
+══════════════════════════════════════════════ -->
 <header id="site-header">
   <div class="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between gap-4">
 
-    <!-- Logo -->
     <a href="#" class="logo flex items-center gap-2" aria-label="Clínica Dental Lumina — Inicio">
-      <!-- Tooth icon -->
-      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <path d="M16 3 C9 3, 3 9, 3 16 C3 21, 6 26, 9 29 C11 31.5, 13 32, 14.5 30 C15 29, 15.5 27, 16 25.5 C16.5 27, 17 29, 17.5 30 C19 32, 21 31.5, 23 29 C26 26, 29 21, 29 16 C29 9, 23 3, 16 3Z"
-              fill="var(--gold)" opacity="0.9"/>
-        <path d="M10 11 C13 7.5, 19 7.5, 22 11" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M16 3C9 3 3 9 3 16c0 5 3 10 6 13 2 2.5 4 3 5.5 1 .5-1 1-3 1.5-4.5.5 1.5 1 3.5 1.5 4.5C19 32 21 31.5 23 29c3-3 6-8 6-13C29 9 23 3 16 3z"
+              fill="var(--mint)" opacity="0.9"/>
+        <path d="M10 11c3-3.5 9-3.5 12 0" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/>
       </svg>
-      Lumina<span>.</span>
+      Lumina<span class="logo-dot">.</span>
     </a>
 
-    <!-- Desktop nav -->
     <nav class="hidden lg:flex items-center gap-7" aria-label="Navegación principal">
       <a href="#"            class="nav-link">Inicio</a>
       <a href="#servicios"   class="nav-link">Servicios</a>
@@ -354,24 +297,22 @@
       <a href="#contacto"    class="nav-link">Contacto</a>
     </nav>
 
-    <!-- CTA -->
     <div class="flex items-center gap-3">
       <a href="tel:+525512345678"
-         class="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-navy/70 hover:text-navy transition-colors">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.38 2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16l.92.92z"/>
+         class="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-slate-400 hover:text-navy transition-colors">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.38 2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16l.92.92z"/>
         </svg>
         55 1234 5678
       </a>
-      <a href="#contacto" class="btn-nav" aria-label="Agendar cita dental">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+      <a href="#contacto" class="btn-nav">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
           <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
         </svg>
         Agendar cita
       </a>
-      <!-- Hamburger -->
       <button id="open-mob" aria-label="Abrir menú"
-        class="lg:hidden p-2 rounded-xl text-navy hover:bg-gold-muted transition-colors">
+              class="lg:hidden p-2 rounded-xl text-slate-500 hover:bg-slate-100 transition-colors">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M3 12h18M3 6h18M3 18h18"/>
         </svg>
@@ -381,46 +322,63 @@
   </div>
 </header>
 
-<!-- ══════════════════════════════════════════════════
-     HERO SECTION
-══════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
 <main>
-<section id="hero" class="relative min-h-dvh flex items-center overflow-hidden bg-cream pt-24 pb-12"
+<section id="hero"
+         class="relative min-h-dvh flex items-center overflow-hidden pt-24 pb-12"
+         style="background: linear-gradient(160deg, #F0F7FF 0%, #F8FAFB 55%, #F0FDFA 100%);"
          aria-labelledby="hero-heading">
 
-  <!-- Subtle background blobs -->
+  <!-- Background blobs (parallax) -->
   <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-    <div class="parallax-slow absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full opacity-40"
-         style="background:radial-gradient(circle, var(--gold-muted) 0%, transparent 70%);"></div>
-    <div class="parallax-slow absolute -bottom-24 -left-24 w-[400px] h-[400px] rounded-full opacity-30"
-         style="background:radial-gradient(circle, var(--teal-pale) 0%, transparent 70%); animation-delay:2s;"></div>
+    <div id="blob-1"
+         class="absolute -top-40 -right-40 w-[640px] h-[640px] rounded-full opacity-50"
+         style="background: radial-gradient(circle, rgba(13,148,136,0.12) 0%, transparent 70%);"></div>
+    <div id="blob-2"
+         class="absolute -bottom-32 -left-32 w-[480px] h-[480px] rounded-full opacity-40"
+         style="background: radial-gradient(circle, rgba(37,99,235,0.10) 0%, transparent 70%);"></div>
+    <!-- Dot grid -->
+    <svg class="absolute inset-0 w-full h-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1.5" fill="var(--navy)"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#dots)"/>
+    </svg>
   </div>
 
   <div id="hero-content" class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full">
-    <div class="grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[1.1fr_0.9fr] gap-10 xl:gap-16 items-center">
+    <div class="grid lg:grid-cols-2 gap-10 xl:gap-16 items-center">
 
-      <!-- ── LEFT: Copy ─────────────────────────── -->
+      <!-- ── LEFT copy ──────────────────────────── -->
       <div class="order-2 lg:order-1 flex flex-col items-start">
 
-        <!-- Eyebrow badge -->
-        <div class="reveal d1 flex items-center gap-2 mb-6
-                    bg-teal-pale border border-teal/20 text-teal
-                    rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest w-fit">
-          <span class="w-2 h-2 rounded-full bg-teal inline-block"></span>
+        <!-- Eyebrow -->
+        <div class="reveal d1 flex items-center gap-2 mb-6 w-fit
+                    rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest"
+             style="background:var(--mint-pale);color:var(--mint);">
+          <span class="w-2 h-2 rounded-full inline-block" style="background:var(--mint);"></span>
           Polanco, CDMX &mdash; Alta Especialidad
         </div>
 
         <!-- Headline -->
         <h1 id="hero-heading"
-            class="reveal d2 font-serif text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold leading-[1.1] text-navy mb-6">
-          Transforma tu<br/>
-          sonrisa con<br/>
-          <em class="text-gold not-italic">expertos.</em>
+            class="reveal d2 font-serif text-4xl sm:text-5xl xl:text-6xl font-bold leading-[1.1] mb-6"
+            style="color:var(--navy);">
+          Tu sonrisa<br/>
+          merece el mejor<br/>
+          <em class="text-mint not-italic">cuidado.</em>
         </h1>
 
-        <!-- Sub -->
-        <p class="reveal d3 text-navy/60 text-base sm:text-lg leading-relaxed max-w-md mb-8">
-          En <strong class="text-navy font-semibold">Clínica Dental Lumina</strong> combinamos tecnología de vanguardia con atención personalizada. Tu bienestar es nuestra prioridad.
+        <!-- Subheadline -->
+        <p class="reveal d3 text-base sm:text-lg leading-relaxed max-w-md mb-8"
+           style="color:var(--slate);">
+          En <strong style="color:var(--navy);font-weight:600;">Clínica Dental Lumina</strong>
+          combinamos tecnología de vanguardia con atención cálida y personalizada.
+          Tu bienestar bucal es nuestra prioridad.
         </p>
 
         <!-- CTAs -->
@@ -439,116 +397,72 @@
           </a>
         </div>
 
-        <!-- Floating service chips -->
-        <div class="reveal d5 flex flex-wrap gap-2 mb-10" role="list" aria-label="Servicios principales">
+        <!-- Service chips -->
+        <div class="reveal d5 flex flex-wrap gap-2 mb-10" role="list" aria-label="Servicios disponibles">
           <span class="chip" role="listitem"><span class="chip-dot"></span>Ortodoncia</span>
-          <span class="chip" role="listitem"><span class="chip-dot" style="background:var(--teal);"></span>Implantes</span>
+          <span class="chip" role="listitem"><span class="chip-dot blue"></span>Implantes</span>
           <span class="chip" role="listitem"><span class="chip-dot"></span>Blanqueamiento</span>
-          <span class="chip" role="listitem"><span class="chip-dot" style="background:var(--teal);"></span>Carillas</span>
+          <span class="chip" role="listitem"><span class="chip-dot blue"></span>Carillas</span>
           <span class="chip" role="listitem"><span class="chip-dot"></span>Limpieza Dental</span>
-          <span class="chip" role="listitem"><span class="chip-dot" style="background:var(--teal);"></span>Odontología Estética</span>
+          <span class="chip" role="listitem"><span class="chip-dot blue"></span>Odontología Estética</span>
         </div>
 
-        <!-- Trust row -->
-        <div class="reveal d5 flex items-center gap-5 flex-wrap" style="transition-delay:0.7s">
-          <!-- Avatars -->
+        <!-- Social proof row -->
+        <div class="reveal flex items-center gap-5 flex-wrap" style="transition-delay:0.72s;">
           <div class="flex -space-x-2.5" aria-label="Pacientes satisfechos">
-            <!-- 4 avatar circles -->
             <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-                 style="background:linear-gradient(135deg,#C49A72,#A07A58);" aria-hidden="true">MA</div>
+                 style="background:linear-gradient(135deg,#14B8A6,#0D9488);" aria-hidden="true">MA</div>
             <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-                 style="background:linear-gradient(135deg,#3D9E98,#2C7873);" aria-hidden="true">JR</div>
+                 style="background:linear-gradient(135deg,#3B82F6,#2563EB);" aria-hidden="true">JR</div>
             <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-                 style="background:linear-gradient(135deg,#D4B05A,#C9A84C);" aria-hidden="true">SL</div>
-            <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-                 style="background:linear-gradient(135deg,#2D4270,#1B2B4A);" aria-hidden="true">+</div>
+                 style="background:linear-gradient(135deg,#60A5FA,#3B82F6);" aria-hidden="true">SL</div>
+            <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold"
+                 style="background:var(--bg);color:var(--slate);" aria-hidden="true">+</div>
           </div>
           <div>
-            <div class="flex gap-0.5 mb-0.5" aria-label="Calificación 5 estrellas">
+            <div class="flex gap-0.5 mb-0.5" aria-label="Calificación 5 de 5 estrellas">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             </div>
-            <p class="text-xs text-navy/55 font-medium">
-              <span class="text-navy font-semibold">500+</span> pacientes satisfechos
+            <p class="text-xs font-medium" style="color:var(--slate-light);">
+              <span style="color:var(--navy);font-weight:600;">500+</span> pacientes satisfechos
             </p>
           </div>
         </div>
 
-      </div>
+      </div><!-- /left copy -->
 
-      <!-- ── RIGHT: Visual ──────────────────────── -->
+      <!-- ── RIGHT visual ───────────────────────── -->
       <div class="order-1 lg:order-2 relative flex justify-center lg:justify-end">
 
-        <!-- Main photo card -->
-        <div class="hero-photo reveal d2 w-full max-w-sm sm:max-w-md relative"
-             style="height:480px;sm:height:540px;" role="img" aria-label="Consultorio Dental Lumina — Polanco CDMX">
-          <div class="hero-photo-inner">
-
-            <!-- SVG dental scene illustration -->
-            <svg viewBox="0 0 400 480" fill="none" class="absolute inset-0 w-full h-full" aria-hidden="true">
-              <!-- Warm background shapes -->
-              <rect width="400" height="480" fill="url(#heroGrad)"/>
-              <!-- Soft light circle -->
-              <circle cx="280" cy="120" r="160" fill="rgba(255,240,220,0.35)"/>
-              <!-- Dental chair suggestion (abstract) -->
-              <ellipse cx="200" cy="400" rx="180" ry="30" fill="rgba(160,122,88,0.2)"/>
-              <!-- Person silhouette - head -->
-              <circle cx="200" cy="200" r="85" fill="rgba(210,170,130,0.65)"/>
-              <!-- Hair top -->
-              <ellipse cx="200" cy="135" rx="85" ry="55" fill="rgba(80,50,30,0.55)"/>
-              <!-- Neck -->
-              <rect x="170" y="272" width="60" height="50" rx="8" fill="rgba(210,170,130,0.65)"/>
-              <!-- Shoulders / body -->
-              <ellipse cx="200" cy="370" rx="130" ry="70" fill="rgba(255,255,255,0.85)"/>
-              <!-- Lab coat collar -->
-              <path d="M160 310 L200 350 L240 310" stroke="rgba(255,255,255,0.9)" stroke-width="3" fill="none"/>
-              <!-- Smile hint -->
-              <path d="M175 215 Q200 235 225 215" stroke="rgba(240,200,170,0.9)" stroke-width="3" fill="none" stroke-linecap="round"/>
-              <!-- Eye left -->
-              <ellipse cx="180" cy="190" rx="8" ry="9" fill="rgba(60,40,20,0.7)"/>
-              <circle cx="182" cy="188" r="2.5" fill="white" opacity="0.8"/>
-              <!-- Eye right -->
-              <ellipse cx="220" cy="190" rx="8" ry="9" fill="rgba(60,40,20,0.7)"/>
-              <circle cx="222" cy="188" r="2.5" fill="white" opacity="0.8"/>
-              <!-- Gold accent light -->
-              <circle cx="340" cy="60" r="50" fill="rgba(201,168,76,0.25)"/>
-
-              <defs>
-                <linearGradient id="heroGrad" x1="0" y1="0" x2="400" y2="480" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%"   stop-color="#EDD9C0"/>
-                  <stop offset="50%"  stop-color="#D4A97A"/>
-                  <stop offset="100%" stop-color="#B8845A"/>
-                </linearGradient>
-              </defs>
-            </svg>
-
-            <!-- Clinic name overlay bottom -->
-            <div class="absolute bottom-0 left-0 right-0 p-5"
-                 style="background:linear-gradient(to top, rgba(27,43,74,0.65) 0%, transparent 100%);">
-              <p class="text-white font-serif text-lg font-semibold">Clínica Dental Lumina</p>
-              <p style="color:var(--gold-light);font-size:0.78rem;font-weight:500;letter-spacing:0.04em;">
-                Polanco, Miguel Hidalgo · CDMX
-              </p>
-            </div>
+        <!-- Photo card -->
+        <div class="hero-img-wrap reveal d2 w-full max-w-sm sm:max-w-[400px]" style="height:520px;">
+          <img src="assets/hero.jpg"
+               alt="Especialista dental revisando la sonrisa de una paciente en Clínica Dental Lumina, Polanco CDMX"
+               width="400" height="520"
+               loading="eager"
+               onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(155deg,#CCFBF1 0%,#A7F3D0 50%,#6EE7B7 100%)';" />
+          <!-- Bottom overlay text -->
+          <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
+            <p class="font-serif text-xl font-semibold text-white leading-tight">Clínica Dental Lumina</p>
+            <p class="text-sm mt-0.5" style="color:rgba(255,255,255,0.75);">Polanco, Miguel Hidalgo · CDMX</p>
           </div>
         </div>
 
-        <!-- ── Floating card: Doctor ── -->
-        <div class="float-card absolute -left-4 sm:-left-10 top-10 w-52 float reveal d3"
-             style="animation-delay:0.3s;" aria-label="Dra. Valeria Torres, especialista en Ortodoncia">
+        <!-- Card: Doctor ── -->
+        <div class="fcard absolute -left-4 sm:-left-10 top-12 w-52 float reveal d3"
+             style="animation-delay:0.3s;" aria-label="Dra. Valeria Torres — Ortodoncista">
           <div class="flex items-center gap-3 mb-2">
-            <!-- Avatar -->
             <div class="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-white text-sm"
-                 style="background:linear-gradient(135deg,var(--gold-light),var(--gold));">VT</div>
+                 style="background:linear-gradient(135deg,var(--mint-light),var(--mint));">VT</div>
             <div>
-              <p class="text-navy font-semibold text-sm leading-tight">Dra. Valeria Torres</p>
-              <p class="text-xs mt-0.5" style="color:var(--teal);font-weight:500;">Especialista</p>
+              <p class="font-semibold text-sm leading-tight" style="color:var(--navy);">Dra. Valeria Torres</p>
+              <p class="text-xs mt-0.5 font-medium" style="color:var(--mint);">Ortodoncista</p>
             </div>
           </div>
-          <!-- Stars -->
           <div class="flex gap-0.5 mb-1" aria-label="5 estrellas">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -556,74 +470,73 @@
             <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
-          <p class="text-navy/50 text-xs leading-snug">4.9 · 120+ reseñas verificadas</p>
+          <p class="text-xs" style="color:var(--slate-light);">4.9 · 120+ reseñas</p>
         </div>
 
-        <!-- ── Floating card: Next appointment ── -->
-        <div class="float-card absolute -right-2 sm:-right-8 bottom-24 w-48 float-slow reveal d4"
-             style="animation-delay:0.8s;" aria-label="Próxima cita disponible">
-          <div class="flex items-center gap-2.5 mb-2">
+        <!-- Card: Disponibilidad ── -->
+        <div class="fcard absolute -right-2 sm:-right-8 bottom-28 w-48 float-slow reveal d4"
+             style="animation-delay:0.8s;" aria-label="Cita disponible mañana a las 10 AM">
+          <div class="flex items-center gap-2.5 mb-2.5">
             <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                 style="background:var(--teal-pale);">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" aria-hidden="true">
+                 style="background:var(--mint-pale);">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2" aria-hidden="true">
                 <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
               </svg>
             </div>
             <div>
-              <p class="text-xs font-semibold" style="color:var(--teal);text-transform:uppercase;letter-spacing:0.04em;">Disponible</p>
-              <p class="text-navy font-bold text-sm">Mañana 10 AM</p>
+              <p class="text-xs font-semibold uppercase tracking-wide" style="color:var(--mint);">Disponible</p>
+              <p class="font-bold text-sm" style="color:var(--navy);">Mañana 10 AM</p>
             </div>
           </div>
-          <div class="h-px w-full bg-navy/[0.07] my-2"></div>
+          <div class="h-px w-full mb-2.5" style="background:var(--border);"></div>
           <a href="#contacto"
-             class="block text-center text-xs font-semibold rounded-full py-1.5 transition-colors cursor-pointer"
-             style="background:var(--gold-muted);color:var(--gold-dark);"
-             onmouseover="this.style.background='var(--gold)';this.style.color='white';"
-             onmouseout="this.style.background='var(--gold-muted)';this.style.color='var(--gold-dark)';">
+             class="block text-center text-xs font-semibold rounded-full py-1.5 transition-all duration-200"
+             style="background:var(--mint-pale);color:var(--mint);"
+             onmouseover="this.style.background='var(--mint)';this.style.color='white';"
+             onmouseout="this.style.background='var(--mint-pale)';this.style.color='var(--mint)';">
             Reservar ahora →
           </a>
         </div>
 
-        <!-- ── Floating badge: Certificados ── -->
-        <div class="float-card absolute top-6 right-2 sm:right-4 flex items-center gap-2.5 float reveal d3"
+        <!-- Badge: Certificados ── -->
+        <div class="fcard absolute top-6 right-2 sm:right-4 flex items-center gap-2.5 float reveal d3"
              style="padding:0.65rem 1rem;animation-delay:1.2s;" aria-label="Certificados por AOM y CMD">
-          <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-               style="background:linear-gradient(135deg,var(--gold-light),var(--gold));">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" aria-hidden="true">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+               style="background:linear-gradient(135deg,var(--mint-light),var(--mint));">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" aria-hidden="true">
               <path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/>
             </svg>
           </div>
           <div>
-            <p class="text-navy font-bold text-sm leading-tight">Certificados</p>
-            <p class="text-navy/50 text-xs">AOM &amp; CMD</p>
+            <p class="font-bold text-sm leading-tight" style="color:var(--navy);">Certificados</p>
+            <p class="text-xs" style="color:var(--slate-light);">AOM &amp; CMD</p>
           </div>
         </div>
 
       </div><!-- /right visual -->
     </div><!-- /grid -->
 
-    <!-- ── Stats strip ───────────────────────────── -->
-    <div class="stat-strip reveal mt-12 lg:mt-16 px-6 sm:px-10 py-5 d5"
+    <!-- ── Stats strip ────────────────────────────── -->
+    <div class="stat-strip reveal mt-12 lg:mt-14 px-6 sm:px-10 py-5 d5"
          style="transition-delay:0.65s;" role="list" aria-label="Estadísticas de la clínica">
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-navy/[0.07]">
-
-        <div class="text-center sm:py-0 py-2 flex flex-col items-center" role="listitem">
-          <p class="font-serif text-3xl font-bold text-gold mb-1" id="stat-patients" data-target="500">0</p>
-          <p class="text-xs text-navy/50 uppercase tracking-widest font-medium">Pacientes</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-0
+                  divide-y-2 sm:divide-y-0 sm:divide-x divide-slate-100">
+        <div class="text-center py-3 sm:py-0 flex flex-col items-center" role="listitem">
+          <p class="font-serif text-3xl font-bold text-mint mb-1" id="stat-patients" data-target="500">0</p>
+          <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Pacientes</p>
         </div>
-        <div class="text-center sm:py-0 py-2 flex flex-col items-center" role="listitem">
-          <p class="font-serif text-3xl font-bold text-gold mb-1" id="stat-years" data-target="12">0</p>
-          <p class="text-xs text-navy/50 uppercase tracking-widest font-medium">Años de experiencia</p>
+        <div class="text-center py-3 sm:py-0 flex flex-col items-center" role="listitem">
+          <p class="font-serif text-3xl font-bold text-mint mb-1" id="stat-years" data-target="12">0</p>
+          <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Años de experiencia</p>
         </div>
-        <div class="text-center sm:py-0 py-2 flex flex-col items-center" role="listitem">
-          <p class="font-serif text-3xl font-bold text-gold mb-1" id="stat-spec" data-target="6">0</p>
-          <p class="text-xs text-navy/50 uppercase tracking-widest font-medium">Especialidades</p>
+        <div class="text-center py-3 sm:py-0 flex flex-col items-center" role="listitem">
+          <p class="font-serif text-3xl font-bold text-mint mb-1" id="stat-spec" data-target="6">0</p>
+          <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Especialidades</p>
         </div>
-        <div class="text-center sm:py-0 py-2 flex flex-col items-center" role="listitem">
-          <p class="font-serif text-3xl font-bold text-gold mb-1" id="stat-rating" data-target="49" data-decimal="true">0</p>
-          <p class="text-xs text-navy/50 uppercase tracking-widest font-medium">Calificación Google</p>
+        <div class="text-center py-3 sm:py-0 flex flex-col items-center" role="listitem">
+          <p class="font-serif text-3xl font-bold text-mint mb-1" id="stat-rating" data-target="49" data-decimal="true">0</p>
+          <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Calificación Google</p>
         </div>
-
       </div>
     </div>
 
@@ -631,8 +544,8 @@
 
   <!-- Scroll hint -->
   <div class="scroll-hint hidden md:flex" aria-hidden="true">
-    <span style="font-size:0.6rem;color:var(--navy-muted);text-transform:uppercase;letter-spacing:0.1em;">Scroll</span>
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy-muted)" stroke-width="1.8" aria-hidden="true">
+    <span style="font-size:0.6rem;color:var(--slate-light);text-transform:uppercase;letter-spacing:0.1em;">Scroll</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--slate-light)" stroke-width="1.8" aria-hidden="true">
       <path d="M12 5v14M5 12l7 7 7-7"/>
     </svg>
   </div>
@@ -640,16 +553,16 @@
 </section>
 </main>
 
-<!-- placeholder for next sections -->
-<div class="next-section-placeholder"></div>
+<!-- Placeholder next sections -->
+<div style="min-height:80px;background:white;"></div>
 
 
-<!-- ══════════════════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════
+     JS
+══════════════════════════════════════════════ -->
 <script>
-  /* ── Mobile menu ──────────────────────────────── */
-  const overlay = document.getElementById('mobile-overlay');
+  /* Mobile menu */
+  const overlay = document.getElementById('mob-overlay');
   document.getElementById('open-mob').addEventListener('click', () => {
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -665,61 +578,47 @@
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeMob();
   });
 
-  /* ── Sticky header ────────────────────────────── */
+  /* Sticky header */
   const hdr = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
-    hdr.classList.toggle('scrolled', window.scrollY > 50);
-  }, { passive: true });
+  window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
 
-  /* ── Parallax background blobs ────────────────── */
-  const blobs = document.querySelectorAll('.parallax-slow');
+  /* Parallax blobs */
+  const b1 = document.getElementById('blob-1');
+  const b2 = document.getElementById('blob-2');
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
-    blobs.forEach((b, i) => {
-      b.style.transform = `translateY(${y * (i === 0 ? 0.15 : -0.1)}px)`;
-    });
+    b1.style.transform = `translateY(${y * 0.12}px)`;
+    b2.style.transform = `translateY(${y * -0.08}px)`;
   }, { passive: true });
 
-  /* ── Intersection Observer: reveal ───────────── */
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
+  /* Intersection Observer — reveal */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  /* ── Counter animation ────────────────────────── */
-  function animCounter(el, target, isDecimal) {
-    const dur = 1800;
-    const t0 = performance.now();
+  /* Counter animation */
+  function animCount(el, target, decimal) {
+    const dur = 1800, t0 = performance.now();
     (function tick(now) {
       const p = Math.min((now - t0) / dur, 1);
       const ease = 1 - Math.pow(1 - p, 3);
-      if (isDecimal) {
-        el.textContent = (ease * (target / 10)).toFixed(1);
-      } else {
-        el.textContent = Math.round(ease * target) + (el.id === 'stat-patients' ? '+' : '');
-      }
+      el.textContent = decimal
+        ? (ease * target / 10).toFixed(1)
+        : Math.round(ease * target) + (el.id === 'stat-patients' ? '+' : '');
       if (p < 1) requestAnimationFrame(tick);
     })(t0);
   }
-
-  const counterObs = new IntersectionObserver(entries => {
+  const cio = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        const el = e.target;
-        animCounter(el, parseInt(el.dataset.target), el.dataset.decimal === 'true');
-        counterObs.unobserve(el);
+        animCount(e.target, parseInt(e.target.dataset.target), e.target.dataset.decimal === 'true');
+        cio.unobserve(e.target);
       }
     });
   }, { threshold: 0.5 });
-
   ['stat-patients','stat-years','stat-spec','stat-rating'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) counterObs.observe(el);
+    const el = document.getElementById(id); if (el) cio.observe(el);
   });
 </script>
 
