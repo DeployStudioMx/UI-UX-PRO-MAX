@@ -327,20 +327,17 @@
 ══════════════════════════════════════════════ -->
 <main>
 <section id="hero"
-         class="relative min-h-dvh flex items-center overflow-hidden pt-24 pb-12"
-         style="background: linear-gradient(160deg, #F0F7FF 0%, #F8FAFB 55%, #F0FDFA 100%);"
+         class="relative overflow-hidden"
+         style="background: linear-gradient(160deg, #F0F7FF 0%, #F8FAFB 55%, #F0FDFA 100%);min-height:100dvh;"
          aria-labelledby="hero-heading">
 
-  <!-- Background blobs (parallax) -->
+  <!-- Background blobs -->
   <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-    <div id="blob-1"
-         class="absolute -top-40 -right-40 w-[640px] h-[640px] rounded-full opacity-50"
-         style="background: radial-gradient(circle, rgba(13,148,136,0.12) 0%, transparent 70%);"></div>
-    <div id="blob-2"
-         class="absolute -bottom-32 -left-32 w-[480px] h-[480px] rounded-full opacity-40"
-         style="background: radial-gradient(circle, rgba(37,99,235,0.10) 0%, transparent 70%);"></div>
-    <!-- Dot grid -->
-    <svg class="absolute inset-0 w-full h-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <div id="blob-1" class="absolute -top-40 left-0 w-[500px] h-[500px] rounded-full opacity-40"
+         style="background:radial-gradient(circle,rgba(13,148,136,0.13) 0%,transparent 70%);"></div>
+    <div id="blob-2" class="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full opacity-30"
+         style="background:radial-gradient(circle,rgba(37,99,235,0.10) 0%,transparent 70%);"></div>
+    <svg class="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
         <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
           <circle cx="2" cy="2" r="1.5" fill="var(--navy)"/>
@@ -350,197 +347,205 @@
     </svg>
   </div>
 
-  <div id="hero-content" class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full">
-    <div class="grid lg:grid-cols-2 gap-10 xl:gap-16 items-center">
+  <!-- Full-height grid -->
+  <div class="relative z-10 grid lg:grid-cols-[1fr_48%] min-h-[100dvh]">
 
-      <!-- ── LEFT copy ──────────────────────────── -->
-      <div class="order-2 lg:order-1 flex flex-col items-start">
+    <!-- ── LEFT: copy (scrollable, padded) ──────── -->
+    <div id="hero-content"
+         class="flex flex-col justify-center px-6 sm:px-10 lg:px-16 xl:px-20
+                pt-32 pb-16 lg:py-0">
 
-        <!-- Eyebrow -->
-        <div class="reveal d1 flex items-center gap-2 mb-6 w-fit
-                    rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest"
-             style="background:var(--mint-pale);color:var(--mint);">
-          <span class="w-2 h-2 rounded-full inline-block" style="background:var(--mint);"></span>
-          Polanco, CDMX &mdash; Alta Especialidad
+      <!-- Eyebrow -->
+      <div class="reveal d1 flex items-center gap-2 mb-7 w-fit rounded-full
+                  px-4 py-1.5 text-xs font-semibold uppercase tracking-widest"
+           style="background:var(--mint-pale);color:var(--mint);">
+        <span class="w-2 h-2 rounded-full inline-block" style="background:var(--mint);"></span>
+        Polanco, CDMX &mdash; Alta Especialidad
+      </div>
+
+      <!-- Headline -->
+      <h1 id="hero-heading"
+          class="reveal d2 font-serif font-bold leading-[1.08] mb-6"
+          style="color:var(--navy);font-size:clamp(2.4rem,4.5vw,3.75rem);">
+        Tu sonrisa<br/>
+        merece el mejor<br/>
+        <em class="text-mint not-italic">cuidado.</em>
+      </h1>
+
+      <!-- Sub -->
+      <p class="reveal d3 leading-relaxed max-w-md mb-9"
+         style="color:var(--slate);font-size:clamp(1rem,1.3vw,1.15rem);">
+        En <strong style="color:var(--navy);font-weight:600;">Clínica Dental Lumina</strong>
+        combinamos tecnología de vanguardia con atención cálida y personalizada.
+        Tu bienestar bucal es nuestra prioridad.
+      </p>
+
+      <!-- CTAs -->
+      <div class="reveal d4 flex flex-wrap gap-3 mb-10">
+        <a href="#contacto" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+          </svg>
+          Agenda tu cita
+        </a>
+        <a href="#servicios" class="btn-outline">
+          Ver servicios
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Service chips -->
+      <div class="reveal d5 flex flex-wrap gap-2 mb-10" role="list" aria-label="Servicios disponibles">
+        <span class="chip" role="listitem"><span class="chip-dot"></span>Ortodoncia</span>
+        <span class="chip" role="listitem"><span class="chip-dot blue"></span>Implantes</span>
+        <span class="chip" role="listitem"><span class="chip-dot"></span>Blanqueamiento</span>
+        <span class="chip" role="listitem"><span class="chip-dot blue"></span>Carillas</span>
+        <span class="chip" role="listitem"><span class="chip-dot"></span>Limpieza Dental</span>
+        <span class="chip" role="listitem"><span class="chip-dot blue"></span>Odontología Estética</span>
+      </div>
+
+      <!-- Social proof -->
+      <div class="reveal flex items-center gap-5 flex-wrap" style="transition-delay:0.72s;">
+        <div class="flex -space-x-2.5" aria-label="Pacientes satisfechos">
+          <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
+               style="background:linear-gradient(135deg,#14B8A6,#0D9488);" aria-hidden="true">MA</div>
+          <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
+               style="background:linear-gradient(135deg,#3B82F6,#2563EB);" aria-hidden="true">JR</div>
+          <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
+               style="background:linear-gradient(135deg,#60A5FA,#3B82F6);" aria-hidden="true">SL</div>
+          <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold"
+               style="background:var(--bg);color:var(--slate);" aria-hidden="true">+</div>
         </div>
-
-        <!-- Headline -->
-        <h1 id="hero-heading"
-            class="reveal d2 font-serif text-4xl sm:text-5xl xl:text-6xl font-bold leading-[1.1] mb-6"
-            style="color:var(--navy);">
-          Tu sonrisa<br/>
-          merece el mejor<br/>
-          <em class="text-mint not-italic">cuidado.</em>
-        </h1>
-
-        <!-- Subheadline -->
-        <p class="reveal d3 text-base sm:text-lg leading-relaxed max-w-md mb-8"
-           style="color:var(--slate);">
-          En <strong style="color:var(--navy);font-weight:600;">Clínica Dental Lumina</strong>
-          combinamos tecnología de vanguardia con atención cálida y personalizada.
-          Tu bienestar bucal es nuestra prioridad.
-        </p>
-
-        <!-- CTAs -->
-        <div class="reveal d4 flex flex-wrap gap-3 mb-10">
-          <a href="#contacto" class="btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-              <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
-            </svg>
-            Agenda tu cita
-          </a>
-          <a href="#servicios" class="btn-outline">
-            Ver servicios
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
-
-        <!-- Service chips -->
-        <div class="reveal d5 flex flex-wrap gap-2 mb-10" role="list" aria-label="Servicios disponibles">
-          <span class="chip" role="listitem"><span class="chip-dot"></span>Ortodoncia</span>
-          <span class="chip" role="listitem"><span class="chip-dot blue"></span>Implantes</span>
-          <span class="chip" role="listitem"><span class="chip-dot"></span>Blanqueamiento</span>
-          <span class="chip" role="listitem"><span class="chip-dot blue"></span>Carillas</span>
-          <span class="chip" role="listitem"><span class="chip-dot"></span>Limpieza Dental</span>
-          <span class="chip" role="listitem"><span class="chip-dot blue"></span>Odontología Estética</span>
-        </div>
-
-        <!-- Social proof row -->
-        <div class="reveal flex items-center gap-5 flex-wrap" style="transition-delay:0.72s;">
-          <div class="flex -space-x-2.5" aria-label="Pacientes satisfechos">
-            <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-                 style="background:linear-gradient(135deg,#14B8A6,#0D9488);" aria-hidden="true">MA</div>
-            <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-                 style="background:linear-gradient(135deg,#3B82F6,#2563EB);" aria-hidden="true">JR</div>
-            <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-                 style="background:linear-gradient(135deg,#60A5FA,#3B82F6);" aria-hidden="true">SL</div>
-            <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold"
-                 style="background:var(--bg);color:var(--slate);" aria-hidden="true">+</div>
+        <div>
+          <div class="flex gap-0.5 mb-0.5" aria-label="Calificación 5 estrellas">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
-          <div>
-            <div class="flex gap-0.5 mb-0.5" aria-label="Calificación 5 de 5 estrellas">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            </div>
-            <p class="text-xs font-medium" style="color:var(--slate-light);">
-              <span style="color:var(--navy);font-weight:600;">500+</span> pacientes satisfechos
-            </p>
-          </div>
-        </div>
-
-      </div><!-- /left copy -->
-
-      <!-- ── RIGHT visual ───────────────────────── -->
-      <div class="order-1 lg:order-2 relative flex justify-center lg:justify-end">
-
-        <!-- Photo card -->
-        <div class="hero-img-wrap reveal d2 w-full max-w-sm sm:max-w-[400px]" style="height:520px;">
-          <img src="assets/hero.webp"
-               alt="Especialista dental revisando la sonrisa de una paciente en Clínica Dental Lumina, Polanco CDMX"
-               width="400" height="520"
-               loading="eager"
-               onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(155deg,#CCFBF1 0%,#A7F3D0 50%,#6EE7B7 100%)';" />
-          <!-- Bottom overlay text -->
-          <div class="absolute bottom-0 left-0 right-0 p-6 z-10">
-            <p class="font-serif text-xl font-semibold text-white leading-tight">Clínica Dental Lumina</p>
-            <p class="text-sm mt-0.5" style="color:rgba(255,255,255,0.75);">Polanco, Miguel Hidalgo · CDMX</p>
-          </div>
-        </div>
-
-        <!-- Card: Doctor ── -->
-        <div class="fcard absolute -left-4 sm:-left-10 top-12 w-52 float reveal d3"
-             style="animation-delay:0.3s;" aria-label="Dra. Valeria Torres — Ortodoncista">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-white text-sm"
-                 style="background:linear-gradient(135deg,var(--mint-light),var(--mint));">VT</div>
-            <div>
-              <p class="font-semibold text-sm leading-tight" style="color:var(--navy);">Dra. Valeria Torres</p>
-              <p class="text-xs mt-0.5 font-medium" style="color:var(--mint);">Ortodoncista</p>
-            </div>
-          </div>
-          <div class="flex gap-0.5 mb-1" aria-label="5 estrellas">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </div>
-          <p class="text-xs" style="color:var(--slate-light);">4.9 · 120+ reseñas</p>
-        </div>
-
-        <!-- Card: Disponibilidad ── -->
-        <div class="fcard absolute -right-2 sm:-right-8 bottom-28 w-48 float-slow reveal d4"
-             style="animation-delay:0.8s;" aria-label="Cita disponible mañana a las 10 AM">
-          <div class="flex items-center gap-2.5 mb-2.5">
-            <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                 style="background:var(--mint-pale);">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
-              </svg>
-            </div>
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-wide" style="color:var(--mint);">Disponible</p>
-              <p class="font-bold text-sm" style="color:var(--navy);">Mañana 10 AM</p>
-            </div>
-          </div>
-          <div class="h-px w-full mb-2.5" style="background:var(--border);"></div>
-          <a href="#contacto"
-             class="block text-center text-xs font-semibold rounded-full py-1.5 transition-all duration-200"
-             style="background:var(--mint-pale);color:var(--mint);"
-             onmouseover="this.style.background='var(--mint)';this.style.color='white';"
-             onmouseout="this.style.background='var(--mint-pale)';this.style.color='var(--mint)';">
-            Reservar ahora →
-          </a>
-        </div>
-
-        <!-- Badge: Certificados ── -->
-        <div class="fcard absolute top-6 right-2 sm:right-4 flex items-center gap-2.5 float reveal d3"
-             style="padding:0.65rem 1rem;animation-delay:1.2s;" aria-label="Certificados por AOM y CMD">
-          <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-               style="background:linear-gradient(135deg,var(--mint-light),var(--mint));">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" aria-hidden="true">
-              <path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/>
-            </svg>
-          </div>
-          <div>
-            <p class="font-bold text-sm leading-tight" style="color:var(--navy);">Certificados</p>
-            <p class="text-xs" style="color:var(--slate-light);">AOM &amp; CMD</p>
-          </div>
-        </div>
-
-      </div><!-- /right visual -->
-    </div><!-- /grid -->
-
-    <!-- ── Stats strip ────────────────────────────── -->
-    <div class="stat-strip reveal mt-12 lg:mt-14 px-6 sm:px-10 py-5 d5"
-         style="transition-delay:0.65s;" role="list" aria-label="Estadísticas de la clínica">
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-0
-                  divide-y-2 sm:divide-y-0 sm:divide-x divide-slate-100">
-        <div class="text-center py-3 sm:py-0 flex flex-col items-center" role="listitem">
-          <p class="font-serif text-3xl font-bold text-mint mb-1" id="stat-patients" data-target="500">0</p>
-          <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Pacientes</p>
-        </div>
-        <div class="text-center py-3 sm:py-0 flex flex-col items-center" role="listitem">
-          <p class="font-serif text-3xl font-bold text-mint mb-1" id="stat-years" data-target="12">0</p>
-          <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Años de experiencia</p>
-        </div>
-        <div class="text-center py-3 sm:py-0 flex flex-col items-center" role="listitem">
-          <p class="font-serif text-3xl font-bold text-mint mb-1" id="stat-spec" data-target="6">0</p>
-          <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Especialidades</p>
-        </div>
-        <div class="text-center py-3 sm:py-0 flex flex-col items-center" role="listitem">
-          <p class="font-serif text-3xl font-bold text-mint mb-1" id="stat-rating" data-target="49" data-decimal="true">0</p>
-          <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Calificación Google</p>
+          <p class="text-xs font-medium" style="color:var(--slate-light);">
+            <span style="color:var(--navy);font-weight:600;">500+</span> pacientes satisfechos
+          </p>
         </div>
       </div>
-    </div>
 
-  </div><!-- /hero-content -->
+      <!-- Stats strip (bottom of left col) -->
+      <div class="stat-strip reveal mt-12 px-6 py-4 d5" style="transition-delay:0.8s;"
+           role="list" aria-label="Estadísticas de la clínica">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-0
+                    divide-y-2 sm:divide-y-0 sm:divide-x divide-slate-100">
+          <div class="text-center py-2 sm:py-0 flex flex-col items-center" role="listitem">
+            <p class="font-serif text-2xl font-bold text-mint mb-0.5" id="stat-patients" data-target="500">0</p>
+            <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Pacientes</p>
+          </div>
+          <div class="text-center py-2 sm:py-0 flex flex-col items-center" role="listitem">
+            <p class="font-serif text-2xl font-bold text-mint mb-0.5" id="stat-years" data-target="12">0</p>
+            <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Años</p>
+          </div>
+          <div class="text-center py-2 sm:py-0 flex flex-col items-center" role="listitem">
+            <p class="font-serif text-2xl font-bold text-mint mb-0.5" id="stat-spec" data-target="6">0</p>
+            <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Especialidades</p>
+          </div>
+          <div class="text-center py-2 sm:py-0 flex flex-col items-center" role="listitem">
+            <p class="font-serif text-2xl font-bold text-mint mb-0.5" id="stat-rating" data-target="49" data-decimal="true">0</p>
+            <p class="text-xs uppercase tracking-widest font-medium" style="color:var(--slate-light);">Google ★</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /left -->
+
+    <!-- ── RIGHT: full-height photo ─────────────── -->
+    <div class="relative hidden lg:block" aria-hidden="false">
+
+      <!-- Photo — fills entire column -->
+      <div class="absolute inset-0 reveal d2" style="border-radius:0 0 0 48px;overflow:hidden;">
+        <img src="assets/hero.webp"
+             alt="Especialista dental revisando la sonrisa de una paciente en Clínica Dental Lumina, Polanco CDMX"
+             style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"
+             loading="eager"
+             onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(155deg,#CCFBF1 0%,#A7F3D0 50%,#6EE7B7 100%)';" />
+        <!-- Gradient overlay -->
+        <div style="position:absolute;inset:0;
+                    background:linear-gradient(to top,rgba(15,23,42,0.6) 0%,rgba(15,23,42,0.1) 40%,transparent 65%);
+                    pointer-events:none;"></div>
+        <!-- Bottom label -->
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:2rem 2.5rem;">
+          <p class="font-serif text-xl font-semibold text-white">Clínica Dental Lumina</p>
+          <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin-top:0.25rem;">
+            Polanco, Miguel Hidalgo · CDMX
+          </p>
+        </div>
+      </div>
+
+      <!-- Floating card: Doctor -->
+      <div class="fcard absolute left-0 -translate-x-1/2 top-32 w-52 float reveal d3"
+           style="animation-delay:0.3s;z-index:20;" aria-label="Dra. Valeria Torres">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center
+                      font-bold text-white text-sm"
+               style="background:linear-gradient(135deg,var(--mint-light),var(--mint));">VT</div>
+          <div>
+            <p class="font-semibold text-sm leading-tight" style="color:var(--navy);">Dra. Valeria Torres</p>
+            <p class="text-xs mt-0.5 font-medium" style="color:var(--mint);">Ortodoncista</p>
+          </div>
+        </div>
+        <div class="flex gap-0.5 mb-1" aria-label="5 estrellas">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="text-xs" style="color:var(--slate-light);">4.9 · 120+ reseñas</p>
+      </div>
+
+      <!-- Floating card: Disponibilidad -->
+      <div class="fcard absolute right-8 bottom-36 w-48 float-slow reveal d4"
+           style="animation-delay:0.8s;z-index:20;" aria-label="Cita disponible mañana 10 AM">
+        <div class="flex items-center gap-2.5 mb-2.5">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+               style="background:var(--mint-pale);">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide" style="color:var(--mint);">Disponible</p>
+            <p class="font-bold text-sm" style="color:var(--navy);">Mañana 10 AM</p>
+          </div>
+        </div>
+        <div class="h-px w-full mb-2.5" style="background:var(--border);"></div>
+        <a href="#contacto"
+           class="block text-center text-xs font-semibold rounded-full py-1.5 transition-all duration-200"
+           style="background:var(--mint-pale);color:var(--mint);"
+           onmouseover="this.style.background='var(--mint)';this.style.color='white';"
+           onmouseout="this.style.background='var(--mint-pale)';this.style.color='var(--mint)';">
+          Reservar ahora →
+        </a>
+      </div>
+
+      <!-- Badge: Certificados -->
+      <div class="fcard absolute top-8 right-8 flex items-center gap-2.5 float reveal d3"
+           style="padding:0.65rem 1rem;animation-delay:1.2s;z-index:20;" aria-label="Certificados AOM y CMD">
+        <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+             style="background:linear-gradient(135deg,var(--mint-light),var(--mint));">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" aria-hidden="true">
+            <path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/>
+          </svg>
+        </div>
+        <div>
+          <p class="font-bold text-sm leading-tight" style="color:var(--navy);">Certificados</p>
+          <p class="text-xs" style="color:var(--slate-light);">AOM &amp; CMD</p>
+        </div>
+      </div>
+
+    </div><!-- /right photo -->
+
+  </div><!-- /full-height grid -->
 
   <!-- Scroll hint -->
   <div class="scroll-hint hidden md:flex" aria-hidden="true">
