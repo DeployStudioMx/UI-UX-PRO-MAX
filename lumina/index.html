@@ -213,9 +213,9 @@
       will-change: transform, opacity;
     }
 
-    /* Navigation dots — sit above the stats strip */
+    /* Navigation dots */
     #hero-dots {
-      position: absolute; bottom: 5.6rem; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
       z-index: 20; display: flex; gap: 0.55rem; align-items: center;
     }
     .hero-dot {
@@ -228,39 +228,39 @@
       background: white; transform: scale(1.35);
     }
 
-    /* ── Hero stats strip — glassmorphism inside hero card ── */
+    /* ── Hero stats panel — bottom-right glass card ── */
     #hero-stats {
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 15;
-      display: flex; align-items: stretch;
-      background: rgba(8, 16, 28, 0.62);
+      position: absolute; right: 2.5rem; bottom: 2.5rem; z-index: 15;
+      display: grid; grid-template-columns: 1fr 1fr;
+      width: 260px;
+      background: rgba(8, 16, 28, 0.66);
       backdrop-filter: blur(32px) saturate(160%);
       -webkit-backdrop-filter: blur(32px) saturate(160%);
-      border-top: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 18px;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.07);
+      overflow: hidden;
     }
     .hstat-item {
-      flex: 1; padding: 1.35rem 1rem;
+      padding: 1.25rem 1rem;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       gap: 0.2rem; text-align: center;
-      border-right: 1px solid rgba(255,255,255,0.07);
     }
-    .hstat-item:last-child { border-right: none; }
+    .hstat-item:nth-child(1),
+    .hstat-item:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .hstat-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.07); }
     .hstat-num {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+      font-size: clamp(1.4rem, 2.4vw, 1.9rem);
       font-weight: 700; color: white; line-height: 1;
     }
     .hstat-num span { color: var(--mint-light); }
     .hstat-label {
-      font-size: 0.65rem; font-weight: 500;
+      font-size: 0.62rem; font-weight: 500;
       color: rgba(255,255,255,0.42); text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.09em;
     }
-    @media (max-width: 480px) {
-      #hero-stats { flex-wrap: wrap; }
-      .hstat-item { flex: 1 1 50%; border-bottom: 1px solid rgba(255,255,255,0.07); }
-      .hstat-item:nth-child(2) { border-right: none; }
-      .hstat-item:nth-last-child(-n+2) { border-bottom: none; }
-    }
+    @media (max-width: 768px) { #hero-stats { display: none; } }
 
     /* Gradient overlay — más ligero para mostrar más imagen */
     #hero-overlay {
