@@ -328,6 +328,23 @@
     .btn-hero:focus-visible { outline: 3px solid white; outline-offset: 3px; }
 
 
+    /* Secondary hero CTA — outline */
+    .btn-hero-outline {
+      display: inline-flex; align-items: center;
+      border: 1.5px solid rgba(255,255,255,0.55);
+      color: white; background: transparent;
+      font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 1rem 2.25rem; border-radius: 50px;
+      text-decoration: none; min-height: 52px;
+      transition: background 0.2s, border-color 0.2s;
+      touch-action: manipulation;
+    }
+    .btn-hero-outline:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.9);
+    }
+
     /* Scroll indicator */
     @keyframes scrollBounce {
       0%,100% { transform: translateY(0); opacity: 0.5; }
@@ -444,14 +461,15 @@
       En <strong style="font-weight:600;color:white;">Clínica Dental Lumina</strong> combinamos tecnología de vanguardia con atención cálida y personalizada. Tu bienestar bucal es nuestra prioridad.
     </p>
 
-    <!-- Single CTA -->
-    <div class="reveal d4">
+    <!-- CTAs -->
+    <div class="reveal d4" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
       <a href="#contacto" class="btn-hero" aria-label="Agenda tu cita en Clínica Dental Lumina">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
           <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
         </svg>
         Agenda tu cita
       </a>
+      <a href="#servicios" class="btn-hero-outline">Ver servicios</a>
     </div>
   </div>
 
