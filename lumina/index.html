@@ -604,36 +604,70 @@
         ? targetIdx
         : (cur + dir + slides.length) % slides.length;
 
+      const cw = card.offsetWidth;
+      const ch = card.offsetHeight;
+      const sw = cw / COLS;
+      const sh = ch / ROWS;
+
+      /* Snapshot current slide into shards */
       const shards = createShards(slides[cur]);
 
+      /* Incoming slide: start zoomed-in + invisible, animate in gracefully */
       slides[cur].classList.remove('is-active');
+      slides[next].style.cssText =
+        'opacity:0;transform:scale(1.05);will-change:opacity,transform;';
       slides[next].classList.add('is-active');
       setDots(next);
 
-      const maxDelay = 480;
-      shards.forEach(shard => {
-        const delay = Math.random() * maxDelay;
-        const dx    = dir * (120 + Math.random() * 220);
-        const dy    = (Math.random() - 0.5) * 110;
-        const dur   = 440 + Math.random() * 320;
-        const rot   = (Math.random() - 0.5) * 18;
-        const sc    = 0.55 + Math.random() * 0.25;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        slides[next].style.cssText =
+          'opacity:1;transform:scale(1);will-change:opacity,transform;' +
+          'transition:opacity 0.7s ease, transform 1.2s cubic-bezier(0.16,1,0.3,1);';
+      }));
+
+      /* Fly shards out: wave delay + radial-directional scatter + motion blur */
+      const maxDelay = 520;
+      shards.forEach((shard, i) => {
+        const c  = i % COLS;
+        const r  = Math.floor(i / COLS);
+        const cx = c * sw + sw / 2;
+        const cy = r * sh + sh / 2;
+
+        /* Radial vector from card center */
+        const rdx = (cx - cw / 2) / (cw / 2);
+        const rdy = (cy - ch / 2) / (ch / 2);
+
+        /* 70% directional sweep + 30% radial explosion */
+        const dx = dir * (95 + Math.random() * 175) + rdx * 70;
+        const dy = rdy * 80 + (Math.random() - 0.5) * 60;
+
+        /* Wave delay sweeping from the leading edge */
+        const wavePos = dir > 0 ? c / COLS : (COLS - 1 - c) / COLS;
+        const delay   = wavePos * 340 + Math.random() * 140;
+
+        const dur    = 580 + Math.random() * 280;
+        const rot    = (Math.random() - 0.5) * 20;
+        const sc     = 0.38 + Math.random() * 0.3;
+        const blur   = Math.min(7, Math.sqrt(dx*dx + dy*dy) / 42).toFixed(1);
+
         setTimeout(() => {
           shard.style.transition =
-            `transform ${dur}ms cubic-bezier(0.4,0,0.9,1),` +
-            `opacity ${dur * 0.65}ms ease`;
-          shard.style.transform =
-            `translate(${dx}px,${dy}px) rotate(${rot}deg) scale(${sc})`;
-          shard.style.opacity = '0';
+            `transform ${dur}ms cubic-bezier(0.4,0,0.8,1),` +
+            `opacity ${dur * 0.52}ms ease,` +
+            `filter ${dur * 0.45}ms ease`;
+          shard.style.transform = `translate(${dx}px,${dy}px) rotate(${rot}deg) scale(${sc})`;
+          shard.style.filter    = `blur(${blur}px)`;
+          shard.style.opacity   = '0';
         }, delay);
       });
 
       setTimeout(() => {
         grid.innerHTML = '';
+        slides[next].style.cssText = '';
         cur = next;
         busy = false;
         scheduleNext();
-      }, maxDelay + 820);
+      }, maxDelay + 940);
     }
 
     function scheduleNext() {
