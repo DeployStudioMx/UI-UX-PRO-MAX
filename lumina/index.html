@@ -272,13 +272,13 @@
         linear-gradient(to top,   rgba(15,23,42,0.75) 0%, rgba(15,23,42,0.0) 50%);
     }
 
-    /* Hero content — centrado vertical */
+    /* Hero content — anclado en 60% vertical */
     #hero-content {
       position: relative; z-index: 10;
       padding: 2rem 3rem 2rem 4rem;
       max-width: 780px;
       margin-top: auto;
-      margin-bottom: auto;
+      margin-bottom: 8%;
     }
     @media (min-width: 640px)  { #hero-content { padding: 2.5rem 3.5rem 2.5rem 4.5rem; } }
     @media (min-width: 1024px) { #hero-content { padding: 3rem 5rem 3rem 5.5rem; } }
@@ -304,7 +304,7 @@
       font-weight: 300;
       color: rgba(255,255,255,0.88);
       line-height: 1.65;
-      max-width: 540px;
+      max-width: 620px;
       margin-bottom: 2.5rem;
       letter-spacing: 0.01em;
     }
@@ -350,16 +350,6 @@
     }
 
     /* Scroll indicator */
-    @keyframes scrollBounce {
-      0%,100% { transform: translateY(0); opacity: 0.5; }
-      50%      { transform: translateY(8px); opacity: 1; }
-    }
-    .scroll-hint {
-      position: absolute; right: 2.5rem; bottom: 7rem; z-index: 11;
-      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
-      animation: scrollBounce 2.5s ease-in-out infinite;
-    }
-    @media (max-width: 768px) { .scroll-hint { display: none; } }
 
     /* ── Buttons for other sections ──────── */
     .btn-primary {
@@ -477,11 +467,6 @@
     </div>
   </div>
 
-    <!-- Scroll indicator — inside card -->
-    <div class="scroll-hint" aria-hidden="true">
-      <span style="font-size:0.6rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.12em;writing-mode:vertical-rl;">Scroll</span>
-      <div style="width:1px;height:48px;background:linear-gradient(to bottom,rgba(255,255,255,0.4),transparent);margin-top:0.5rem;"></div>
-    </div>
 
 
     <!-- Carousel dots -->
