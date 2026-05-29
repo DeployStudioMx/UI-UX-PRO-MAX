@@ -229,51 +229,41 @@
       background: white; transform: scale(1.35);
     }
 
-    /* ── Floating UI cards ───────────────── */
-    .hero-float {
-      position: absolute; z-index: 20;
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(20px) saturate(1.4);
-      -webkit-backdrop-filter: blur(20px) saturate(1.4);
-      border-radius: 16px;
-      box-shadow: 0 8px 40px rgba(15,23,42,0.13), 0 2px 8px rgba(15,23,42,0.06);
-      display: flex; align-items: center; gap: 0.75rem;
-      opacity: 0;
-      pointer-events: auto;
+    /* ── Stats bar ───────────────────────── */
+    #stats-bar {
+      background: var(--white);
+      padding: 0 1rem 1rem;
     }
-    .hero-float.visible { opacity: 1; }
-
-    #float-doctor {
-      left: 1.75rem; top: 50%;
-      padding: 0.85rem 1.1rem;
-      transform: translateY(calc(-50% + var(--py, 0px)));
-      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1) 1.1s;
+    .stats-inner {
+      display: flex; align-items: stretch;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
     }
-    #float-cert {
-      right: 1.75rem; top: 1.75rem;
-      padding: 0.7rem 1rem;
-      transform: translateY(var(--py, 0px));
-      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1) 1.4s;
+    .stat-item {
+      flex: 1; padding: 1.5rem 1rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.25rem; text-align: center;
+      border-right: 1px solid var(--border);
     }
-    #float-avail {
-      right: 1.75rem; bottom: 5.5rem;
-      padding: 0.85rem 1.1rem;
-      flex-direction: column; align-items: stretch; gap: 0.6rem;
-      transform: translateY(var(--py, 0px));
-      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1) 1.7s;
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700; color: var(--navy); line-height: 1;
     }
-    .float-avail-btn {
-      display: block; text-align: center;
-      background: rgba(13,148,136,0.09); color: var(--mint);
-      font-size: 0.78rem; font-weight: 600;
-      padding: 0.45rem 1rem; border-radius: 50px;
-      text-decoration: none;
-      transition: background 0.2s;
+    .stat-num span { color: var(--mint); }
+    .stat-label {
+      font-size: 0.72rem; font-weight: 500;
+      color: var(--slate-light); text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
-    .float-avail-btn:hover { background: rgba(13,148,136,0.18); }
-
-    @media (max-width: 767px) { .hero-float { display: none; } }
-    @media (min-width: 768px) and (max-width: 1199px) { #float-doctor { display: none; } }
+    @media (max-width: 480px) {
+      .stats-inner { flex-wrap: wrap; }
+      .stat-item { flex: 1 1 50%; border-bottom: 1px solid var(--border); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+    }
 
     /* Gradient overlay */
     #hero-overlay {
@@ -505,41 +495,6 @@
     </div>
 
 
-    <!-- Floating UI cards -->
-    <div class="hero-float" id="float-doctor" aria-hidden="true">
-      <div style="width:46px;height:46px;border-radius:12px;background:var(--mint);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:0.85rem;flex-shrink:0;letter-spacing:0.04em;">VT</div>
-      <div>
-        <div style="font-weight:700;font-size:0.88rem;color:var(--navy);line-height:1.2;">Dra. Valeria Torres</div>
-        <div style="font-size:0.73rem;color:var(--mint);font-weight:500;margin-top:0.15rem;">Ortodoncista</div>
-        <div style="font-size:0.7rem;color:var(--slate-light);margin-top:0.25rem;">
-          <span style="color:#F59E0B;">★★★★★</span>&nbsp; 4.9 · 120+ reseñas
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-float" id="float-cert" aria-hidden="true">
-      <div style="width:38px;height:38px;border-radius:50%;background:rgba(13,148,136,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <div>
-        <div style="font-weight:700;font-size:0.85rem;color:var(--navy);">Certificados</div>
-        <div style="font-size:0.71rem;color:var(--slate-light);margin-top:0.1rem;">AOM &amp; CMD</div>
-      </div>
-    </div>
-
-    <div class="hero-float" id="float-avail" aria-hidden="true">
-      <div style="display:flex;align-items:center;gap:0.6rem;">
-        <div style="width:38px;height:38px;border-radius:50%;background:rgba(13,148,136,0.11);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div>
-          <div style="font-size:0.63rem;font-weight:700;letter-spacing:0.1em;color:var(--mint);text-transform:uppercase;">Disponible</div>
-          <div style="font-weight:700;font-size:0.9rem;color:var(--navy);">Mañana 10 AM</div>
-        </div>
-      </div>
-      <a href="#contacto" class="float-avail-btn">Reservar ahora →</a>
-    </div>
-
     <!-- Carousel dots -->
     <div id="hero-dots" role="tablist" aria-label="Diapositivas del hero"></div>
 
@@ -548,8 +503,34 @@
 </section>
 </main>
 
-<!-- placeholder next sections -->
-<div style="height:80px;background:var(--bg);"></div>
+<!-- ══════════════════════════════════════
+     STATS BAR
+══════════════════════════════════════ -->
+<section id="stats-bar" aria-label="Estadísticas de la clínica">
+  <div class="stats-inner">
+
+    <div class="stat-item reveal">
+      <div class="stat-num"><span class="count" data-target="500">0</span><span>+</span></div>
+      <div class="stat-label">Pacientes atendidos</div>
+    </div>
+
+    <div class="stat-item reveal d1">
+      <div class="stat-num"><span class="count" data-target="4" data-decimal="1">0</span><span style="color:var(--mint);">★</span></div>
+      <div class="stat-label">Calificación promedio</div>
+    </div>
+
+    <div class="stat-item reveal d2">
+      <div class="stat-num"><span class="count" data-target="10">0</span><span>+</span></div>
+      <div class="stat-label">Años de experiencia</div>
+    </div>
+
+    <div class="stat-item reveal d3">
+      <div class="stat-num" style="font-size:clamp(1rem,2vw,1.4rem);letter-spacing:-0.01em;">AOM<span> & </span>CMD</div>
+      <div class="stat-label">Certificaciones</div>
+    </div>
+
+  </div>
+</section>
 
 
 <!-- ══════════════════════════════════════
@@ -573,24 +554,31 @@
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeMob();
   });
 
-  /* Floating cards — fade in on load + parallax */
-  (function () {
-    const cards = [
-      { id: 'float-doctor', speed:  0.05 },
-      { id: 'float-cert',   speed: -0.04 },
-      { id: 'float-avail',  speed:  0.07 },
-    ].map(c => ({ el: document.getElementById(c.id), speed: c.speed }))
-     .filter(c => c.el);
-
-    /* Trigger fade-in shortly after page load */
-    requestAnimationFrame(() => cards.forEach(c => c.el.classList.add('visible')));
-
-    /* Scroll parallax — each card at different depth */
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      cards.forEach(({ el, speed }) => el.style.setProperty('--py', `${y * speed}px`));
-    }, { passive: true });
-  })();
+  /* Stats counter animation */
+  function animateCount(el) {
+    const target  = parseFloat(el.dataset.target);
+    const decimal = parseInt(el.dataset.decimal || 0);
+    const dur     = 1600;
+    const start   = performance.now();
+    function ease(t) { return 1 - Math.pow(1 - t, 3); }
+    function step(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const val = target * ease(p);
+      el.textContent = decimal ? val.toFixed(decimal) : Math.floor(val);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = decimal ? target.toFixed(decimal) : target;
+    }
+    requestAnimationFrame(step);
+  }
+  const countIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.count').forEach(animateCount);
+        countIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-item').forEach(el => countIO.observe(el));
 
   /* Header — 3 states: transparent / liquid-dark / liquid-light */
   const hdr = document.getElementById('site-header');
