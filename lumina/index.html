@@ -62,29 +62,50 @@
     /* ── Header ──────────────────────────── */
     #site-header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      padding: 1.5rem 0;
-      transition: background 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
-    }
-    #site-header.scrolled {
-      background: rgba(255,255,255,0.93);
-      backdrop-filter: blur(20px) saturate(1.6);
-      -webkit-backdrop-filter: blur(20px) saturate(1.6);
-      box-shadow: 0 1px 24px rgba(15,23,42,0.08);
-      padding: 0.85rem 0;
+      padding: 2rem 0;
+      transition:
+        background 0.55s cubic-bezier(0.16,1,0.3,1),
+        padding    0.55s cubic-bezier(0.16,1,0.3,1),
+        box-shadow 0.55s cubic-bezier(0.16,1,0.3,1),
+        border-color 0.55s;
+      border-bottom: 1px solid transparent;
     }
 
-    /* Logo — blanco sobre imagen, navy al scrollear */
+    /* State 2 — liquid glass dark (scrolled, still over hero) */
+    #site-header.scrolled {
+      padding: 1.1rem 0;
+      background: rgba(8, 16, 26, 0.14);
+      backdrop-filter: blur(56px) saturate(180%) brightness(1.1);
+      -webkit-backdrop-filter: blur(56px) saturate(180%) brightness(1.1);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.13),
+        0 8px 48px rgba(0,0,0,0.08);
+    }
+
+    /* State 3 — liquid glass light (past hero, over white sections) */
+    #site-header.scrolled.over-light {
+      background: rgba(248,250,251,0.68);
+      backdrop-filter: blur(56px) saturate(200%) brightness(1.04);
+      -webkit-backdrop-filter: blur(56px) saturate(200%) brightness(1.04);
+      border-bottom: 1px solid rgba(255,255,255,0.92);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.95),
+        0 6px 40px rgba(15,23,42,0.07);
+    }
+
+    /* Logo */
     .logo {
       font-family: 'Playfair Display', serif;
       font-size: 1.5rem; font-weight: 600;
       color: white; text-decoration: none;
       letter-spacing: 0.01em;
-      transition: color 0.4s;
+      transition: color 0.5s;
     }
     .logo-dot { color: var(--gold); }
-    #site-header.scrolled .logo { color: var(--navy); }
+    #site-header.scrolled.over-light .logo { color: var(--navy); }
 
-    /* Nav links — visibles al scrollear */
+    /* Nav links */
     .nav-link {
       font-size: 0.85rem; font-weight: 500;
       color: rgba(255,255,255,0.85); text-decoration: none;
@@ -98,8 +119,8 @@
     }
     .nav-link:hover { color: white; }
     .nav-link:hover::after { width: 100%; }
-    #site-header.scrolled .nav-link { color: var(--slate); }
-    #site-header.scrolled .nav-link:hover { color: var(--navy); }
+    #site-header.scrolled.over-light .nav-link { color: var(--slate); }
+    #site-header.scrolled.over-light .nav-link:hover { color: var(--navy); }
 
     /* Phone link */
     .phone-link {
@@ -109,8 +130,8 @@
       transition: color 0.3s;
     }
     .phone-link:hover { color: white; }
-    #site-header.scrolled .phone-link { color: var(--slate-light); }
-    #site-header.scrolled .phone-link:hover { color: var(--navy); }
+    #site-header.scrolled.over-light .phone-link { color: var(--slate-light); }
+    #site-header.scrolled.over-light .phone-link:hover { color: var(--navy); }
 
     /* CTA nav button */
     .btn-nav {
@@ -119,15 +140,15 @@
       font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
       padding: 0.6rem 1.4rem; border-radius: 50px;
       text-decoration: none; min-height: 44px;
-      transition: background 0.2s, transform 0.15s, opacity 0.3s;
+      transition: background 0.2s, transform 0.15s;
       touch-action: manipulation;
     }
     .btn-nav:hover { background: var(--mint-light); transform: translateY(-1px); }
     .btn-nav:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
 
-    /* Hamburger icon color */
-    .menu-icon { color: white; transition: color 0.4s; }
-    #site-header.scrolled .menu-icon { color: var(--navy); }
+    /* Hamburger icon */
+    .menu-icon { color: white; transition: color 0.5s; }
+    #site-header.scrolled.over-light .menu-icon { color: var(--navy); }
 
     /* ── Mobile menu ─────────────────────── */
     #mob-overlay {
@@ -490,11 +511,17 @@
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeMob();
   });
 
-  /* Sticky header */
+  /* Header — 3 states: transparent / liquid-dark / liquid-light */
   const hdr = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
-    hdr.classList.toggle('scrolled', window.scrollY > 80);
-  }, { passive: true });
+  const heroSection = document.getElementById('hero');
+  function updateHeader() {
+    const scrolled = window.scrollY > 60;
+    const pastHero = heroSection.getBoundingClientRect().bottom < 80;
+    hdr.classList.toggle('scrolled', scrolled);
+    hdr.classList.toggle('over-light', pastHero);
+  }
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
 
   /* Parallax on hero image */
   const heroBg = document.getElementById('hero-bg');
