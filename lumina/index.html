@@ -97,13 +97,27 @@
     /* Logo */
     .logo {
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem; font-weight: 600;
+      font-size: 1.95rem; font-weight: 700;
       color: white; text-decoration: none;
       letter-spacing: 0.01em;
       transition: color 0.5s;
+      display: flex; align-items: center; gap: 0.5rem;
     }
     .logo-dot { color: var(--gold); }
     #site-header.scrolled.over-light .logo { color: var(--navy); }
+
+    /* Header inner — 3-column grid */
+    .header-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+    .header-right {
+      display: flex; justify-content: flex-end; align-items: center;
+    }
 
     /* Nav links */
     .nav-link {
@@ -146,23 +160,6 @@
     .btn-nav:hover { background: var(--mint-light); transform: translateY(-1px); }
     .btn-nav:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
 
-    /* Hamburger icon */
-    .menu-icon { color: white; transition: color 0.5s; }
-    #site-header.scrolled.over-light .menu-icon { color: var(--navy); }
-
-    /* ── Mobile menu ─────────────────────── */
-    #mob-overlay {
-      display: none; position: fixed; inset: 0; z-index: 300;
-      background: rgba(15,23,42,0.97); backdrop-filter: blur(20px);
-      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
-    }
-    #mob-overlay.open { display: flex; }
-    .mob-link {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem; color: white; text-decoration: none;
-      transition: color 0.2s;
-    }
-    .mob-link:hover { color: var(--mint-light); }
 
     /* ── HERO ────────────────────────────── */
     /* White page background — image lives inside a rounded card */
@@ -381,62 +378,32 @@
 </a>
 
 <!-- ══════════════════════════════════════
-     MOBILE MENU
-══════════════════════════════════════ -->
-<nav id="mob-overlay" role="dialog" aria-modal="true" aria-label="Menú principal">
-  <button id="close-mob" aria-label="Cerrar menú"
-          class="absolute top-6 right-6 p-2 text-white/50 hover:text-white transition-colors">
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-      <path d="M18 6 6 18M6 6l12 12"/>
-    </svg>
-  </button>
-  <a href="#servicios"   class="mob-link" onclick="closeMob()">Servicios</a>
-  <a href="#por-que"     class="mob-link" onclick="closeMob()">Nosotros</a>
-  <a href="#testimonios" class="mob-link" onclick="closeMob()">Testimonios</a>
-  <a href="#equipo"      class="mob-link" onclick="closeMob()">El Equipo</a>
-  <a href="#contacto"    class="mob-link" onclick="closeMob()">Contacto</a>
-  <a href="#contacto" class="btn-hero mt-4" onclick="closeMob()">Agenda tu cita</a>
-</nav>
-
-<!-- ══════════════════════════════════════
      HEADER
 ══════════════════════════════════════ -->
 <header id="site-header">
-  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 flex items-center justify-between gap-6">
+  <div class="header-grid">
 
     <!-- Logo -->
-    <a href="#" class="logo flex items-center gap-2" aria-label="Clínica Dental Lumina">
-      <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <a href="#" class="logo" aria-label="Clínica Dental Lumina">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
         <path d="M16 3C9 3 3 9 3 16c0 5 3 10 6 13 2 2.5 4 3 5.5 1 .5-1 1-3 1.5-4.5.5 1.5 1 3.5 1.5 4.5C19 32 21 31.5 23 29c3-3 6-8 6-13C29 9 23 3 16 3z"
               fill="var(--mint)"/>
         <path d="M10 11c3-3.5 9-3.5 12 0" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
       </svg>
-      Lumina<span class="logo-dot">.</span>
+      Clínica Dental Lumina<span class="logo-dot">.</span>
     </a>
 
-    <!-- Desktop nav -->
-    <nav class="hidden lg:flex items-center gap-8" aria-label="Navegación principal">
+    <!-- Nav centrado -->
+    <nav class="flex items-center gap-8" aria-label="Navegación principal">
       <a href="#servicios"   class="nav-link">Servicios</a>
       <a href="#por-que"     class="nav-link">Nosotros</a>
       <a href="#testimonios" class="nav-link">Testimonios</a>
       <a href="#contacto"    class="nav-link">Contacto</a>
     </nav>
 
-    <!-- Right side -->
-    <div class="flex items-center gap-4">
-      <a href="tel:+525512345678" class="phone-link hidden sm:flex" aria-label="Llamar a la clínica">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.38 2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16l.92.92z"/>
-        </svg>
-        55 1234 5678
-      </a>
-      <a href="#contacto" class="btn-nav hidden sm:inline-flex">Agendar cita</a>
-      <button id="open-mob" class="menu-icon p-2 rounded-xl hover:bg-white/10 transition-colors"
-              aria-label="Abrir menú">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M3 12h18M3 6h18M3 18h18"/>
-        </svg>
-      </button>
+    <!-- CTA pegado a la derecha -->
+    <div class="header-right">
+      <a href="#contacto" class="btn-nav">Agendar cita</a>
     </div>
 
   </div>
@@ -537,22 +504,6 @@
      JAVASCRIPT
 ══════════════════════════════════════ -->
 <script>
-  /* Mobile menu */
-  const overlay = document.getElementById('mob-overlay');
-  document.getElementById('open-mob').addEventListener('click', () => {
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    document.getElementById('close-mob').focus();
-  });
-  document.getElementById('close-mob').addEventListener('click', closeMob);
-  function closeMob() {
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-    document.getElementById('open-mob').focus();
-  }
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && overlay.classList.contains('open')) closeMob();
-  });
 
   /* Stats counter animation */
   function animateCount(el) {
