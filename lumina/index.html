@@ -228,39 +228,45 @@
       background: white; transform: scale(1.35);
     }
 
-    /* ── Hero stats panel — bottom-right glass card ── */
-    #hero-stats {
-      position: absolute; right: 2.5rem; bottom: 2.5rem; z-index: 15;
-      display: grid; grid-template-columns: 1fr 1fr;
-      width: 260px;
-      background: rgba(8, 16, 28, 0.66);
-      backdrop-filter: blur(32px) saturate(160%);
-      -webkit-backdrop-filter: blur(32px) saturate(160%);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 18px;
-      box-shadow: 0 8px 48px rgba(0,0,0,0.40), inset 0 1px 0 rgba(255,255,255,0.07);
+    /* ── Stats bar — premium below hero ── */
+    #stats-bar {
+      background: var(--white);
+      padding: 0 1rem 1rem;
+    }
+    .stats-inner {
+      display: flex; align-items: stretch;
+      border: 1px solid var(--border);
+      border-radius: 20px;
       overflow: hidden;
     }
-    .hstat-item {
-      padding: 1.25rem 1rem;
+    .stat-item {
+      flex: 1; padding: 2.2rem 1rem;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 0.2rem; text-align: center;
+      gap: 0.35rem; text-align: center; position: relative;
     }
-    .hstat-item:nth-child(1),
-    .hstat-item:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.07); }
-    .hstat-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.07); }
-    .hstat-num {
+    .stat-item:not(:last-child)::after {
+      content: ''; position: absolute; right: 0; top: 22%; bottom: 22%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--border) 40%, var(--border) 60%, transparent);
+    }
+    .stat-num {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.4rem, 2.4vw, 1.9rem);
-      font-weight: 700; color: white; line-height: 1;
+      font-size: clamp(2rem, 3.2vw, 2.7rem);
+      font-weight: 700; color: var(--navy); line-height: 1;
     }
-    .hstat-num span { color: var(--mint-light); }
-    .hstat-label {
-      font-size: 0.62rem; font-weight: 500;
-      color: rgba(255,255,255,0.42); text-transform: uppercase;
-      letter-spacing: 0.09em;
+    .stat-num span { color: var(--mint); }
+    .stat-label {
+      font-size: 0.7rem; font-weight: 500;
+      color: var(--slate-light); text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
-    @media (max-width: 768px) { #hero-stats { display: none; } }
+    @media (max-width: 480px) {
+      .stats-inner { flex-wrap: wrap; }
+      .stat-item { flex: 1 1 50%; }
+      .stat-item:not(:last-child)::after { display: none; }
+      .stat-item { border-bottom: 1px solid var(--border); }
+      .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+    }
 
     /* Gradient overlay — más ligero para mostrar más imagen */
     #hero-overlay {
@@ -467,31 +473,6 @@
 
 
 
-    <!-- Stats strip — glassmorphism at the bottom of hero card -->
-    <div id="hero-stats" aria-label="Estadísticas de la clínica">
-
-      <div class="hstat-item">
-        <div class="hstat-num"><span class="count" data-target="500">0</span><span>+</span></div>
-        <div class="hstat-label">Pacientes atendidos</div>
-      </div>
-
-      <div class="hstat-item">
-        <div class="hstat-num"><span class="count" data-target="4" data-decimal="1">0</span><span>★</span></div>
-        <div class="hstat-label">Calificación promedio</div>
-      </div>
-
-      <div class="hstat-item">
-        <div class="hstat-num"><span class="count" data-target="10">0</span><span>+</span></div>
-        <div class="hstat-label">Años de experiencia</div>
-      </div>
-
-      <div class="hstat-item">
-        <div class="hstat-num" style="font-size:clamp(0.95rem,1.9vw,1.4rem);letter-spacing:-0.01em;">AOM<span> &amp; </span>CMD</div>
-        <div class="hstat-label">Certificaciones</div>
-      </div>
-
-    </div><!-- /hero-stats -->
-
     <!-- Carousel dots -->
     <div id="hero-dots" role="tablist" aria-label="Diapositivas del hero"></div>
 
@@ -500,6 +481,34 @@
 </section>
 </main>
 
+<!-- ══════════════════════════════════════
+     STATS BAR
+══════════════════════════════════════ -->
+<section id="stats-bar" aria-label="Estadísticas de la clínica">
+  <div class="stats-inner">
+
+    <div class="stat-item reveal">
+      <div class="stat-num"><span class="count" data-target="500">0</span><span>+</span></div>
+      <div class="stat-label">Pacientes atendidos</div>
+    </div>
+
+    <div class="stat-item reveal d1">
+      <div class="stat-num"><span class="count" data-target="4" data-decimal="1">0</span><span style="color:var(--mint);">★</span></div>
+      <div class="stat-label">Calificación promedio</div>
+    </div>
+
+    <div class="stat-item reveal d2">
+      <div class="stat-num"><span class="count" data-target="10">0</span><span>+</span></div>
+      <div class="stat-label">Años de experiencia</div>
+    </div>
+
+    <div class="stat-item reveal d3">
+      <div class="stat-num" style="font-size:clamp(1.1rem,2.2vw,1.7rem);letter-spacing:-0.01em;">AOM<span> &amp; </span>CMD</div>
+      <div class="stat-label">Certificaciones</div>
+    </div>
+
+  </div>
+</section>
 
 
 <!-- ══════════════════════════════════════
@@ -531,7 +540,7 @@
       }
     });
   }, { threshold: 0.5 });
-  document.querySelectorAll('.hstat-item').forEach(el => countIO.observe(el));
+  document.querySelectorAll('.stat-item').forEach(el => countIO.observe(el));
 
   /* Header — 3 states: transparent / liquid-dark / liquid-light */
   const hdr = document.getElementById('site-header');
