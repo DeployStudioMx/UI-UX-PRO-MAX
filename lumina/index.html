@@ -389,10 +389,10 @@
 
     <!-- Background image -->
     <div id="hero-bg" aria-hidden="true">
-      <img src="assets/hero2.jpg"
+      <img src="assets/hero2.jpeg"
            alt=""
            loading="eager"
-           onerror="this.parentElement.style.background='linear-gradient(155deg,#0F2027 0%,#203A43 50%,#2C5364 100%)';" />
+           onerror="this.src='assets/hero2.jpg'; this.onerror=function(){this.parentElement.style.background='linear-gradient(155deg,#0F2027 0%,#203A43 50%,#2C5364 100%)';};" />
     </div>
 
     <!-- Overlay -->
