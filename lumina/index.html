@@ -504,24 +504,28 @@
   window.addEventListener('scroll', updateHeader, { passive: true });
   updateHeader();
 
-  /* Parallax on active slide */
-  window.addEventListener('scroll', () => {
-    const offset = window.scrollY * 0.28;
-    document.querySelectorAll('.hero-slide').forEach(s => {
-      s.style.transform = `translateY(${offset}px)`;
-    });
-  }, { passive: true });
-
   /* ── Shard carousel ──────────────────── */
   (function () {
     const COLS = 22, ROWS = 14;
     const slides = Array.from(document.querySelectorAll('.hero-slide'));
     const grid   = document.getElementById('shard-grid');
+    const card   = document.getElementById('hero-card');
     const dotsEl = document.getElementById('hero-dots');
     let cur = 0, busy = false, timer;
     const AUTO = 5500;
 
-    /* Activate first slide */
+    /* Preload images → store natural dimensions for exact cover math */
+    const naturalSizes = {};
+    slides.forEach(slide => {
+      const bg = window.getComputedStyle(slide).backgroundImage;
+      const m  = bg.match(/url\(["']?([^"')]+)["']?\)/);
+      if (m) {
+        const img = new Image();
+        img.onload = () => { naturalSizes[m[1]] = { w: img.naturalWidth, h: img.naturalHeight }; };
+        img.src = m[1];
+      }
+    });
+
     slides[0].classList.add('is-active');
 
     /* Build dots */
@@ -530,33 +534,63 @@
       btn.className = 'hero-dot' + (i === 0 ? ' active' : '');
       btn.setAttribute('role', 'tab');
       btn.setAttribute('aria-label', `Diapositiva ${i + 1}`);
-      btn.addEventListener('click', () => go(i > cur ? 1 : -1, i));
+      btn.addEventListener('click', () => { if (!busy) go(i > cur ? 1 : -1, i); });
       dotsEl.appendChild(btn);
     });
 
     function setDots(idx) {
-      dotsEl.querySelectorAll('.hero-dot').forEach((d, i) => {
-        d.classList.toggle('active', i === idx);
-      });
+      dotsEl.querySelectorAll('.hero-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
     }
 
-    /* Create pixel-shards that mirror the current slide */
-    function createShards(bgImage) {
-      grid.innerHTML = '';
+    /* Parse "center 25%" / "50% 30%" → fractions */
+    function parseBgPos(str) {
+      const kw = { center:0.5, left:0, right:1, top:0, bottom:1 };
+      const parts = str.trim().split(/\s+/);
+      const toF = s => s in kw ? kw[s] : (parseFloat(s) / 100);
+      return { x: toF(parts[0] || 'center'), y: toF(parts[1] || 'center') };
+    }
+
+    /* Create shards that EXACTLY mirror the slide's cover appearance */
+    function createShards(curSlide) {
+      const bgImage = window.getComputedStyle(curSlide).backgroundImage;
+      const bgPos   = window.getComputedStyle(curSlide).backgroundPosition;
+      const cw = card.offsetWidth;
+      const ch = card.offsetHeight;
+
+      /* Default: fill container 1:1 */
+      let coverW = cw, coverH = ch, ox = 0, oy = 0;
+
+      const m = bgImage.match(/url\(["']?([^"')]+)["']?\)/);
+      if (m && naturalSizes[m[1]]) {
+        const nat   = naturalSizes[m[1]];
+        const scale = Math.max(cw / nat.w, ch / nat.h); /* same as background-size:cover */
+        coverW = nat.w * scale;
+        coverH = nat.h * scale;
+        const pos = parseBgPos(bgPos);
+        ox = (cw - coverW) * pos.x;
+        oy = (ch - coverH) * pos.y;
+      }
+
+      const sw = cw / COLS;
+      const sh = ch / ROWS;
       const frag = document.createDocumentFragment();
+
       for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
           const el = document.createElement('div');
           el.className = 'shard';
+          const sx = c * sw, sy = r * sh;
+          /* background-position offsets so each shard shows its exact tile */
           el.style.cssText =
-            `left:${c*100/COLS}%;top:${r*100/ROWS}%;` +
-            `width:${100/COLS + 0.4}%;height:${100/ROWS + 0.4}%;` +
+            `left:${sx}px;top:${sy}px;` +
+            `width:${sw + 1}px;height:${sh + 1}px;` +
             `background-image:${bgImage};` +
-            `background-size:${COLS*100}% ${ROWS*100}%;` +
-            `background-position:${COLS>1 ? c*100/(COLS-1) : 0}% ${ROWS>1 ? r*100/(ROWS-1) : 0}%;`;
+            `background-size:${coverW}px ${coverH}px;` +
+            `background-position:${ox - sx}px ${oy - sy}px;`;
           frag.appendChild(el);
         }
       }
+      grid.innerHTML = '';
       grid.appendChild(frag);
       return Array.from(grid.children);
     }
@@ -570,36 +604,30 @@
         ? targetIdx
         : (cur + dir + slides.length) % slides.length;
 
-      /* Grab computed bg of current slide for shards */
-      const curBg = window.getComputedStyle(slides[cur]).backgroundImage;
-      const shards = createShards(curBg);
+      const shards = createShards(slides[cur]);
 
-      /* Swap real slides instantly (hidden behind shards) */
       slides[cur].classList.remove('is-active');
       slides[next].classList.add('is-active');
       setDots(next);
 
-      /* Fly shards out — biased in transition direction, with scatter */
       const maxDelay = 480;
       shards.forEach(shard => {
-        const delay  = Math.random() * maxDelay;
-        const dx     = dir * (120 + Math.random() * 220);
-        const dy     = (Math.random() - 0.5) * 110;
-        const dur    = 440 + Math.random() * 320;
-        const rot    = (Math.random() - 0.5) * 18;
-        const scale  = 0.55 + Math.random() * 0.25;
-
+        const delay = Math.random() * maxDelay;
+        const dx    = dir * (120 + Math.random() * 220);
+        const dy    = (Math.random() - 0.5) * 110;
+        const dur   = 440 + Math.random() * 320;
+        const rot   = (Math.random() - 0.5) * 18;
+        const sc    = 0.55 + Math.random() * 0.25;
         setTimeout(() => {
           shard.style.transition =
             `transform ${dur}ms cubic-bezier(0.4,0,0.9,1),` +
             `opacity ${dur * 0.65}ms ease`;
           shard.style.transform =
-            `translate(${dx}px,${dy}px) rotate(${rot}deg) scale(${scale})`;
+            `translate(${dx}px,${dy}px) rotate(${rot}deg) scale(${sc})`;
           shard.style.opacity = '0';
         }, delay);
       });
 
-      /* Clean up after all shards are gone */
       setTimeout(() => {
         grid.innerHTML = '';
         cur = next;
