@@ -213,10 +213,10 @@
       will-change: transform, opacity;
     }
 
-    /* Navigation dots */
+    /* Navigation dots — sit above the stats strip */
     #hero-dots {
-      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-      z-index: 10; display: flex; gap: 0.55rem; align-items: center;
+      position: absolute; bottom: 5.6rem; left: 50%; transform: translateX(-50%);
+      z-index: 20; display: flex; gap: 0.55rem; align-items: center;
     }
     .hero-dot {
       width: 6px; height: 6px; border-radius: 50%;
@@ -228,40 +228,38 @@
       background: white; transform: scale(1.35);
     }
 
-    /* ── Stats bar ───────────────────────── */
-    #stats-bar {
-      background: var(--white);
-      padding: 0 1rem 1rem;
-    }
-    .stats-inner {
+    /* ── Hero stats strip — glassmorphism inside hero card ── */
+    #hero-stats {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 15;
       display: flex; align-items: stretch;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
+      background: rgba(8, 16, 28, 0.62);
+      backdrop-filter: blur(32px) saturate(160%);
+      -webkit-backdrop-filter: blur(32px) saturate(160%);
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
-    .stat-item {
-      flex: 1; padding: 1.5rem 1rem;
+    .hstat-item {
+      flex: 1; padding: 1.35rem 1rem;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 0.25rem; text-align: center;
-      border-right: 1px solid var(--border);
+      gap: 0.2rem; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.07);
     }
-    .stat-item:last-child { border-right: none; }
-    .stat-num {
+    .hstat-item:last-child { border-right: none; }
+    .hstat-num {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
-      font-weight: 700; color: var(--navy); line-height: 1;
+      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+      font-weight: 700; color: white; line-height: 1;
     }
-    .stat-num span { color: var(--mint); }
-    .stat-label {
-      font-size: 0.72rem; font-weight: 500;
-      color: var(--slate-light); text-transform: uppercase;
-      letter-spacing: 0.08em;
+    .hstat-num span { color: var(--mint-light); }
+    .hstat-label {
+      font-size: 0.65rem; font-weight: 500;
+      color: rgba(255,255,255,0.42); text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
     @media (max-width: 480px) {
-      .stats-inner { flex-wrap: wrap; }
-      .stat-item { flex: 1 1 50%; border-bottom: 1px solid var(--border); }
-      .stat-item:nth-child(2) { border-right: none; }
-      .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+      #hero-stats { flex-wrap: wrap; }
+      .hstat-item { flex: 1 1 50%; border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .hstat-item:nth-child(2) { border-right: none; }
+      .hstat-item:nth-last-child(-n+2) { border-bottom: none; }
     }
 
     /* Gradient overlay — más ligero para mostrar más imagen */
@@ -348,68 +346,6 @@
       background: rgba(255,255,255,0.12);
       border-color: rgba(255,255,255,0.9);
     }
-
-    /* ── Hero info strip — bottom-right glass card ── */
-    #hero-info-strip {
-      position: absolute;
-      right: 2.5rem;
-      bottom: 2.5rem;
-      z-index: 15;
-      width: 268px;
-      background: rgba(8, 16, 28, 0.68);
-      backdrop-filter: blur(32px) saturate(160%);
-      -webkit-backdrop-filter: blur(32px) saturate(160%);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 18px;
-      box-shadow:
-        0 10px 56px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.08);
-      overflow: hidden;
-    }
-    .hinfo-item {
-      display: flex; align-items: center; gap: 0.85rem;
-      padding: 1rem 1.25rem;
-    }
-    .hinfo-divider {
-      height: 1px;
-      background: rgba(255,255,255,0.07);
-      margin: 0 1.25rem;
-    }
-    .hinfo-icon {
-      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.10);
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.65);
-    }
-    .hinfo-icon--mint {
-      background: rgba(13,148,136,0.22);
-      border-color: rgba(20,184,166,0.28);
-      color: var(--mint-light);
-    }
-    .hinfo-icon--red {
-      background: rgba(239,68,68,0.16);
-      border-color: rgba(239,68,68,0.22);
-      color: #FCA5A5;
-    }
-    .hinfo-text {
-      display: flex; flex-direction: column; gap: 0.15rem;
-    }
-    .hinfo-label {
-      font-size: 0.67rem; font-weight: 500; text-transform: uppercase;
-      letter-spacing: 0.1em; color: rgba(255,255,255,0.40);
-    }
-    .hinfo-value {
-      font-size: 0.87rem; font-weight: 500;
-      color: rgba(255,255,255,0.88); font-family: 'DM Sans', sans-serif;
-    }
-    .hinfo-link {
-      font-size: 0.87rem; font-weight: 600;
-      color: var(--mint-light); text-decoration: none;
-      transition: color 0.2s;
-    }
-    .hinfo-link:hover { color: white; }
-    @media (max-width: 768px) { #hero-info-strip { display: none; } }
 
     /* Scroll indicator */
 
@@ -531,50 +467,30 @@
 
 
 
-    <!-- Info strip — bottom right glass panel -->
-    <div id="hero-info-strip">
+    <!-- Stats strip — glassmorphism at the bottom of hero card -->
+    <div id="hero-stats" aria-label="Estadísticas de la clínica">
 
-      <div class="hinfo-item">
-        <div class="hinfo-icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l3.5 2"/>
-          </svg>
-        </div>
-        <div class="hinfo-text">
-          <span class="hinfo-label">Horario</span>
-          <span class="hinfo-value">Lun–Sáb &nbsp;·&nbsp; 9:00–20:00</span>
-        </div>
+      <div class="hstat-item">
+        <div class="hstat-num"><span class="count" data-target="500">0</span><span>+</span></div>
+        <div class="hstat-label">Pacientes atendidos</div>
       </div>
 
-      <div class="hinfo-divider"></div>
-
-      <div class="hinfo-item">
-        <div class="hinfo-icon hinfo-icon--mint">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
-          </svg>
-        </div>
-        <div class="hinfo-text">
-          <span class="hinfo-label">Cita</span>
-          <a href="#contacto" class="hinfo-link">Reservar ahora →</a>
-        </div>
+      <div class="hstat-item">
+        <div class="hstat-num"><span class="count" data-target="4" data-decimal="1">0</span><span>★</span></div>
+        <div class="hstat-label">Calificación promedio</div>
       </div>
 
-      <div class="hinfo-divider"></div>
-
-      <div class="hinfo-item">
-        <div class="hinfo-icon hinfo-icon--red">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-          </svg>
-        </div>
-        <div class="hinfo-text">
-          <span class="hinfo-label">Urgencias</span>
-          <a href="tel:+525512345678" class="hinfo-value" style="text-decoration:none; color:rgba(255,255,255,0.88);">55 1234 5678</a>
-        </div>
+      <div class="hstat-item">
+        <div class="hstat-num"><span class="count" data-target="10">0</span><span>+</span></div>
+        <div class="hstat-label">Años de experiencia</div>
       </div>
 
-    </div><!-- /hero-info-strip -->
+      <div class="hstat-item">
+        <div class="hstat-num" style="font-size:clamp(0.95rem,1.9vw,1.4rem);letter-spacing:-0.01em;">AOM<span> &amp; </span>CMD</div>
+        <div class="hstat-label">Certificaciones</div>
+      </div>
+
+    </div><!-- /hero-stats -->
 
     <!-- Carousel dots -->
     <div id="hero-dots" role="tablist" aria-label="Diapositivas del hero"></div>
@@ -584,34 +500,6 @@
 </section>
 </main>
 
-<!-- ══════════════════════════════════════
-     STATS BAR
-══════════════════════════════════════ -->
-<section id="stats-bar" aria-label="Estadísticas de la clínica">
-  <div class="stats-inner">
-
-    <div class="stat-item reveal">
-      <div class="stat-num"><span class="count" data-target="500">0</span><span>+</span></div>
-      <div class="stat-label">Pacientes atendidos</div>
-    </div>
-
-    <div class="stat-item reveal d1">
-      <div class="stat-num"><span class="count" data-target="4" data-decimal="1">0</span><span style="color:var(--mint);">★</span></div>
-      <div class="stat-label">Calificación promedio</div>
-    </div>
-
-    <div class="stat-item reveal d2">
-      <div class="stat-num"><span class="count" data-target="10">0</span><span>+</span></div>
-      <div class="stat-label">Años de experiencia</div>
-    </div>
-
-    <div class="stat-item reveal d3">
-      <div class="stat-num" style="font-size:clamp(1rem,2vw,1.4rem);letter-spacing:-0.01em;">AOM<span> & </span>CMD</div>
-      <div class="stat-label">Certificaciones</div>
-    </div>
-
-  </div>
-</section>
 
 
 <!-- ══════════════════════════════════════
@@ -643,7 +531,7 @@
       }
     });
   }, { threshold: 0.5 });
-  document.querySelectorAll('.stat-item').forEach(el => countIO.observe(el));
+  document.querySelectorAll('.hstat-item').forEach(el => countIO.observe(el));
 
   /* Header — 3 states: transparent / liquid-dark / liquid-light */
   const hdr = document.getElementById('site-header');
