@@ -614,15 +614,16 @@
 
       /* Incoming slide: start zoomed-in + invisible, animate in gracefully */
       slides[cur].classList.remove('is-active');
-      slides[next].style.cssText =
-        'opacity:0;transform:scale(1.05);will-change:opacity,transform;';
+      slides[next].style.opacity    = '0';
+      slides[next].style.transform  = 'scale(1.05)';
+      slides[next].style.transition = 'none';
       slides[next].classList.add('is-active');
       setDots(next);
 
       requestAnimationFrame(() => requestAnimationFrame(() => {
-        slides[next].style.cssText =
-          'opacity:1;transform:scale(1);will-change:opacity,transform;' +
-          'transition:opacity 0.7s ease, transform 1.2s cubic-bezier(0.16,1,0.3,1);';
+        slides[next].style.transition = 'opacity 0.7s ease, transform 1.2s cubic-bezier(0.16,1,0.3,1)';
+        slides[next].style.transform  = 'scale(1)';
+        slides[next].style.opacity    = '1';
       }));
 
       /* Fly shards out: wave delay + radial-directional scatter + motion blur */
@@ -663,7 +664,9 @@
 
       setTimeout(() => {
         grid.innerHTML = '';
-        slides[next].style.cssText = '';
+        slides[next].style.opacity    = '';
+        slides[next].style.transform  = '';
+        slides[next].style.transition = '';
         cur = next;
         busy = false;
         scheduleNext();
