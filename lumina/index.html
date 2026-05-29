@@ -190,15 +190,43 @@
     @media (min-width: 640px)  { #hero-card { border-radius: 24px; min-height: calc(100dvh - 2rem); } }
     @media (min-width: 1024px) { #hero-card { border-radius: 32px; min-height: calc(100dvh - 2rem); } }
 
-    /* Background image inside card */
+    /* ── Carousel ───────────────────────── */
     #hero-bg {
       position: absolute; inset: 0;
-      background: var(--navy);
+      background: var(--navy); overflow: hidden;
     }
-    #hero-bg img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center 25%;
-      display: block;
+
+    .hero-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center 25%;
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+    .hero-slide.is-active { opacity: 1; }
+
+    /* Shard grid — sits on top during transitions */
+    #shard-grid {
+      position: absolute; inset: 0; z-index: 5;
+      pointer-events: none; overflow: hidden;
+    }
+    .shard {
+      position: absolute;
+      will-change: transform, opacity;
+    }
+
+    /* Navigation dots */
+    #hero-dots {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      z-index: 10; display: flex; gap: 0.55rem; align-items: center;
+    }
+    .hero-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer; transition: background 0.3s, transform 0.3s;
+      border: none; padding: 0;
+    }
+    .hero-dot.active {
+      background: white; transform: scale(1.35);
     }
 
     /* Gradient overlay */
@@ -387,12 +415,12 @@
   <!-- Rounded image card -->
   <div id="hero-card">
 
-    <!-- Background image -->
+    <!-- Carousel slides -->
     <div id="hero-bg" aria-hidden="true">
-      <img src="assets/hero2.jpeg"
-           alt=""
-           loading="eager"
-           onerror="this.src='assets/hero2.jpg'; this.onerror=function(){this.parentElement.style.background='linear-gradient(155deg,#0F2027 0%,#203A43 50%,#2C5364 100%)';};" />
+      <div class="hero-slide" style="background-image:url('assets/hero2.jpeg')"></div>
+      <!-- Agrega más slides aquí: <div class="hero-slide" style="background-image:url('assets/hero3.jpeg')"></div> -->
+      <div class="hero-slide" style="background-image:linear-gradient(135deg,#0a1628 0%,#0D9488 60%,#0a1628 100%)"></div>
+      <div id="shard-grid"></div>
     </div>
 
     <!-- Overlay -->
@@ -431,6 +459,9 @@
       <div style="width:1px;height:48px;background:linear-gradient(to bottom,rgba(255,255,255,0.4),transparent);margin-top:0.5rem;"></div>
     </div>
 
+
+    <!-- Carousel dots -->
+    <div id="hero-dots" role="tablist" aria-label="Diapositivas del hero"></div>
 
   </div><!-- /hero-card -->
 
@@ -474,11 +505,116 @@
   window.addEventListener('scroll', updateHeader, { passive: true });
   updateHeader();
 
-  /* Parallax on hero image */
-  const heroBg = document.getElementById('hero-bg');
+  /* Parallax on active slide */
   window.addEventListener('scroll', () => {
-    heroBg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+    const offset = window.scrollY * 0.28;
+    document.querySelectorAll('.hero-slide').forEach(s => {
+      s.style.transform = `translateY(${offset}px)`;
+    });
   }, { passive: true });
+
+  /* ── Shard carousel ──────────────────── */
+  (function () {
+    const COLS = 13, ROWS = 9;
+    const slides = Array.from(document.querySelectorAll('.hero-slide'));
+    const grid   = document.getElementById('shard-grid');
+    const dotsEl = document.getElementById('hero-dots');
+    let cur = 0, busy = false, timer;
+    const AUTO = 5500;
+
+    /* Activate first slide */
+    slides[0].classList.add('is-active');
+
+    /* Build dots */
+    slides.forEach((_, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'hero-dot' + (i === 0 ? ' active' : '');
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-label', `Diapositiva ${i + 1}`);
+      btn.addEventListener('click', () => go(i > cur ? 1 : -1, i));
+      dotsEl.appendChild(btn);
+    });
+
+    function setDots(idx) {
+      dotsEl.querySelectorAll('.hero-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === idx);
+      });
+    }
+
+    /* Create pixel-shards that mirror the current slide */
+    function createShards(bgImage) {
+      grid.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const el = document.createElement('div');
+          el.className = 'shard';
+          el.style.cssText =
+            `left:${c*100/COLS}%;top:${r*100/ROWS}%;` +
+            `width:${100/COLS + 0.4}%;height:${100/ROWS + 0.4}%;` +
+            `background-image:${bgImage};` +
+            `background-size:${COLS*100}% ${ROWS*100}%;` +
+            `background-position:${COLS>1 ? c*100/(COLS-1) : 0}% ${ROWS>1 ? r*100/(ROWS-1) : 0}%;`;
+          frag.appendChild(el);
+        }
+      }
+      grid.appendChild(frag);
+      return Array.from(grid.children);
+    }
+
+    function go(dir, targetIdx) {
+      if (busy || slides.length < 2) return;
+      busy = true;
+      clearTimeout(timer);
+
+      const next = targetIdx !== undefined
+        ? targetIdx
+        : (cur + dir + slides.length) % slides.length;
+
+      /* Grab computed bg of current slide for shards */
+      const curBg = window.getComputedStyle(slides[cur]).backgroundImage;
+      const shards = createShards(curBg);
+
+      /* Swap real slides instantly (hidden behind shards) */
+      slides[cur].classList.remove('is-active');
+      slides[next].classList.add('is-active');
+      setDots(next);
+
+      /* Fly shards out — biased in transition direction, with scatter */
+      const maxDelay = 480;
+      shards.forEach(shard => {
+        const delay  = Math.random() * maxDelay;
+        const dx     = dir * (120 + Math.random() * 220);
+        const dy     = (Math.random() - 0.5) * 110;
+        const dur    = 440 + Math.random() * 320;
+        const rot    = (Math.random() - 0.5) * 18;
+        const scale  = 0.55 + Math.random() * 0.25;
+
+        setTimeout(() => {
+          shard.style.transition =
+            `transform ${dur}ms cubic-bezier(0.4,0,0.9,1),` +
+            `opacity ${dur * 0.65}ms ease`;
+          shard.style.transform =
+            `translate(${dx}px,${dy}px) rotate(${rot}deg) scale(${scale})`;
+          shard.style.opacity = '0';
+        }, delay);
+      });
+
+      /* Clean up after all shards are gone */
+      setTimeout(() => {
+        grid.innerHTML = '';
+        cur = next;
+        busy = false;
+        scheduleNext();
+      }, maxDelay + 820);
+    }
+
+    function scheduleNext() {
+      if (slides.length > 1) timer = setTimeout(() => go(1), AUTO);
+    }
+
+    scheduleNext();
+  })();
 
   /* Intersection Observer — reveal */
   const io = new IntersectionObserver(entries => {
