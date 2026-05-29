@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -16,8 +16,8 @@
       theme: {
         extend: {
           fontFamily: {
-            serif: ['Playfair Display', 'Georgia', 'serif'],
-            sans:  ['Inter', 'system-ui', 'sans-serif'],
+            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            sans:  ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
           },
         },
       },
@@ -40,7 +40,7 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html  { scroll-behavior: smooth; }
-    body  { font-family: 'Inter', sans-serif; background: var(--white); color: var(--navy); overflow-x: hidden; }
+    body  { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--white); color: var(--navy); overflow-x: hidden; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
@@ -96,7 +96,7 @@
 
     /* Logo */
     .logo {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: 1.95rem; font-weight: 700;
       color: white; text-decoration: none;
       letter-spacing: 0.01em;
@@ -245,7 +245,7 @@
     }
     .stat-item:last-child { border-right: none; }
     .stat-num {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: clamp(1.6rem, 3vw, 2.4rem);
       font-weight: 700; color: var(--navy); line-height: 1;
     }
@@ -281,9 +281,9 @@
 
     /* Big headline */
     .hero-headline {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Cormorant Garamond', serif;
       font-weight: 700;
-      font-size: clamp(2.4rem, 5.5vw, 5.5rem);
+      font-size: clamp(2.8rem, 6.5vw, 6.5rem);
       line-height: 1.0;
       color: white;
       letter-spacing: -0.02em;
@@ -390,7 +390,7 @@
               fill="var(--mint)"/>
         <path d="M10 11c3-3.5 9-3.5 12 0" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
       </svg>
-      Clínica Dental Lumina<span class="logo-dot">.</span>
+      Lumina<span class="logo-dot">.</span>
     </a>
 
     <!-- Nav centrado -->
