@@ -506,7 +506,7 @@
 
   /* ── Shard carousel ──────────────────── */
   (function () {
-    const COLS = 22, ROWS = 14;
+    const COLS = 1, ROWS = 16;
     const slides = Array.from(document.querySelectorAll('.hero-slide'));
     const grid   = document.getElementById('shard-grid');
     const card   = document.getElementById('hero-card');
@@ -626,37 +626,27 @@
         slides[next].style.opacity    = '1';
       }));
 
-      /* Fly shards out: wave delay + radial-directional scatter + motion blur */
+      /* Fly strips out: venetian blinds — alternating left/right, wave top→bottom */
       const maxDelay = 520;
-      shards.forEach((shard, i) => {
-        const c  = i % COLS;
-        const r  = Math.floor(i / COLS);
-        const cx = c * sw + sw / 2;
-        const cy = r * sh + sh / 2;
+      shards.forEach((shard, r) => {
+        /* Even strips fly right, odd strips fly left */
+        const stripDir = r % 2 === 0 ? 1 : -1;
+        const dx  = stripDir * (cw * 0.75 + Math.random() * cw * 0.4);
+        const dy  = (Math.random() - 0.5) * 18;
 
-        /* Radial vector from card center */
-        const rdx = (cx - cw / 2) / (cw / 2);
-        const rdy = (cy - ch / 2) / (ch / 2);
+        /* Wave delay cascading top → bottom */
+        const delay = (r / ROWS) * 420 + Math.random() * 100;
 
-        /* 70% directional sweep + 30% radial explosion */
-        const dx = dir * (95 + Math.random() * 175) + rdx * 70;
-        const dy = rdy * 80 + (Math.random() - 0.5) * 60;
-
-        /* Wave delay sweeping from the leading edge */
-        const wavePos = dir > 0 ? c / COLS : (COLS - 1 - c) / COLS;
-        const delay   = wavePos * 340 + Math.random() * 140;
-
-        const dur    = 580 + Math.random() * 280;
-        const rot    = (Math.random() - 0.5) * 20;
-        const sc     = 0.38 + Math.random() * 0.3;
-        const blur   = Math.min(7, Math.sqrt(dx*dx + dy*dy) / 42).toFixed(1);
+        const dur  = 600 + Math.random() * 260;
+        const rot  = stripDir * (Math.random() * 3);
+        const blur = Math.min(9, Math.abs(dx) / 55).toFixed(1);
 
         setTimeout(() => {
           shard.style.transition =
-            `transform ${dur}ms cubic-bezier(0.4,0,0.8,1),` +
-            `opacity ${dur * 0.52}ms ease,` +
-            `filter ${dur * 0.45}ms ease`;
-          shard.style.transform = `translate(${dx}px,${dy}px) rotate(${rot}deg) scale(${sc})`;
+            `transform ${dur}ms cubic-bezier(0.4,0,0.75,1),` +
+            `opacity ${dur * 0.5}ms ease,` +
+            `filter ${dur * 0.4}ms ease`;
+          shard.style.transform = `translate(${dx}px,${dy}px) rotate(${rot}deg)`;
           shard.style.filter    = `blur(${blur}px)`;
           shard.style.opacity   = '0';
         }, delay);
