@@ -53,6 +53,7 @@
       height: 164px;
       overflow: hidden;
       flex-shrink: 0;
+      margin-bottom: -2px; /* tapa la costura sub-pixel entre img y body */
     }
     .card-img-wrap img {
       width: 100%; height: 100%;
@@ -72,8 +73,6 @@
     .card-img-wrap::after {
       content: '';
       position: absolute; inset: 0;
-      /* 1px extra abajo para tapar cualquier sub-pixel gap */
-      bottom: -1px;
       background: linear-gradient(
         to bottom,
         transparent          0%,
