@@ -6,7 +6,7 @@
   <title>Propuesta L — Flip 3D</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -28,16 +28,16 @@
       top: 1rem;
       right: 1rem;
       z-index: 9999;
-      background: rgba(15,23,42,0.85);
-      border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(10px);
-      padding: 0.35rem 0.9rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(12px);
+      padding: 0.38rem 0.95rem;
       border-radius: 999px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
       color: #fff;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
     }
 
@@ -56,22 +56,22 @@
 
     .section-tag {
       display: inline-block;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--slate-light);
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.65rem;
     }
 
     .section-title {
       font-family: 'DM Serif Display', serif;
-      font-size: 2.2rem;
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
       color: #fff;
       line-height: 1.2;
     }
 
-    /* ── Grid ── */
+    /* ── 3-column grid ── */
     .flip-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -80,13 +80,13 @@
       margin: 0 auto;
     }
 
-    /* ── Flip wrapper (provides perspective) ── */
+    /* ── Flip wrapper — perspective container ── */
     .flip-wrapper {
       perspective: 1000px;
       height: 280px;
     }
 
-    /* ── The card itself — rotates ── */
+    /* ── The rotating card ── */
     .flip-card {
       position: relative;
       width: 100%;
@@ -99,7 +99,7 @@
       transform: rotateY(180deg);
     }
 
-    /* ── Shared face styles ── */
+    /* ── Shared face ── */
     .face {
       position: absolute;
       inset: 0;
@@ -109,7 +109,7 @@
       -webkit-backface-visibility: hidden;
     }
 
-    /* ── Front face ── */
+    /* ── Front ── */
     .face-front {
       background: var(--navy2);
     }
@@ -128,7 +128,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(15,23,42,0) 35%, rgba(15,23,42,0.82) 100%);
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0) 30%, rgba(15, 23, 42, 0.86) 100%);
       z-index: 1;
     }
 
@@ -138,7 +138,7 @@
       left: 0;
       right: 0;
       z-index: 2;
-      padding: 1.25rem 1.4rem;
+      padding: 1.25rem 1.4rem 1.3rem;
     }
 
     .face-front-title {
@@ -148,7 +148,7 @@
       line-height: 1.2;
     }
 
-    /* ── Back face ── */
+    /* ── Back ── */
     .face-back {
       background: var(--navy2);
       transform: rotateY(180deg);
@@ -158,7 +158,7 @@
       justify-content: center;
       padding: 2rem 1.6rem;
       text-align: center;
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid rgba(255, 255, 255, 0.07);
     }
 
     .back-icon {
@@ -166,6 +166,7 @@
       height: 40px;
       margin-bottom: 1rem;
       color: var(--accent);
+      flex-shrink: 0;
     }
 
     .back-title {
@@ -173,6 +174,7 @@
       font-size: 1.2rem;
       color: #fff;
       margin-bottom: 0.6rem;
+      line-height: 1.2;
     }
 
     .back-desc {
@@ -189,14 +191,14 @@
       font-family: 'DM Sans', sans-serif;
       font-size: 0.78rem;
       font-weight: 600;
-      padding: 0.5rem 1.25rem;
+      padding: 0.5rem 1.3rem;
       border-radius: 999px;
       text-decoration: none;
       letter-spacing: 0.02em;
-      transition: opacity 0.2s;
+      transition: opacity 0.2s ease;
     }
 
-    .back-btn:hover { opacity: 0.85; }
+    .back-btn:hover { opacity: 0.82; }
   </style>
 </head>
 <body>
@@ -212,7 +214,7 @@
     <div class="flip-grid">
 
       <!-- 1. Ortodoncia -->
-      <div class="flip-wrapper" style="--accent:#2DD4BF;">
+      <div class="flip-wrapper" style="--accent: #2DD4BF;">
         <div class="flip-card">
           <div class="face face-front">
             <img src="../lumina/assets/ort1.jpg" alt="Ortodoncia" />
@@ -232,7 +234,7 @@
       </div>
 
       <!-- 2. Implantes Dentales -->
-      <div class="flip-wrapper" style="--accent:#FCD34D;">
+      <div class="flip-wrapper" style="--accent: #FCD34D;">
         <div class="flip-card">
           <div class="face face-front">
             <img src="../lumina/assets/impdent.jpg" alt="Implantes Dentales" />
@@ -242,8 +244,8 @@
           </div>
           <div class="face face-back">
             <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 4.5c-.621 0-1.125.504-1.125 1.125v.375m0 0A1.125 1.125 0 0012 7.125m0-1.125a1.125 1.125 0 011.125 1.125v.375M12 6c-.621 0-1.125.504-1.125 1.125M4.5 12a7.5 7.5 0 1115 0 7.5 7.5 0 01-15 0z"/>
-              <circle cx="12" cy="12" r="3"/>
+              <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              <path d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z"/>
             </svg>
             <h3 class="back-title">Implantes Dentales</h3>
             <p class="back-desc">Reemplaza dientes perdidos con implantes de titanio de por vida, con apariencia y función idéntica a la natural.</p>
@@ -253,20 +255,19 @@
       </div>
 
       <!-- 3. Blanqueamiento -->
-      <div class="flip-wrapper" style="--accent:#7DD3FC;">
+      <div class="flip-wrapper" style="--accent: #7DD3FC;">
         <div class="flip-card">
           <div class="face face-front">
             <img src="../lumina/assets/blanqueamientodental.jpg" alt="Blanqueamiento" />
             <div class="face-front-content">
-              <h3 class="face-front-title">Blanqueamiento</h3>
+              <h3 class="face-front-title">Blanqueamiento Dental</h3>
             </div>
           </div>
           <div class="face face-back">
             <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3v1m0 16v1m8.485-8.485l-.707.707M4.222 19.778l-.707-.707M21 12h-1M4 12H3m16.485 4.485l-.707-.707M4.222 4.222l-.707.707"/>
-              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
             </svg>
-            <h3 class="back-title">Blanqueamiento</h3>
+            <h3 class="back-title">Blanqueamiento Dental</h3>
             <p class="back-desc">Hasta 8 tonos más blanco en una sola sesión con tecnología LED de última generación, sin dañar el esmalte.</p>
             <a href="#" class="back-btn">Agendar →</a>
           </div>
@@ -274,7 +275,7 @@
       </div>
 
       <!-- 4. Limpieza Dental -->
-      <div class="flip-wrapper" style="--accent:#6EE7B7;">
+      <div class="flip-wrapper" style="--accent: #6EE7B7;">
         <div class="flip-card">
           <div class="face face-front">
             <img src="../lumina/assets/limpiezadental.jpg" alt="Limpieza Dental" />
@@ -284,7 +285,7 @@
           </div>
           <div class="face face-back">
             <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714a2.25 2.25 0 001.5 2.121m-1.5-2.121c.251.023.501.05.75.082M9 19.5v-4.5a.75.75 0 01.75-.75h4.5a.75.75 0 01.75.75V19.5"/>
+              <path d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1 1 .3 2.7-1.1 2.7H3.9c-1.4 0-2.1-1.7-1.1-2.7L4.2 15.3"/>
             </svg>
             <h3 class="back-title">Limpieza Dental</h3>
             <p class="back-desc">Profilaxis profesional que elimina sarro y manchas, previniendo caries y enfermedades periodontales.</p>
@@ -294,7 +295,7 @@
       </div>
 
       <!-- 5. Carillas de Porcelana -->
-      <div class="flip-wrapper" style="--accent:#FCA5A5;">
+      <div class="flip-wrapper" style="--accent: #FCA5A5;">
         <div class="flip-card">
           <div class="face face-front">
             <img src="../lumina/assets/carillas.jpg" alt="Carillas de Porcelana" />
@@ -314,7 +315,7 @@
       </div>
 
       <!-- 6. Odontología Estética -->
-      <div class="flip-wrapper" style="--accent:#C4B5FD;">
+      <div class="flip-wrapper" style="--accent: #C4B5FD;">
         <div class="flip-card">
           <div class="face face-front">
             <img src="../lumina/assets/odontologiaestetica.jpg" alt="Odontología Estética" />
