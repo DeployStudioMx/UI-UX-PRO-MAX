@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Propuesta F — Flip 3D</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: #F8FAFB; }
+    :root {
+      --mint: #0D9488; --mint-light: #14B8A6; --mint-pale: #CCFBF1;
+      --navy: #0F172A; --slate: #475569; --slate-light: #94A3B8;
+      --border: #E2E8F0; --white: #FFFFFF; --gold: #C9A84C;
+    }
+    .badge { position:fixed;top:1rem;right:1rem;z-index:999;background:var(--navy);color:white;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1rem;border-radius:50px; }
+
+    section { background: var(--white); padding: 6rem 2.5rem; }
+    .container { max-width: 1280px; margin: 0 auto; }
+    .section-tag { display:inline-flex;align-items:center;gap:.7rem;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--mint);margin-bottom:1.1rem; }
+    .section-tag::before { content:'';width:28px;height:2px;background:linear-gradient(90deg,var(--mint),var(--mint-light));border-radius:2px; }
+    .section-title { font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,4vw,3.4rem);color:var(--navy);line-height:1.1;letter-spacing:-.02em;margin-bottom:1.2rem; }
+    .section-title em { font-style:italic;color:var(--mint-light); }
+    .section-sub { font-size:1.05rem;font-weight:300;color:var(--slate);line-height:1.75;max-width:520px;margin-bottom:4rem; }
+
+    /* ── Flip grid ── */
+    .grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem; }
+    @media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:580px){.grid{grid-template-columns:1fr;}}
+
+    .card { height: 280px; perspective: 1200px; cursor: pointer; }
+
+    .card-inner {
+      width:100%; height:100%;
+      position:relative;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    }
+    .card:hover .card-inner { transform: rotateY(180deg); }
+
+    .card-front, .card-back {
+      position:absolute; inset:0;
+      border-radius: 20px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2.2rem;
+    }
+
+    /* FRONT */
+    .card-front {
+      background: var(--white);
+      border: 1px solid var(--border);
+      gap: 1.1rem; text-align: center;
+    }
+    .front-icon {
+      width: 68px; height: 68px; border-radius: 18px;
+      background: var(--mint-pale);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--mint);
+    }
+    .front-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem; font-weight: 700; color: var(--navy);
+    }
+    .front-hint {
+      font-size: 0.72rem; font-weight: 500; color: var(--slate-light);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .front-num {
+      position: absolute; top: 1.2rem; right: 1.5rem;
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem; font-weight: 700; color: var(--border); line-height: 1;
+    }
+
+    /* BACK */
+    .card-back {
+      background: var(--navy);
+      transform: rotateY(180deg);
+      gap: 1rem; align-items: flex-start; text-align: left;
+    }
+    .back-tag {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--mint-light);
+    }
+    .back-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem; color: white; line-height: 1.2;
+    }
+    .back-desc { font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.62); line-height: 1.6; flex: 1; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--mint); color: white;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em;
+      padding: 0.65rem 1.4rem; border-radius: 50px; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .back-link:hover { background: var(--mint-light); }
+  </style>
+</head>
+<body>
+  <div class="badge">Propuesta F — Flip 3D</div>
+  <section>
+    <div class="container">
+      <p class="section-tag">Nuestros Servicios</p>
+      <h2 class="section-title">Todo lo que tu<br/><em>sonrisa necesita</em></h2>
+      <p class="section-sub">Pasa el cursor sobre cada servicio para conocer más detalles.</p>
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front">
+              <span class="front-num">01</span>
+              <div class="front-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M7 4C5.3 4 4 5.8 4 8c0 1.5.5 2.8 1.2 3.5L6 20h2l1-5h6l1 5h2l.8-8.5C19.5 10.8 20 9.5 20 8c0-2.2-1.3-4-3-4-1 0-1.8.6-2.5 1.5C14 6.1 13.1 6.6 12 6.6s-2-.5-2.5-1.1C8.8 4.6 8 4 7 4z"/><path d="M9 11h6"/></svg></div>
+              <h3 class="front-name">Ortodoncia</h3>
+              <span class="front-hint">Pasa el cursor →</span>
+            </div>
+            <div class="card-back">
+              <span class="back-tag">01 — Ortodoncia</span>
+              <h3 class="back-name">Sonrisa<br/>perfectamente alineada</h3>
+              <p class="back-desc">Alineadores transparentes y brackets de última generación sin comprometer tu estética ni comodidad.</p>
+              <a href="#" class="back-link">Agendar consulta →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front">
+              <span class="front-num">02</span>
+              <div class="front-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3C9.5 3 7.5 5.2 7.5 8c0 1.8.7 3.3 1.8 4.2L10 20h4l.7-7.8C15.8 11.3 16.5 9.8 16.5 8 16.5 5.2 14.5 3 12 3z"/><line x1="12" y1="13" x2="12" y2="20"/><line x1="10" y1="16" x2="14" y2="16"/></svg></div>
+              <h3 class="front-name">Implantes Dentales</h3>
+              <span class="front-hint">Pasa el cursor →</span>
+            </div>
+            <div class="card-back">
+              <span class="back-tag">02 — Implantes</span>
+              <h3 class="back-name">Naturales<br/>para toda la vida</h3>
+              <p class="back-desc">Implantes de titanio con apariencia completamente natural. La solución permanente y definitiva.</p>
+              <a href="#" class="back-link">Agendar consulta →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front">
+              <span class="front-num">03</span>
+              <div class="front-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3C9.5 3 7.5 5.2 7.5 8c0 1.8.7 3.3 1.8 4.2L10 20h4l.7-7.8C15.8 11.3 16.5 9.8 16.5 8 16.5 5.2 14.5 3 12 3z"/><path d="M9 2l.5 1.5M15 2l-.5 1.5M6 5l1.2.8M18 5l-1.2.8"/></svg></div>
+              <h3 class="front-name">Blanqueamiento</h3>
+              <span class="front-hint">Pasa el cursor →</span>
+            </div>
+            <div class="card-back">
+              <span class="back-tag">03 — Blanqueamiento</span>
+              <h3 class="back-name">Hasta 8 tonos<br/>más brillante</h3>
+              <p class="back-desc">Tratamiento profesional en consultorio. Resultados visibles en una sola sesión de 60 minutos.</p>
+              <a href="#" class="back-link">Agendar consulta →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front">
+              <span class="front-num">04</span>
+              <div class="front-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9 9h.01M15 9h.01M8.5 14s1.5 2.5 3.5 2.5 3.5-2.5 3.5-2.5"/></svg></div>
+              <h3 class="front-name">Limpieza Dental</h3>
+              <span class="front-hint">Pasa el cursor →</span>
+            </div>
+            <div class="card-back">
+              <span class="back-tag">04 — Limpieza</span>
+              <h3 class="back-name">Encías sanas,<br/>aliento fresco</h3>
+              <p class="back-desc">Profilaxis profunda con ultrasonido. Elimina sarro, manchas y bacterias que el cepillo no alcanza.</p>
+              <a href="#" class="back-link">Agendar consulta →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front">
+              <span class="front-num">05</span>
+              <div class="front-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3C9.5 3 7.5 5.2 7.5 8c0 1.8.7 3.3 1.8 4.2L10 20h4l.7-7.8C15.8 11.3 16.5 9.8 16.5 8 16.5 5.2 14.5 3 12 3z"/><path d="M9.5 4.5Q12 6.5 14.5 4.5"/></svg></div>
+              <h3 class="front-name">Carillas</h3>
+              <span class="front-hint">Pasa el cursor →</span>
+            </div>
+            <div class="card-back">
+              <span class="back-tag">05 — Carillas</span>
+              <h3 class="back-name">Transformación<br/>en 2 visitas</h3>
+              <p class="back-desc">Láminas ultra-delgadas de porcelana que cambian forma, color y tamaño. Duración 15+ años.</p>
+              <a href="#" class="back-link">Agendar consulta →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front">
+              <span class="front-num">06</span>
+              <div class="front-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 2l2.4 4.8 5.3.8-3.8 3.7.9 5.2L12 14l-4.8 2.5.9-5.2L4.3 7.6l5.3-.8z"/></svg></div>
+              <h3 class="front-name">Odont. Estética</h3>
+              <span class="front-hint">Pasa el cursor →</span>
+            </div>
+            <div class="card-back">
+              <span class="back-tag">06 — Estética</span>
+              <h3 class="back-name">Diseño de sonrisa<br/>personalizado</h3>
+              <p class="back-desc">Plan combinado con simulación 3D del resultado final antes de iniciar cualquier tratamiento.</p>
+              <a href="#" class="back-link">Agendar consulta →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</body>
+</html>
