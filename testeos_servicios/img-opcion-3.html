@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'DM Sans', sans-serif; background: #0F172A; padding: 4rem 2rem; }
+    body { font-family: 'DM Sans', sans-serif; background: #0F172A; padding: 3rem 2rem; }
     :root {
       --navy: #0F172A; --navy2: #1E293B;
       --slate-light: #94A3B8;
@@ -24,36 +24,33 @@
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 1.25rem;
       max-width: 960px;
       margin: 0 auto;
     }
 
-    /* ── Card base — usa --accent definido inline por card ── */
     .card {
-      --accent: #0D9488; /* fallback; cada card lo sobreescribe */
+      --accent: #0D9488;
       background: var(--navy2);
       border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 24px;
+      border-radius: 20px;
       overflow: hidden;
-      position: relative;
       display: flex;
       flex-direction: column;
       transition: transform 0.45s cubic-bezier(0.16,1,0.3,1),
                   box-shadow 0.45s, border-color 0.45s;
     }
     .card:hover {
-      transform: translateY(-10px);
-      /* glow usa el accent de cada card */
-      box-shadow: 0 32px 80px rgba(0,0,0,0.55),
-                  0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
-      border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+      transform: translateY(-8px);
+      box-shadow: 0 28px 64px rgba(0,0,0,0.5),
+                  0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent);
+      border-color: color-mix(in srgb, var(--accent) 40%, transparent);
     }
 
-    /* ── Imagen: más alta, el difuminado empieza tarde ── */
+    /* ── Imagen ── */
     .card-img-wrap {
       position: relative;
-      height: 192px;   /* más espacio para la foto */
+      height: 164px;
       overflow: hidden;
       flex-shrink: 0;
     }
@@ -67,84 +64,62 @@
       transform: scale(1.08);
     }
 
-    /* Dissolve: empieza a difuminar recién en el 60% de la imagen */
+    /*
+      Dissolve fijo — sin animar opacity en hover para evitar
+      la línea blanca en la costura imagen→card-body.
+      El gradiente termina exactamente en --navy2 (#1E293B).
+    */
     .card-img-wrap::after {
       content: '';
       position: absolute; inset: 0;
+      /* 1px extra abajo para tapar cualquier sub-pixel gap */
+      bottom: -1px;
       background: linear-gradient(
         to bottom,
-        transparent         0%,
-        transparent        55%,
-        rgba(30,41,59,0.55) 78%,
+        transparent          0%,
+        transparent         50%,
+        rgba(30,41,59,0.45) 72%,
         rgba(30,41,59,1.00) 100%
       );
-      transition: opacity 0.45s;
-    }
-    /* Hover: la máscara retrocede, la foto respira */
-    .card:hover .card-img-wrap::after {
-      opacity: 0.72;
-    }
-
-    /* Pastilla de acento — reemplaza al número, identifica el servicio */
-    .card-tag {
-      position: absolute;
-      bottom: 0.85rem; left: 1.1rem;
-      z-index: 1;
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      padding: 0.28rem 0.75rem;
-      border-radius: 50px;
-      background: color-mix(in srgb, var(--accent) 18%, transparent);
-      border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
-      color: color-mix(in srgb, var(--accent) 90%, white);
-      font-size: 0.62rem; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      backdrop-filter: blur(6px);
-      transition: background 0.35s, border-color 0.35s;
-    }
-    .card:hover .card-tag {
-      background: color-mix(in srgb, var(--accent) 28%, transparent);
-      border-color: color-mix(in srgb, var(--accent) 60%, transparent);
-    }
-    /* Dot de color dentro de la pastilla */
-    .card-tag::before {
-      content: '';
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--accent);
-      flex-shrink: 0;
+      pointer-events: none;
     }
 
     /* ── Cuerpo ── */
     .card-body {
-      padding: 1.25rem 1.75rem 1.85rem;
+      padding: 1rem 1.5rem 1.6rem;
       text-align: center;
       display: flex; flex-direction: column;
-      gap: 0.75rem; align-items: center;
+      gap: 0.6rem; align-items: center;
       flex: 1;
     }
+    /* Título coloreado con el accent de cada card */
     .card-name {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.15rem; font-weight: 700; color: white;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--accent);
+      line-height: 1.2;
+      transition: color 0.3s;
     }
     .card-sep {
-      width: 28px; height: 2px;
-      background: rgba(255,255,255,0.08); border-radius: 2px;
-      transition: background 0.35s, width 0.35s;
+      width: 26px; height: 2px;
+      background: rgba(255,255,255,0.07); border-radius: 2px;
+      transition: background 0.3s, width 0.3s;
     }
     .card:hover .card-sep {
       background: var(--accent);
-      width: 44px;
+      width: 40px;
     }
     .card-desc {
-      font-size: .84rem; font-weight: 300;
-      color: var(--slate-light); line-height: 1.65;
+      font-size: .82rem; font-weight: 300;
+      color: var(--slate-light); line-height: 1.6;
     }
     .card-link {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 36px; height: 36px; border-radius: 50%;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
       color: var(--slate-light); text-decoration: none;
-      margin-top: .3rem;
+      margin-top: .2rem;
       transition: background .3s, border-color .3s, color .3s, transform .3s;
     }
     .card:hover .card-link {
@@ -160,98 +135,92 @@
 
   <div class="grid">
 
-    <!-- Ortodoncia — Teal (color raíz del sistema) -->
+    <!-- Ortodoncia — Teal -->
     <div class="card" style="--accent: #0D9488;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Ortodoncia" />
-        <span class="card-tag">Ortodoncia</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Ortodoncia</h3>
         <div class="card-sep"></div>
         <p class="card-desc">Alineadores transparentes y brackets de última generación para una sonrisa perfectamente alineada.</p>
         <a href="#" class="card-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
     </div>
 
-    <!-- Implantes — Gold / permanencia y valor -->
+    <!-- Implantes — Gold -->
     <div class="card" style="--accent: #C9A84C;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Implantes" />
-        <span class="card-tag">Implantes</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Implantes Dentales</h3>
         <div class="card-sep"></div>
         <p class="card-desc">Implantes de titanio con apariencia completamente natural. Solución permanente y definitiva.</p>
         <a href="#" class="card-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
     </div>
 
-    <!-- Blanqueamiento — Sky / luminosidad -->
+    <!-- Blanqueamiento — Sky -->
     <div class="card" style="--accent: #0EA5E9;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Blanqueamiento" />
-        <span class="card-tag">Blanqueamiento</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Blanqueamiento</h3>
         <div class="card-sep"></div>
         <p class="card-desc">Hasta 8 tonos más brillante en una sola sesión con tecnología de luz LED profesional.</p>
         <a href="#" class="card-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
     </div>
 
-    <!-- Limpieza — Esmeralda / salud y frescura -->
+    <!-- Limpieza — Esmeralda -->
     <div class="card" style="--accent: #10B981;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Limpieza" />
-        <span class="card-tag">Limpieza</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Limpieza Dental</h3>
         <div class="card-sep"></div>
         <p class="card-desc">Profilaxis profunda con ultrasonido para encías sanas y aliento fresco garantizado.</p>
         <a href="#" class="card-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
     </div>
 
-    <!-- Carillas — Rosa / estética y elegancia -->
+    <!-- Carillas — Rosa -->
     <div class="card" style="--accent: #F472B6;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Carillas" />
-        <span class="card-tag">Carillas</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Carillas de Porcelana</h3>
         <div class="card-sep"></div>
         <p class="card-desc">Láminas ultra-delgadas que transforman tu sonrisa en solo 2 visitas. Duran 15+ años.</p>
         <a href="#" class="card-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
     </div>
 
-    <!-- Odontología Estética — Violeta / lujo y personalización -->
+    <!-- Odontología Estética — Violeta -->
     <div class="card" style="--accent: #A78BFA;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Estética" />
-        <span class="card-tag">Estética</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Odontología Estética</h3>
         <div class="card-sep"></div>
         <p class="card-desc">Diseño de sonrisa con simulación 3D para el resultado ideal adaptado a tu rostro.</p>
         <a href="#" class="card-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
     </div>
