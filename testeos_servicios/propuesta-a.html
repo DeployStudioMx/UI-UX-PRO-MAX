@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Servicios — Propuesta A: Cards Numeradas</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: #F8FAFB; color: #0F172A; }
+    :root {
+      --mint: #0D9488; --mint-light: #14B8A6; --mint-pale: #CCFBF1;
+      --navy: #0F172A; --slate: #475569; --slate-light: #94A3B8;
+      --border: #E2E8F0; --bg: #F8FAFB; --white: #FFFFFF;
+    }
+
+    /* ── Label de la propuesta ── */
+    .badge {
+      position: fixed; top: 1rem; right: 1rem; z-index: 999;
+      background: var(--navy); color: white;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.5rem 1rem; border-radius: 50px;
+    }
+
+    /* ── Sección ── */
+    #servicios { background: var(--white); padding: 6rem 2.5rem; }
+    .container { max-width: 1280px; margin: 0 auto; }
+
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--mint); margin-bottom: 1.1rem;
+    }
+    .section-tag::before {
+      content: ''; width: 28px; height: 2px;
+      background: linear-gradient(90deg, var(--mint), var(--mint-light));
+      border-radius: 2px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      color: var(--navy); line-height: 1.1; letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
+    }
+    .section-title em { font-style: italic; color: var(--mint-light); }
+    .section-sub {
+      font-size: 1.05rem; font-weight: 300; color: var(--slate);
+      line-height: 1.75; max-width: 520px; margin-bottom: 4rem;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    /* ── Card A: Número decorativo de fondo ── */
+    .card {
+      position: relative; overflow: hidden;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.4rem 2rem 2rem;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
+                  box-shadow 0.35s, border-color 0.35s;
+    }
+    /* Borde superior animado */
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--mint), var(--mint-light));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    /* Número decorativo */
+    .card-num {
+      position: absolute; top: 1.2rem; right: 1.4rem;
+      font-family: 'DM Serif Display', serif;
+      font-size: 3.5rem; font-weight: 700;
+      color: var(--border); line-height: 1;
+      transition: color 0.35s;
+      user-select: none;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 20px 56px rgba(13,148,136,0.10); border-color: var(--mint-pale); }
+    .card:hover::before { transform: scaleX(1); }
+    .card:hover .card-num { color: var(--mint-pale); }
+
+    .card-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: var(--mint-pale); display: flex; align-items: center; justify-content: center;
+      color: var(--mint); flex-shrink: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+    .card:hover .card-icon { background: var(--mint); color: white; }
+    .card-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem; font-weight: 700; color: var(--navy); line-height: 1.2;
+    }
+    .card-desc { font-size: 0.88rem; font-weight: 300; color: var(--slate); line-height: 1.7; flex: 1; }
+    .card-link {
+      font-size: 0.78rem; font-weight: 600; color: var(--mint);
+      text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 0.25rem; transition: gap 0.2s;
+    }
+    .card-link:hover { gap: 0.7rem; }
+  </style>
+</head>
+<body>
+  <div class="badge">Propuesta A — Cards Numeradas</div>
+
+  <section id="servicios">
+    <div class="container">
+      <p class="section-tag">Nuestros Servicios</p>
+      <h2 class="section-title">Todo lo que tu<br/><em>sonrisa necesita</em></h2>
+      <p class="section-sub">Tratamientos de alta especialidad con tecnología de vanguardia, diseñados para cada etapa de tu salud bucal.</p>
+
+      <div class="grid">
+
+        <article class="card">
+          <span class="card-num">01</span>
+          <div class="card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 4C5.3 4 4 5.8 4 8c0 1.5.5 2.8 1.2 3.5L6 20h2l1-5h6l1 5h2l.8-8.5C19.5 10.8 20 9.5 20 8c0-2.2-1.3-4-3-4-1 0-1.8.6-2.5 1.5C14 6.1 13.1 6.6 12 6.6s-2-.5-2.5-1.1C8.8 4.6 8 4 7 4z"/><path d="M9 11h6"/></svg>
+          </div>
+          <h3 class="card-name">Ortodoncia</h3>
+          <p class="card-desc">Alineadores transparentes y brackets de última generación para una sonrisa perfectamente alineada, sin comprometer tu estética.</p>
+          <a href="#" class="card-link">Agendar consulta <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+
+        <article class="card">
+          <span class="card-num">02</span>
+          <div class="card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3C9.5 3 7.5 5.2 7.5 8c0 1.8.7 3.3 1.8 4.2L10 20h4l.7-7.8C15.8 11.3 16.5 9.8 16.5 8 16.5 5.2 14.5 3 12 3z"/><line x1="12" y1="13" x2="12" y2="20"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+          </div>
+          <h3 class="card-name">Implantes Dentales</h3>
+          <p class="card-desc">Restaura tu sonrisa con implantes de titanio de alta durabilidad y apariencia completamente natural, para toda la vida.</p>
+          <a href="#" class="card-link">Agendar consulta <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+
+        <article class="card">
+          <span class="card-num">03</span>
+          <div class="card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3C9.5 3 7.5 5.2 7.5 8c0 1.8.7 3.3 1.8 4.2L10 20h4l.7-7.8C15.8 11.3 16.5 9.8 16.5 8 16.5 5.2 14.5 3 12 3z"/><path d="M9 2l.5 1.5M15 2l-.5 1.5M6 5l1.2.8M18 5l-1.2.8"/></svg>
+          </div>
+          <h3 class="card-name">Blanqueamiento Dental</h3>
+          <p class="card-desc">Tratamientos profesionales que iluminan tu sonrisa varios tonos en una sola sesión, con resultados visibles y duraderos.</p>
+          <a href="#" class="card-link">Agendar consulta <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+
+        <article class="card">
+          <span class="card-num">04</span>
+          <div class="card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9 9h.01M15 9h.01M8.5 14s1.5 2.5 3.5 2.5 3.5-2.5 3.5-2.5"/></svg>
+          </div>
+          <h3 class="card-name">Limpieza Dental</h3>
+          <p class="card-desc">Profilaxis profunda y eliminación de sarro con ultrasonido para mantener tus encías en óptima salud y tu aliento fresco.</p>
+          <a href="#" class="card-link">Agendar consulta <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+
+        <article class="card">
+          <span class="card-num">05</span>
+          <div class="card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3C9.5 3 7.5 5.2 7.5 8c0 1.8.7 3.3 1.8 4.2L10 20h4l.7-7.8C15.8 11.3 16.5 9.8 16.5 8 16.5 5.2 14.5 3 12 3z"/><path d="M9.5 4.5Q12 6.5 14.5 4.5"/></svg>
+          </div>
+          <h3 class="card-name">Carillas de Porcelana</h3>
+          <p class="card-desc">Láminas ultra-delgadas de porcelana que transforman forma, color y tamaño de tus dientes con resultados naturales e inmediatos.</p>
+          <a href="#" class="card-link">Agendar consulta <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+
+        <article class="card">
+          <span class="card-num">06</span>
+          <div class="card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2l2.4 4.8 5.3.8-3.8 3.7.9 5.2L12 14l-4.8 2.5.9-5.2L4.3 7.6l5.3-.8z"/></svg>
+          </div>
+          <h3 class="card-name">Odontología Estética</h3>
+          <p class="card-desc">Diseño de sonrisa personalizado que combina múltiples tratamientos para crear el resultado ideal adaptado a tu rostro.</p>
+          <a href="#" class="card-link">Agendar consulta <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+</body>
+</html>
