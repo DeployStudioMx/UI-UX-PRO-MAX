@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Propuesta O — Spotlight Cards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:        #0F172A;
+      --navy2:       #1E293B;
+      --slate-light: #94A3B8;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #080E1A;
+      color: #fff;
+    }
+
+    /* ── Fixed badge ── */
+    .badge {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 9999;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(12px);
+      padding: 0.38rem 0.95rem;
+      border-radius: 999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    /* ── Section ── */
+    .section {
+      background: #080E1A;
+      padding: 4rem 2rem;
+      min-height: 100vh;
+    }
+
+    .section-header {
+      max-width: 960px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--slate-light);
+      margin-bottom: 0.65rem;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    /* ── 3-column grid ── */
+    .spotlight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* ── Card ── */
+    .card {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      height: 320px;
+      cursor: pointer;
+    }
+
+    /* Full-bleed background image */
+    .card-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .card:hover .card-img {
+      transform: scale(1.04);
+    }
+
+    /* ::before — dark overlay, lightens on hover */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      z-index: 1;
+      transition: background 0.4s ease;
+    }
+
+    .card:hover::before {
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    /* ::after — spotlight radial gradient, fades in on hover */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at 50% 40%,
+        rgba(255, 255, 255, 0.14) 0%,
+        transparent 65%
+      );
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+    }
+
+    /* ── Bottom content panel ── */
+    .card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      padding: 1.4rem 1.5rem 1.5rem;
+    }
+
+    /* Always visible: service name */
+    .card-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--accent);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Separator line — always visible */
+    .card-sep {
+      width: 32px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0.75rem;
+      transition: width 0.35s ease;
+    }
+
+    .card:hover .card-sep {
+      width: 48px;
+    }
+
+    /* Hidden by default — fades in on hover */
+    .card-desc {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.5;
+      margin-bottom: 0.85rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s ease 0.05s,
+                  transform 0.4s ease 0.05s;
+    }
+
+    .card:hover .card-desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s ease 0.1s,
+                  transform 0.4s ease 0.1s;
+    }
+
+    .card:hover .card-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-btn:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <span class="badge">Propuesta O — Spotlight Cards</span>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-tag">Nuestros Servicios</span>
+      <h2 class="section-title">Descubre cada tratamiento</h2>
+    </div>
+
+    <div class="spotlight-grid">
+
+      <!-- 1. Ortodoncia -->
+      <div class="card" style="--accent: #2DD4BF;">
+        <img class="card-img" src="../lumina/assets/ort1.jpg" alt="Ortodoncia" />
+        <div class="card-content">
+          <h3 class="card-name">Ortodoncia</h3>
+          <div class="card-sep"></div>
+          <p class="card-desc">Brackets o alineadores invisibles para una sonrisa equilibrada y perfectamente alineada.</p>
+          <a href="#" class="card-btn">Agendar consulta →</a>
+        </div>
+      </div>
+
+      <!-- 2. Implantes Dentales -->
+      <div class="card" style="--accent: #FCD34D;">
+        <img class="card-img" src="../lumina/assets/impdent.jpg" alt="Implantes Dentales" />
+        <div class="card-content">
+          <h3 class="card-name">Implantes Dentales</h3>
+          <div class="card-sep"></div>
+          <p class="card-desc">Solución permanente para dientes perdidos con titanio médico e integración ósea total.</p>
+          <a href="#" class="card-btn">Agendar consulta →</a>
+        </div>
+      </div>
+
+      <!-- 3. Blanqueamiento Dental -->
+      <div class="card" style="--accent: #7DD3FC;">
+        <img class="card-img" src="../lumina/assets/blanqueamientodental.jpg" alt="Blanqueamiento" />
+        <div class="card-content">
+          <h3 class="card-name">Blanqueamiento Dental</h3>
+          <div class="card-sep"></div>
+          <p class="card-desc">Hasta 8 tonos más blanco en una sesión con tecnología LED avanzada, sin dañar el esmalte.</p>
+          <a href="#" class="card-btn">Agendar consulta →</a>
+        </div>
+      </div>
+
+      <!-- 4. Limpieza Dental -->
+      <div class="card" style="--accent: #6EE7B7;">
+        <img class="card-img" src="../lumina/assets/limpiezadental.jpg" alt="Limpieza Dental" />
+        <div class="card-content">
+          <h3 class="card-name">Limpieza Dental</h3>
+          <div class="card-sep"></div>
+          <p class="card-desc">Profilaxis con ultrasonido que elimina sarro y manchas para proteger tu salud periodontal.</p>
+          <a href="#" class="card-btn">Agendar consulta →</a>
+        </div>
+      </div>
+
+      <!-- 5. Carillas de Porcelana -->
+      <div class="card" style="--accent: #FCA5A5;">
+        <img class="card-img" src="../lumina/assets/carillas.jpg" alt="Carillas de Porcelana" />
+        <div class="card-content">
+          <h3 class="card-name">Carillas de Porcelana</h3>
+          <div class="card-sep"></div>
+          <p class="card-desc">Láminas de porcelana que transforman forma, color y proporción de tu sonrisa con resultados duraderos.</p>
+          <a href="#" class="card-btn">Agendar consulta →</a>
+        </div>
+      </div>
+
+      <!-- 6. Odontología Estética -->
+      <div class="card" style="--accent: #C4B5FD;">
+        <img class="card-img" src="../lumina/assets/odontologiaestetica.jpg" alt="Odontología Estética" />
+        <div class="card-content">
+          <h3 class="card-name">Odontología Estética</h3>
+          <div class="card-sep"></div>
+          <p class="card-desc">Diseño de sonrisa integral que combina múltiples tratamientos con un enfoque armonioso y personalizado.</p>
+          <a href="#" class="card-btn">Agendar consulta →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

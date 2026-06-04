@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Propuesta M — Horizontal Ticket</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:        #0F172A;
+      --navy2:       #1E293B;
+      --slate-light: #94A3B8;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: #fff;
+    }
+
+    /* ── Fixed badge ── */
+    .badge {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 9999;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(12px);
+      padding: 0.38rem 0.95rem;
+      border-radius: 999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    /* ── Section ── */
+    .section {
+      background: var(--navy);
+      padding: 4rem 2rem;
+      min-height: 100vh;
+    }
+
+    /* ── Section header ── */
+    .section-header {
+      max-width: 820px;
+      margin: 0 auto 3rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--slate-light);
+      margin-bottom: 0.65rem;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    /* ── Card list ── */
+    .ticket-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* ── Single ticket card ── */
+    .ticket {
+      display: flex;
+      height: 140px;
+      border-radius: 16px;
+      background: var(--navy2);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-left: 3px solid var(--accent);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .ticket:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px -6px var(--accent),
+                  0 2px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ── Left image block ── */
+    .ticket-image {
+      width: 220px;
+      flex-shrink: 0;
+      overflow: hidden;
+      border-radius: 14px 0 0 14px;
+    }
+
+    .ticket-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .ticket:hover .ticket-image img {
+      transform: scale(1.08);
+    }
+
+    /* ── Right content ── */
+    .ticket-body {
+      flex: 1;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .ticket-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .ticket-desc {
+      font-size: 0.82rem;
+      color: var(--slate-light);
+      line-height: 1.45;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ticket-link {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s;
+    }
+
+    .ticket-link:hover { opacity: 0.7; }
+  </style>
+</head>
+<body>
+
+  <span class="badge">Propuesta M — Horizontal Ticket</span>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-tag">Nuestros Servicios</span>
+      <h2 class="section-title">Todo lo que tu sonrisa necesita</h2>
+    </div>
+
+    <div class="ticket-list">
+
+      <!-- 1. Ortodoncia -->
+      <div class="ticket" style="--accent: #2DD4BF;">
+        <div class="ticket-image">
+          <img src="../lumina/assets/ort1.jpg" alt="Ortodoncia" />
+        </div>
+        <div class="ticket-body">
+          <h3 class="ticket-name">Ortodoncia</h3>
+          <p class="ticket-desc">Alineación perfecta con brackets o alineadores invisibles para cada caso clínico.</p>
+          <a href="#" class="ticket-link">Ver más →</a>
+        </div>
+      </div>
+
+      <!-- 2. Implantes Dentales -->
+      <div class="ticket" style="--accent: #FCD34D;">
+        <div class="ticket-image">
+          <img src="../lumina/assets/impdent.jpg" alt="Implantes Dentales" />
+        </div>
+        <div class="ticket-body">
+          <h3 class="ticket-name">Implantes Dentales</h3>
+          <p class="ticket-desc">Restauración permanente de dientes perdidos con titanio de grado médico.</p>
+          <a href="#" class="ticket-link">Ver más →</a>
+        </div>
+      </div>
+
+      <!-- 3. Blanqueamiento Dental -->
+      <div class="ticket" style="--accent: #7DD3FC;">
+        <div class="ticket-image">
+          <img src="../lumina/assets/blanqueamientodental.jpg" alt="Blanqueamiento Dental" />
+        </div>
+        <div class="ticket-body">
+          <h3 class="ticket-name">Blanqueamiento Dental</h3>
+          <p class="ticket-desc">Hasta 8 tonos más blanco en una sesión, con tecnología LED sin dañar el esmalte.</p>
+          <a href="#" class="ticket-link">Ver más →</a>
+        </div>
+      </div>
+
+      <!-- 4. Limpieza Dental -->
+      <div class="ticket" style="--accent: #6EE7B7;">
+        <div class="ticket-image">
+          <img src="../lumina/assets/limpiezadental.jpg" alt="Limpieza Dental" />
+        </div>
+        <div class="ticket-body">
+          <h3 class="ticket-name">Limpieza Dental</h3>
+          <p class="ticket-desc">Profilaxis profesional con ultrasonido para eliminar sarro y prevenir enfermedades periodontales.</p>
+          <a href="#" class="ticket-link">Ver más →</a>
+        </div>
+      </div>
+
+      <!-- 5. Carillas de Porcelana -->
+      <div class="ticket" style="--accent: #FCA5A5;">
+        <div class="ticket-image">
+          <img src="../lumina/assets/carillas.jpg" alt="Carillas de Porcelana" />
+        </div>
+        <div class="ticket-body">
+          <h3 class="ticket-name">Carillas de Porcelana</h3>
+          <p class="ticket-desc">Láminas ultrafinas que transforman color, forma y proporción de tu sonrisa definitivamente.</p>
+          <a href="#" class="ticket-link">Ver más →</a>
+        </div>
+      </div>
+
+      <!-- 6. Odontología Estética -->
+      <div class="ticket" style="--accent: #C4B5FD;">
+        <div class="ticket-image">
+          <img src="../lumina/assets/odontologiaestetica.jpg" alt="Odontología Estética" />
+        </div>
+        <div class="ticket-body">
+          <h3 class="ticket-name">Odontología Estética</h3>
+          <p class="ticket-desc">Diseño de sonrisa integral con los más altos estándares biomédicos y estéticos personalizados.</p>
+          <a href="#" class="ticket-link">Ver más →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>
