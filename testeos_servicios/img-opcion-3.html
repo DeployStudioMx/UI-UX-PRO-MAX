@@ -9,8 +9,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: #0F172A; padding: 4rem 2rem; }
     :root {
-      --mint: #0D9488; --mint-light: #14B8A6;
-      --navy: #0F172A; --navy2: #1E293B; --navy3: #263348;
+      --navy: #0F172A; --navy2: #1E293B;
       --slate-light: #94A3B8;
     }
 
@@ -30,12 +29,13 @@
       margin: 0 auto;
     }
 
-    /* ── Card base ── */
+    /* ── Card base — usa --accent definido inline por card ── */
     .card {
+      --accent: #0D9488; /* fallback; cada card lo sobreescribe */
       background: var(--navy2);
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 24px;
-      overflow: hidden; /* imagen vive dentro */
+      overflow: hidden;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -44,64 +44,78 @@
     }
     .card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 32px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(20,184,166,0.22);
-      border-color: rgba(20,184,166,0.22);
+      /* glow usa el accent de cada card */
+      box-shadow: 0 32px 80px rgba(0,0,0,0.55),
+                  0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
+      border-color: color-mix(in srgb, var(--accent) 35%, transparent);
     }
 
-    /* ── OPCIÓN 3: Imagen que se disuelve hacia abajo ── */
+    /* ── Imagen: más alta, el difuminado empieza tarde ── */
     .card-img-wrap {
       position: relative;
-      height: 148px;
+      height: 192px;   /* más espacio para la foto */
       overflow: hidden;
       flex-shrink: 0;
     }
     .card-img-wrap img {
       width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
+      object-fit: cover; object-position: center;
       display: block;
-      /* zoom suave al hacer hover (controlado desde .card:hover) */
       transition: transform 0.65s cubic-bezier(0.16,1,0.3,1);
     }
     .card:hover .card-img-wrap img {
-      transform: scale(1.10);
+      transform: scale(1.08);
     }
 
-    /* Máscara: la imagen se disuelve hacia el color del card */
+    /* Dissolve: empieza a difuminar recién en el 60% de la imagen */
     .card-img-wrap::after {
       content: '';
       position: absolute; inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(30,41,59, 0.05)  0%,
-        rgba(30,41,59, 0.10) 35%,
-        rgba(30,41,59, 0.70) 72%,
-        rgba(30,41,59, 1.00) 100%
+        transparent         0%,
+        transparent        55%,
+        rgba(30,41,59,0.55) 78%,
+        rgba(30,41,59,1.00) 100%
       );
       transition: opacity 0.45s;
     }
-    /* Al hover la máscara se aclara un poco = más foto visible */
+    /* Hover: la máscara retrocede, la foto respira */
     .card:hover .card-img-wrap::after {
-      opacity: 0.75;
+      opacity: 0.72;
     }
 
-    /* Número de servicio — flota sobre la imagen (esquina inferior derecha) */
-    .card-num {
+    /* Pastilla de acento — reemplaza al número, identifica el servicio */
+    .card-tag {
       position: absolute;
-      bottom: 0.65rem; right: 1rem;
-      font-family: 'DM Serif Display', serif;
-      font-size: 3.5rem; line-height: 1;
-      font-weight: 700;
-      color: rgba(255,255,255,0.10);
-      pointer-events: none;
+      bottom: 0.85rem; left: 1.1rem;
       z-index: 1;
-      transition: color 0.4s;
-      user-select: none;
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.28rem 0.75rem;
+      border-radius: 50px;
+      background: color-mix(in srgb, var(--accent) 18%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+      color: color-mix(in srgb, var(--accent) 90%, white);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      backdrop-filter: blur(6px);
+      transition: background 0.35s, border-color 0.35s;
     }
-    .card:hover .card-num { color: rgba(20,184,166,0.18); }
+    .card:hover .card-tag {
+      background: color-mix(in srgb, var(--accent) 28%, transparent);
+      border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+    }
+    /* Dot de color dentro de la pastilla */
+    .card-tag::before {
+      content: '';
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
 
-    /* ── Cuerpo — ahora no necesita padding-top grande ── */
+    /* ── Cuerpo ── */
     .card-body {
-      padding: 1.4rem 1.75rem 2rem;
+      padding: 1.25rem 1.75rem 1.85rem;
       text-align: center;
       display: flex; flex-direction: column;
       gap: 0.75rem; align-items: center;
@@ -112,13 +126,16 @@
       font-size: 1.15rem; font-weight: 700; color: white;
     }
     .card-sep {
-      width: 32px; height: 2px;
+      width: 28px; height: 2px;
       background: rgba(255,255,255,0.08); border-radius: 2px;
-      transition: background 0.3s, width 0.3s;
+      transition: background 0.35s, width 0.35s;
     }
-    .card:hover .card-sep { background: var(--mint); width: 48px; }
+    .card:hover .card-sep {
+      background: var(--accent);
+      width: 44px;
+    }
     .card-desc {
-      font-size: .85rem; font-weight: 300;
+      font-size: .84rem; font-weight: 300;
       color: var(--slate-light); line-height: 1.65;
     }
     .card-link {
@@ -127,24 +144,27 @@
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.10);
       color: var(--slate-light); text-decoration: none;
-      margin-top: .4rem;
+      margin-top: .3rem;
       transition: background .3s, border-color .3s, color .3s, transform .3s;
     }
     .card:hover .card-link {
-      background: var(--mint); border-color: var(--mint);
-      color: white; transform: rotate(45deg);
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      transform: rotate(45deg);
     }
   </style>
 </head>
 <body>
-  <div class="label">Opción 3 — Dissolve Integrado</div>
+  <div class="label">Opción 3 — Dissolve · Identidad por servicio</div>
 
   <div class="grid">
 
-    <div class="card">
+    <!-- Ortodoncia — Teal (color raíz del sistema) -->
+    <div class="card" style="--accent: #0D9488;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Ortodoncia" />
-        <span class="card-num">01</span>
+        <span class="card-tag">Ortodoncia</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Ortodoncia</h3>
@@ -156,10 +176,11 @@
       </div>
     </div>
 
-    <div class="card">
+    <!-- Implantes — Gold / permanencia y valor -->
+    <div class="card" style="--accent: #C9A84C;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Implantes" />
-        <span class="card-num">02</span>
+        <span class="card-tag">Implantes</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Implantes Dentales</h3>
@@ -171,10 +192,11 @@
       </div>
     </div>
 
-    <div class="card">
+    <!-- Blanqueamiento — Sky / luminosidad -->
+    <div class="card" style="--accent: #0EA5E9;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Blanqueamiento" />
-        <span class="card-num">03</span>
+        <span class="card-tag">Blanqueamiento</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Blanqueamiento</h3>
@@ -186,10 +208,11 @@
       </div>
     </div>
 
-    <div class="card">
+    <!-- Limpieza — Esmeralda / salud y frescura -->
+    <div class="card" style="--accent: #10B981;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Limpieza" />
-        <span class="card-num">04</span>
+        <span class="card-tag">Limpieza</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Limpieza Dental</h3>
@@ -201,10 +224,11 @@
       </div>
     </div>
 
-    <div class="card">
+    <!-- Carillas — Rosa / estética y elegancia -->
+    <div class="card" style="--accent: #F472B6;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Carillas" />
-        <span class="card-num">05</span>
+        <span class="card-tag">Carillas</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Carillas de Porcelana</h3>
@@ -216,10 +240,11 @@
       </div>
     </div>
 
-    <div class="card">
+    <!-- Odontología Estética — Violeta / lujo y personalización -->
+    <div class="card" style="--accent: #A78BFA;">
       <div class="card-img-wrap">
         <img src="../lumina/assets/ort1.jpg" alt="Estética" />
-        <span class="card-num">06</span>
+        <span class="card-tag">Estética</span>
       </div>
       <div class="card-body">
         <h3 class="card-name">Odontología Estética</h3>
