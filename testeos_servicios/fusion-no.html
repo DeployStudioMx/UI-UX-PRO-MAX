@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fusión N+O — Lista Spotlight</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: #080E1A; color: #fff; }
+
+    .badge {
+      position: fixed; top: 1rem; right: 1rem; z-index: 9999;
+      background: rgba(8,14,26,0.88); border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(12px); padding: .38rem .95rem; border-radius: 999px;
+      font-size: .7rem; font-weight: 600; color: #fff;
+      letter-spacing: .07em; text-transform: uppercase;
+    }
+
+    section { padding: 5.5rem 2.5rem; min-height: 100vh; }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    /* ── Header ── */
+    .section-tag {
+      display: inline-flex; align-items: center; gap: .7rem;
+      font-size: .7rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .16em; color: #14B8A6; margin-bottom: 1rem;
+    }
+    .section-tag::before {
+      content: ''; width: 28px; height: 2px;
+      background: linear-gradient(90deg, #0D9488, #14B8A6); border-radius: 2px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      color: white; line-height: 1.1; letter-spacing: -.02em;
+      margin-bottom: 4rem;
+    }
+    .section-title em { font-style: italic; color: #14B8A6; }
+
+    /* ── Lista ── */
+    .list { display: flex; flex-direction: column; }
+
+    /* ── Item ── */
+    .item {
+      --accent: #2DD4BF;
+      display: flex;
+      align-items: stretch;
+      min-height: 86px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      overflow: hidden;
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition:
+        min-height 0.52s cubic-bezier(0.16,1,0.3,1),
+        border-color 0.35s,
+        background 0.35s;
+    }
+    .item:first-of-type { border-top: 1px solid rgba(255,255,255,0.07); }
+    .item:hover {
+      min-height: 188px;
+      border-left-color: var(--accent);
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* ── Número (de N, oscuro → accent en hover) ── */
+    .item-num {
+      width: 96px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding-left: 1.25rem;
+      font-family: 'DM Serif Display', serif;
+      font-size: 3.6rem;
+      color: rgba(255,255,255,0.07);
+      line-height: 1;
+      user-select: none;
+      transition: color 0.4s;
+    }
+    .item:hover .item-num { color: var(--accent); }
+
+    /* ── Contenido ── */
+    .item-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: .42rem;
+      padding: 1.35rem 1.5rem 1.35rem 0.5rem;
+    }
+
+    /* Nombre siempre visible en color acento (de O) */
+    .item-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+
+    /* Separador de O — aparece con el hover */
+    .item-sep {
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.35s cubic-bezier(0.16,1,0.3,1) 0.05s;
+    }
+    .item:hover .item-sep { width: 36px; }
+
+    /* Descripción: oculta → visible al hover (de N) */
+    .item-desc {
+      font-size: .84rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.48);
+      line-height: 1.6;
+      max-width: 460px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.38s ease 0.08s, transform 0.38s ease 0.08s;
+    }
+    .item:hover .item-desc { opacity: 1; transform: none; }
+
+    .item-link {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-size: .76rem; font-weight: 600;
+      color: var(--accent); text-decoration: none;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.35s ease 0.16s, transform 0.35s ease 0.16s;
+    }
+    .item:hover .item-link { opacity: 1; transform: none; }
+
+    /* ── Columna imagen con spotlight (de O) ── */
+    .item-img {
+      flex-shrink: 0;
+      width: 0;
+      overflow: hidden;
+      position: relative;
+      transition: width 0.52s cubic-bezier(0.16,1,0.3,1);
+    }
+    .item:hover .item-img { width: 320px; }
+
+    .item-img img {
+      display: block;
+      width: 320px;   /* fijo para que no colapsen al animar */
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.65s cubic-bezier(0.16,1,0.3,1);
+      filter: brightness(0.55);
+      transition: transform 0.65s cubic-bezier(0.16,1,0.3,1),
+                  filter 0.5s ease;
+    }
+    .item:hover .item-img img {
+      transform: scale(1.06);
+      filter: brightness(0.82);
+    }
+
+    /* Overlay oscuro de O — se aclara al hover */
+    .item-img::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background: rgba(0,0,0,0.55);
+      transition: background 0.45s ease;
+      pointer-events: none;
+    }
+    .item:hover .item-img::before { background: rgba(0,0,0,0.22); }
+
+    /* Spotlight radial de O — aparece al hover */
+    .item-img::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 2;
+      background: radial-gradient(
+        circle at 50% 38%,
+        rgba(255,255,255,0.16) 0%,
+        transparent 62%
+      );
+      opacity: 0;
+      transition: opacity 0.45s ease 0.1s;
+      pointer-events: none;
+    }
+    .item:hover .item-img::after { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <span class="badge">Fusión N + O — Lista Spotlight</span>
+
+  <section>
+    <div class="container">
+
+      <p class="section-tag">Nuestros Servicios</p>
+      <h2 class="section-title">Todo lo que tu<br/><em>sonrisa necesita</em></h2>
+
+      <div class="list">
+
+        <div class="item" style="--accent: #2DD4BF;">
+          <div class="item-num">01</div>
+          <div class="item-content">
+            <h3 class="item-name">Ortodoncia</h3>
+            <div class="item-sep"></div>
+            <p class="item-desc">Brackets o alineadores invisibles diseñados para cada caso, con seguimiento personalizado en cada etapa del tratamiento.</p>
+            <a href="#" class="item-link">Agendar consulta <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="item-img">
+            <img src="../lumina/assets/ort1.jpg" alt="Ortodoncia" />
+          </div>
+        </div>
+
+        <div class="item" style="--accent: #FCD34D;">
+          <div class="item-num">02</div>
+          <div class="item-content">
+            <h3 class="item-name">Implantes Dentales</h3>
+            <div class="item-sep"></div>
+            <p class="item-desc">Reemplaza dientes perdidos con implantes de titanio de grado médico. Solución permanente con apariencia completamente natural.</p>
+            <a href="#" class="item-link">Agendar consulta <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="item-img">
+            <img src="../lumina/assets/impdent.jpg" alt="Implantes" />
+          </div>
+        </div>
+
+        <div class="item" style="--accent: #7DD3FC;">
+          <div class="item-num">03</div>
+          <div class="item-content">
+            <h3 class="item-name">Blanqueamiento Dental</h3>
+            <div class="item-sep"></div>
+            <p class="item-desc">Tecnología LED de última generación que aclara hasta 8 tonos en una sola sesión sin dañar el esmalte ni sensibilizar los dientes.</p>
+            <a href="#" class="item-link">Agendar consulta <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="item-img">
+            <img src="../lumina/assets/blanqueamientodental.jpg" alt="Blanqueamiento" />
+          </div>
+        </div>
+
+        <div class="item" style="--accent: #6EE7B7;">
+          <div class="item-num">04</div>
+          <div class="item-content">
+            <h3 class="item-name">Limpieza Dental</h3>
+            <div class="item-sep"></div>
+            <p class="item-desc">Profilaxis profesional con ultrasonido para eliminar sarro acumulado, previniendo caries y enfermedades periodontales.</p>
+            <a href="#" class="item-link">Agendar consulta <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="item-img">
+            <img src="../lumina/assets/limpiezadental.jpg" alt="Limpieza" />
+          </div>
+        </div>
+
+        <div class="item" style="--accent: #FCA5A5;">
+          <div class="item-num">05</div>
+          <div class="item-content">
+            <h3 class="item-name">Carillas de Porcelana</h3>
+            <div class="item-sep"></div>
+            <p class="item-desc">Láminas ultrafinas de porcelana de alta resistencia que transforman color, forma y tamaño con resultados de larga duración.</p>
+            <a href="#" class="item-link">Agendar consulta <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="item-img">
+            <img src="../lumina/assets/carillas.jpg" alt="Carillas" />
+          </div>
+        </div>
+
+        <div class="item" style="--accent: #C4B5FD;">
+          <div class="item-num">06</div>
+          <div class="item-content">
+            <h3 class="item-name">Odontología Estética</h3>
+            <div class="item-sep"></div>
+            <p class="item-desc">Diseño integral de sonrisa que combina múltiples tratamientos para un resultado armonioso, natural y completamente personalizado.</p>
+            <a href="#" class="item-link">Agendar consulta <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="item-img">
+            <img src="../lumina/assets/odontologiaestetica.jpg" alt="Estética" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
