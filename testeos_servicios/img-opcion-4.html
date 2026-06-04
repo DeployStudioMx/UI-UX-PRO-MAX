@@ -72,30 +72,29 @@
       pointer-events: none;
     }
 
-    /* ── Panel inferior: vidrio oscuro ── */
+    /* ── Panel inferior ── */
     .card-panel {
       position: absolute;
       bottom: 0; left: 0; right: 0;
       z-index: 2;
-      padding: 1.4rem 1.5rem 1.5rem;
-      /* Línea de acento en la parte superior del panel */
+      padding: 1.3rem 1.5rem 1.5rem;
       border-top: 2px solid var(--accent);
     }
 
+    /* Título en color de acento — es el único título */
     .card-name {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.15rem; font-weight: 700;
-      color: white;
-      line-height: 1.2;
-      margin-bottom: 0.4rem;
+      font-size: 1.45rem; font-weight: 700;
+      color: var(--accent);
+      line-height: 1.15;
+      margin-bottom: 0.45rem;
     }
 
     .card-desc {
       font-size: .78rem; font-weight: 300;
-      color: rgba(255,255,255,0.62);
+      color: rgba(255,255,255,0.60);
       line-height: 1.55;
       margin-bottom: 0.9rem;
-      /* Solo 2 líneas para mantener compacto */
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -103,14 +102,7 @@
     }
 
     .card-footer {
-      display: flex; align-items: center; justify-content: space-between;
-    }
-
-    /* Tag de servicio con el accent */
-    .card-tag {
-      font-size: 0.62rem; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--accent);
+      display: flex; align-items: center; justify-content: flex-end;
     }
 
     .card-link {
@@ -128,6 +120,7 @@
       color: white;
       transform: rotate(45deg);
     }
+    .card-tag { display: none; }
   </style>
 </head>
 <body>
