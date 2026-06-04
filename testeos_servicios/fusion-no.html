@@ -41,39 +41,35 @@
     .section-title em { font-style: italic; color: #14B8A6; }
 
     /* ── Lista ── */
-    .list { display: flex; flex-direction: column; }
+    .list { display: flex; flex-direction: column; gap: 0.55rem; }
 
-    /* ── Item ── */
+    /* ── Item: card redondeada ── */
     .item {
       --accent: #2DD4BF;
       display: flex;
       align-items: stretch;
-      min-height: 86px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-left: 3px solid transparent;
       overflow: hidden;
       cursor: pointer;
-      border-left: 2px solid transparent;
-      transition:
-        min-height 0.52s cubic-bezier(0.16,1,0.3,1),
-        border-color 0.35s,
-        background 0.35s;
+      transition: border-color 0.35s, background 0.35s, box-shadow 0.4s;
     }
-    .item:first-of-type { border-top: 1px solid rgba(255,255,255,0.07); }
     .item:hover {
-      min-height: 188px;
       border-left-color: var(--accent);
-      background: rgba(255,255,255,0.02);
+      background: rgba(255,255,255,0.025);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
     }
 
-    /* ── Número (de N, oscuro → accent en hover) ── */
+    /* ── Número ── */
     .item-num {
-      width: 96px;
+      width: 80px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
-      padding-left: 1.25rem;
+      justify-content: center;
       font-family: 'DM Serif Display', serif;
-      font-size: 3.6rem;
+      font-size: 2.4rem;
       color: rgba(255,255,255,0.07);
       line-height: 1;
       user-select: none;
@@ -87,47 +83,45 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: .42rem;
-      padding: 1.35rem 1.5rem 1.35rem 0.5rem;
+      gap: .35rem;
+      padding: 1.1rem 1.25rem 1.1rem 0.25rem;
     }
 
-    /* Nombre siempre visible en color acento (de O) */
+    /* Nombre en color acento */
     .item-name {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       color: var(--accent);
       line-height: 1.2;
     }
 
-    /* Separador de O — aparece con el hover */
+    /* Separador — siempre visible */
     .item-sep {
-      width: 0;
+      width: 28px;
       height: 2px;
       background: var(--accent);
       border-radius: 2px;
-      transition: width 0.35s cubic-bezier(0.16,1,0.3,1) 0.05s;
+      opacity: 0.5;
+      transition: width 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.35s;
     }
-    .item:hover .item-sep { width: 36px; }
+    .item:hover .item-sep { width: 40px; opacity: 1; }
 
-    /* Descripción: oculta → visible al hover (de N) */
+    /* Descripción: siempre visible */
     .item-desc {
-      font-size: .84rem;
+      font-size: .82rem;
       font-weight: 300;
-      color: rgba(255,255,255,0.48);
-      line-height: 1.6;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.58;
       max-width: 460px;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.38s ease 0.08s, transform 0.38s ease 0.08s;
     }
-    .item:hover .item-desc { opacity: 1; transform: none; }
 
     .item-link {
       display: inline-flex; align-items: center; gap: .35rem;
-      font-size: .76rem; font-weight: 600;
+      font-size: .74rem; font-weight: 600;
       color: var(--accent); text-decoration: none;
-      opacity: 0; transform: translateY(8px);
-      transition: opacity 0.35s ease 0.16s, transform 0.35s ease 0.16s;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+      margin-top: .1rem;
     }
     .item:hover .item-link { opacity: 1; transform: none; }
 
