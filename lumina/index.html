@@ -381,6 +381,76 @@
       touch-action: manipulation;
     }
     .btn-outline:hover { border-color: var(--mint); color: var(--mint); background: #F0FDFA; }
+
+    /* ── Section entrance animation ─────── */
+    .section-reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition:
+        opacity  0.9s cubic-bezier(0.16,1,0.3,1),
+        transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    }
+    .section-reveal.section-visible {
+      opacity: 1;
+      transform: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .section-reveal { opacity: 1; transform: none; }
+    }
+
+    /* ── Side section navigator ──────────── */
+    #section-nav {
+      position: fixed;
+      right: 1.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      align-items: flex-end;
+    }
+    .snav-dot {
+      display: flex; align-items: center; gap: 0.55rem;
+      background: none; border: none; padding: 0; cursor: pointer;
+    }
+    .snav-label {
+      font-size: 0.62rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--mint); white-space: nowrap;
+      opacity: 0; transform: translateX(6px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+    .snav-pip {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(15,23,42,0.18);
+      border: 1.5px solid rgba(15,23,42,0.12);
+      transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+      flex-shrink: 0;
+    }
+    /* Over hero (dark bg) — dots should be white */
+    #section-nav.on-dark .snav-pip {
+      background: rgba(255,255,255,0.30);
+      border-color: rgba(255,255,255,0.20);
+    }
+    #section-nav.on-dark .snav-dot.active .snav-pip {
+      background: white;
+      border-color: white;
+    }
+    #section-nav.on-dark .snav-label { color: rgba(255,255,255,0.85); }
+
+    .snav-dot.active .snav-pip {
+      background: var(--mint);
+      border-color: var(--mint);
+      height: 22px;
+      border-radius: 4px;
+      box-shadow: 0 2px 10px rgba(13,148,136,0.45);
+    }
+    .snav-dot:hover .snav-label,
+    .snav-dot.active .snav-label { opacity: 1; transform: translateX(0); }
+
+    @media (max-width: 1024px) { #section-nav { display: none; } }
   </style>
 </head>
 
@@ -391,6 +461,9 @@
           focus:bg-mint focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold">
   Ir al contenido principal
 </a>
+
+<!-- Side section navigator — auto-populated by JS -->
+<nav id="section-nav" aria-label="Navegación de secciones"></nav>
 
 <!-- ══════════════════════════════════════
      HEADER
@@ -428,7 +501,7 @@
      HERO — full screen editorial
 ══════════════════════════════════════ -->
 <main>
-<section id="hero" aria-labelledby="hero-heading">
+<section id="hero" aria-labelledby="hero-heading" data-nav="Inicio">
 
   <!-- Rounded image card -->
   <div id="hero-card">
@@ -484,7 +557,7 @@
 <!-- ══════════════════════════════════════
      STATS BAR
 ══════════════════════════════════════ -->
-<section id="stats-bar" aria-label="Estadísticas de la clínica">
+<section id="stats-bar" aria-label="Estadísticas de la clínica" class="section-reveal">
   <div class="stats-inner">
 
     <div class="stat-item reveal">
@@ -720,13 +793,67 @@
     scheduleNext();
   })();
 
-  /* Intersection Observer — reveal */
+  /* Intersection Observer — reveal elements */
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ── Section entrance animations ──────── */
+  const sectionRevealIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('section-visible');
+        sectionRevealIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.section-reveal').forEach(el => sectionRevealIO.observe(el));
+
+  /* ── Side section navigator ────────────── */
+  (function () {
+    const navEl   = document.getElementById('section-nav');
+    const heroEl  = document.getElementById('hero');
+    const navSecs = Array.from(document.querySelectorAll('section[data-nav]'));
+    if (!navEl || !navSecs.length) return;
+
+    /* Build dots */
+    navSecs.forEach((sec, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'snav-dot';
+      btn.setAttribute('aria-label', sec.dataset.nav);
+      btn.innerHTML =
+        `<span class="snav-label">${sec.dataset.nav}</span>` +
+        `<span class="snav-pip"></span>`;
+      btn.addEventListener('click', () => sec.scrollIntoView({ behavior: 'smooth' }));
+      navEl.appendChild(btn);
+    });
+
+    const dots = Array.from(navEl.querySelectorAll('.snav-dot'));
+
+    function setActive(idx) {
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+
+    /* Which section is most visible */
+    const activeIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const idx = navSecs.indexOf(e.target);
+        if (e.isIntersecting) setActive(idx);
+      });
+    }, { threshold: 0.4 });
+    navSecs.forEach(s => activeIO.observe(s));
+
+    /* Toggle dark/light style based on hero visibility */
+    const darkIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        navEl.classList.toggle('on-dark', e.isIntersecting);
+      });
+    }, { threshold: 0.1 });
+    darkIO.observe(heroEl);
+  })();
 </script>
 
 </body>
