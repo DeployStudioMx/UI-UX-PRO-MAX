@@ -9,12 +9,11 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'DM Sans', sans-serif; background: #080E1A; color: #fff; }
+    body { font-family: 'DM Sans', sans-serif; background: #F8FAFB; color: #0F172A; }
 
     .badge {
       position: fixed; top: 1rem; right: 1rem; z-index: 9999;
-      background: rgba(8,14,26,0.88); border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(12px); padding: .38rem .95rem; border-radius: 999px;
+      background: #0F172A; padding: .38rem .95rem; border-radius: 999px;
       font-size: .7rem; font-weight: 600; color: #fff;
       letter-spacing: .07em; text-transform: uppercase;
     }
@@ -26,7 +25,7 @@
     .section-tag {
       display: inline-flex; align-items: center; gap: .7rem;
       font-size: .7rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: .16em; color: #14B8A6; margin-bottom: 1rem;
+      letter-spacing: .16em; color: #0D9488; margin-bottom: 1rem;
     }
     .section-tag::before {
       content: ''; width: 28px; height: 2px;
@@ -35,42 +34,44 @@
     .section-title {
       font-family: 'DM Serif Display', serif;
       font-size: clamp(2.2rem, 4vw, 3.2rem);
-      color: white; line-height: 1.1; letter-spacing: -.02em;
-      margin-bottom: 4rem;
+      color: #0F172A; line-height: 1.1; letter-spacing: -.02em;
+      margin-bottom: 3rem;
     }
     .section-title em { font-style: italic; color: #14B8A6; }
 
     /* ── Lista ── */
-    .list { display: flex; flex-direction: column; gap: 0.55rem; }
+    .list { display: flex; flex-direction: column; gap: 0.5rem; }
 
-    /* ── Item: card redondeada ── */
+    /* ── Item: card con altura fija ── */
     .item {
-      --accent: #2DD4BF;
+      --accent: #0D9488;
       display: flex;
       align-items: stretch;
+      height: 112px;          /* altura fija por card */
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.07);
+      background: #fff;
+      border: 1px solid #E2E8F0;
       border-left: 3px solid transparent;
       overflow: hidden;
       cursor: pointer;
-      transition: border-color 0.35s, background 0.35s, box-shadow 0.4s;
+      transition: border-color 0.35s, box-shadow 0.4s, background 0.3s;
     }
     .item:hover {
       border-left-color: var(--accent);
-      background: rgba(255,255,255,0.025);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+      box-shadow: 0 6px 28px rgba(15,23,42,0.10);
+      background: #fff;
     }
 
     /* ── Número ── */
     .item-num {
-      width: 80px;
+      width: 72px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'DM Serif Display', serif;
-      font-size: 2.4rem;
-      color: rgba(255,255,255,0.07);
+      font-size: 2rem;
+      color: #E2E8F0;
       line-height: 1;
       user-select: none;
       transition: color 0.4s;
@@ -83,95 +84,87 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: .35rem;
-      padding: 1.1rem 1.25rem 1.1rem 0.25rem;
+      gap: .3rem;
+      padding: 0.9rem 1.25rem 0.9rem 0.25rem;
+      min-width: 0;
     }
 
-    /* Nombre en color acento */
     .item-name {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--accent);
       line-height: 1.2;
     }
 
-    /* Separador — siempre visible */
     .item-sep {
-      width: 28px;
-      height: 2px;
-      background: var(--accent);
-      border-radius: 2px;
-      opacity: 0.5;
+      width: 24px; height: 2px;
+      background: var(--accent); border-radius: 2px;
+      opacity: 0.4;
       transition: width 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.35s;
     }
-    .item:hover .item-sep { width: 40px; opacity: 1; }
+    .item:hover .item-sep { width: 36px; opacity: 1; }
 
-    /* Descripción: siempre visible */
+    /* Descripción siempre visible */
     .item-desc {
-      font-size: .82rem;
+      font-size: .79rem;
       font-weight: 300;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.58;
-      max-width: 460px;
+      color: #64748B;
+      line-height: 1.5;
+      /* recorta a 2 líneas para no desbordarse del height fijo */
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .item-link {
-      display: inline-flex; align-items: center; gap: .35rem;
-      font-size: .74rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: .3rem;
+      font-size: .72rem; font-weight: 600;
       color: var(--accent); text-decoration: none;
-      opacity: 0; transform: translateY(6px);
-      transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
-      margin-top: .1rem;
+      opacity: 0; transform: translateY(5px);
+      transition: opacity 0.28s ease 0.08s, transform 0.28s ease 0.08s;
     }
     .item:hover .item-link { opacity: 1; transform: none; }
 
-    /* ── Columna imagen con spotlight (de O) ── */
+    /* ── Columna imagen ── */
     .item-img {
       flex-shrink: 0;
       width: 0;
       overflow: hidden;
       position: relative;
-      transition: width 0.52s cubic-bezier(0.16,1,0.3,1);
+      transition: width 0.48s cubic-bezier(0.16,1,0.3,1);
     }
-    .item:hover .item-img { width: 320px; }
+    .item:hover .item-img { width: 200px; }
 
     .item-img img {
       display: block;
-      width: 320px;   /* fijo para que no colapsen al animar */
+      width: 200px;
       height: 100%;
       object-fit: cover;
       object-position: center;
-      transition: transform 0.65s cubic-bezier(0.16,1,0.3,1);
-      filter: brightness(0.55);
-      transition: transform 0.65s cubic-bezier(0.16,1,0.3,1),
-                  filter 0.5s ease;
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), filter 0.45s;
+      filter: brightness(0.78) saturate(1.1);
     }
     .item:hover .item-img img {
-      transform: scale(1.06);
-      filter: brightness(0.82);
+      transform: scale(1.07);
+      filter: brightness(0.95) saturate(1.15);
     }
 
-    /* Overlay oscuro de O — se aclara al hover */
+    /* Overlay que aclara al hover */
     .item-img::before {
-      content: '';
-      position: absolute; inset: 0; z-index: 1;
-      background: rgba(0,0,0,0.55);
-      transition: background 0.45s ease;
+      content: ''; position: absolute; inset: 0; z-index: 1;
+      background: rgba(255,255,255,0.28);
+      transition: opacity 0.45s;
       pointer-events: none;
     }
-    .item:hover .item-img::before { background: rgba(0,0,0,0.22); }
+    .item:hover .item-img::before { opacity: 0; }
 
-    /* Spotlight radial de O — aparece al hover */
+    /* Spotlight radial */
     .item-img::after {
-      content: '';
-      position: absolute; inset: 0; z-index: 2;
-      background: radial-gradient(
-        circle at 50% 38%,
-        rgba(255,255,255,0.16) 0%,
-        transparent 62%
-      );
+      content: ''; position: absolute; inset: 0; z-index: 2;
+      background: radial-gradient(circle at 50% 38%, rgba(255,255,255,0.22) 0%, transparent 65%);
       opacity: 0;
-      transition: opacity 0.45s ease 0.1s;
+      transition: opacity 0.4s ease 0.1s;
       pointer-events: none;
     }
     .item:hover .item-img::after { opacity: 1; }
@@ -179,7 +172,7 @@
 </head>
 <body>
 
-  <span class="badge">Fusión N + O — Lista Spotlight</span>
+  <span class="badge">Fusión N+O — Light</span>
 
   <section>
     <div class="container">
@@ -189,7 +182,7 @@
 
       <div class="list">
 
-        <div class="item" style="--accent: #2DD4BF;">
+        <div class="item" style="--accent: #0D9488;">
           <div class="item-num">01</div>
           <div class="item-content">
             <h3 class="item-name">Ortodoncia</h3>
@@ -202,7 +195,7 @@
           </div>
         </div>
 
-        <div class="item" style="--accent: #FCD34D;">
+        <div class="item" style="--accent: #C9A84C;">
           <div class="item-num">02</div>
           <div class="item-content">
             <h3 class="item-name">Implantes Dentales</h3>
@@ -215,7 +208,7 @@
           </div>
         </div>
 
-        <div class="item" style="--accent: #7DD3FC;">
+        <div class="item" style="--accent: #0EA5E9;">
           <div class="item-num">03</div>
           <div class="item-content">
             <h3 class="item-name">Blanqueamiento Dental</h3>
@@ -228,7 +221,7 @@
           </div>
         </div>
 
-        <div class="item" style="--accent: #6EE7B7;">
+        <div class="item" style="--accent: #10B981;">
           <div class="item-num">04</div>
           <div class="item-content">
             <h3 class="item-name">Limpieza Dental</h3>
@@ -241,7 +234,7 @@
           </div>
         </div>
 
-        <div class="item" style="--accent: #FCA5A5;">
+        <div class="item" style="--accent: #EC4899;">
           <div class="item-num">05</div>
           <div class="item-content">
             <h3 class="item-name">Carillas de Porcelana</h3>
@@ -254,7 +247,7 @@
           </div>
         </div>
 
-        <div class="item" style="--accent: #C4B5FD;">
+        <div class="item" style="--accent: #8B5CF6;">
           <div class="item-num">06</div>
           <div class="item-content">
             <h3 class="item-name">Odontología Estética</h3>
