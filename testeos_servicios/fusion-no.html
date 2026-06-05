@@ -42,27 +42,42 @@
     /* ── Lista ── */
     .list { display: flex; flex-direction: column; gap: 0.5rem; }
 
-    /* ── Item: card con altura fija ── */
+    /* ── Item ── */
     .item {
       --accent: #0D9488;
       display: flex;
       align-items: stretch;
-      height: 112px;          /* altura fija por card */
+      height: 134px;
       border-radius: 14px;
       background: #fff;
       border: 1px solid #E2E8F0;
-      border-left: 3px solid transparent;
+      border-left: 3px solid var(--accent); /* siempre visible */
       overflow: hidden;
       cursor: pointer;
-      transition: border-color 0.35s, box-shadow 0.4s, background 0.3s;
-    }
-    .item:hover {
-      border-left-color: var(--accent);
-      box-shadow: 0 6px 28px rgba(15,23,42,0.10);
-      background: #fff;
+      position: relative;
+      transition: border-color 0.45s, box-shadow 0.4s;
     }
 
-    /* ── Número ── */
+    /* Fill izquierda → derecha */
+    .item::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.48s cubic-bezier(0.16,1,0.3,1);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .item:hover { border-color: var(--accent); box-shadow: 0 6px 28px rgba(15,23,42,0.14); }
+    .item:hover::before { transform: scaleX(1); }
+
+    /* Todos los hijos encima del fill */
+    .item-num,
+    .item-content,
+    .item-img { position: relative; z-index: 1; }
+
+    /* ── Número: color acento en reposo, blanco en hover ── */
     .item-num {
       width: 72px;
       flex-shrink: 0;
@@ -71,12 +86,12 @@
       justify-content: center;
       font-family: 'DM Serif Display', serif;
       font-size: 2rem;
-      color: #E2E8F0;
+      color: var(--accent);
       line-height: 1;
       user-select: none;
-      transition: color 0.4s;
+      transition: color 0.35s;
     }
-    .item:hover .item-num { color: var(--accent); }
+    .item:hover .item-num { color: white; }
 
     /* ── Contenido ── */
     .item-content {
@@ -94,80 +109,83 @@
       font-size: 1.1rem;
       color: var(--accent);
       line-height: 1.2;
+      transition: color 0.35s;
     }
+    .item:hover .item-name { color: white; }
 
     .item-sep {
       width: 24px; height: 2px;
       background: var(--accent); border-radius: 2px;
-      opacity: 0.4;
-      transition: width 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.35s;
+      opacity: 0.45;
+      transition: width 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.35s, background 0.35s;
     }
-    .item:hover .item-sep { width: 36px; opacity: 1; }
+    .item:hover .item-sep { width: 36px; opacity: 1; background: white; }
 
-    /* Descripción siempre visible */
     .item-desc {
       font-size: .79rem;
       font-weight: 300;
       color: #64748B;
       line-height: 1.5;
-      /* recorta a 2 líneas para no desbordarse del height fijo */
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      transition: color 0.35s;
     }
+    .item:hover .item-desc { color: rgba(255,255,255,0.82); }
 
     .item-link {
       display: inline-flex; align-items: center; gap: .3rem;
       font-size: .72rem; font-weight: 600;
       color: var(--accent); text-decoration: none;
       opacity: 0; transform: translateY(5px);
-      transition: opacity 0.28s ease 0.08s, transform 0.28s ease 0.08s;
+      transition: opacity 0.28s ease 0.08s, transform 0.28s ease 0.08s, color 0.28s;
+      margin-top: .05rem;
     }
-    .item:hover .item-link { opacity: 1; transform: none; }
+    .item:hover .item-link { opacity: 1; transform: none; color: white; }
 
-    /* ── Columna imagen ── */
+    /* ── Imagen: wrapper externo anima el ancho, interno redondea ── */
     .item-img {
       flex-shrink: 0;
       width: 0;
       overflow: hidden;
-      position: relative;
+      padding: 6px 8px 6px 0;
       transition: width 0.48s cubic-bezier(0.16,1,0.3,1);
     }
-    .item:hover .item-img { width: 200px; }
+    .item:hover .item-img { width: 212px; }
 
-    .item-img img {
-      display: block;
-      width: 200px;
+    /* Contenedor con border-radius visible en todos los bordes */
+    .item-img-inner {
+      width: 196px;
       height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), filter 0.45s;
-      filter: brightness(0.78) saturate(1.1);
-    }
-    .item:hover .item-img img {
-      transform: scale(1.07);
-      filter: brightness(0.95) saturate(1.15);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
     }
 
-    /* Overlay que aclara al hover */
-    .item-img::before {
+    .item-img-inner img {
+      display: block;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      filter: brightness(0.78) saturate(1.1);
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), filter 0.45s;
+    }
+    .item:hover .item-img-inner img { transform: scale(1.07); filter: brightness(0.95) saturate(1.15); }
+
+    .item-img-inner::before {
       content: ''; position: absolute; inset: 0; z-index: 1;
       background: rgba(255,255,255,0.28);
-      transition: opacity 0.45s;
-      pointer-events: none;
+      transition: opacity 0.45s; pointer-events: none;
     }
-    .item:hover .item-img::before { opacity: 0; }
+    .item:hover .item-img-inner::before { opacity: 0; }
 
-    /* Spotlight radial */
-    .item-img::after {
+    .item-img-inner::after {
       content: ''; position: absolute; inset: 0; z-index: 2;
       background: radial-gradient(circle at 50% 38%, rgba(255,255,255,0.22) 0%, transparent 65%);
-      opacity: 0;
-      transition: opacity 0.4s ease 0.1s;
-      pointer-events: none;
+      opacity: 0; transition: opacity 0.4s ease 0.1s; pointer-events: none;
     }
-    .item:hover .item-img::after { opacity: 1; }
+    .item:hover .item-img-inner::after { opacity: 1; }
   </style>
 </head>
 <body>
@@ -191,7 +209,7 @@
             <a href="#" class="item-link">Agendar consulta <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
           <div class="item-img">
-            <img src="../lumina/assets/ort1.jpg" alt="Ortodoncia" />
+            <div class="item-img-inner"><img src="../lumina/assets/ort1.jpg" alt="Ortodoncia" /></div>
           </div>
         </div>
 
