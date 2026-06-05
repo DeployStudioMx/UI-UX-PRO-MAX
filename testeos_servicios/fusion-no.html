@@ -51,26 +51,26 @@
       border-radius: 14px;
       /* Tinte propio por servicio usando color-mix */
       background: color-mix(in srgb, var(--accent) 4%, #fff);
-      border: 1px solid color-mix(in srgb, var(--accent) 16%, #E2E8F0);
-      border-left: 4px solid var(--accent);
+      border: 1px solid #E2E8F0;
+      border-left: 4px solid #E2E8F0;
       overflow: hidden;
       cursor: pointer;
       position: relative;
-      transition: box-shadow 0.45s;
+      transition: box-shadow 0.45s, border-left-color 0.55s;
     }
 
-    /* Fill izquierda → derecha — lento y suave */
+    /* Fill izquierda → derecha */
     .item::before {
       content: '';
       position: absolute; inset: 0;
       background: var(--accent);
       transform: scaleX(0);
       transform-origin: left center;
-      transition: transform 0.72s cubic-bezier(0.16,1,0.3,1);
+      transition: transform 1.05s cubic-bezier(0.16,1,0.3,1);
       z-index: 0;
       pointer-events: none;
     }
-    .item:hover { box-shadow: 0 8px 32px rgba(15,23,42,0.12); }
+    .item:hover { box-shadow: 0 8px 32px rgba(15,23,42,0.12); border-left-color: var(--accent); }
     .item:hover::before { transform: scaleX(1); }
 
     /* Todos los hijos encima del fill */
@@ -149,9 +149,9 @@
       flex-shrink: 0;
       width: 0;
       overflow: hidden;
-      /* padding arriba/abajo/izquierda — sin padding derecha = flush */
-      padding: 8px 0 8px 6px;
-      transition: width 0.72s cubic-bezier(0.16,1,0.3,1);
+      /* sin padding arriba/abajo — imagen ocupa todo el alto */
+      padding: 0 0 0 6px;
+      transition: width 1.05s cubic-bezier(0.16,1,0.3,1);
     }
     .item:hover .item-img { width: 228px; }
 
